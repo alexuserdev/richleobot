@@ -1,50 +1,59 @@
 from dataclasses import dataclass
 
-from environs import Env
+
+@dataclass
+class Wallets:
+    btc_seed: str = 'local mushroom size account scheme camera laugh wheat parent sun wrestle supply'
+    eth_seed: str = 'asset shoulder pepper token spawn chunk worth tell mixture around improve veteran'
+    usdt_seed: str = 'diamond scrap return whisper entire organ loan topic pool narrow father jealous'
 
 
 @dataclass
 class DbConfig:
-    host: str
-    password: str
-    user: str
-    database: str
+    host: str = "postgresql://postgres@localhost/crypto_exchange_bot"
+    password: str = "43154814"
 
 
 @dataclass
 class TgBot:
     token: str
-    admin_ids: list[int]
+    admin_ids: list
     use_redis: bool
 
 
 @dataclass
-class Miscellaneous:
-    other_params: str = None
+class BinanceData:
+    API_KEY: str = "G76QeFkMdvW9Q3MQpOHRvNP2ncs2WGHUmf7QF4NopN9jOQCafQd53CYjDKLcV6Ad"
+    API_SECRET: str = "fvbnpjKWQOIkHitbmdWv2f6u0HxP0tIjtUm0uLjjoPgmpqsKHtiwKUyU864x2MYM"
+
+
+@dataclass
+class CryptoInformation:
+    deposit_amounts: dict
+
+CryptoInformation = CryptoInformation(
+            deposit_amounts={'BTC': [0.001, 0],
+                             'ETH': [0, 0],
+                             'USDT': [10, 0],
+                             'NGN': [10, 5000000]})
 
 
 @dataclass
 class Config:
     tg_bot: TgBot
     db: DbConfig
-    misc: Miscellaneous
 
 
 def load_config(path: str = None):
-    env = Env()
-    env.read_env(path)
-
     return Config(
         tg_bot=TgBot(
-            token=env.str("BOT_TOKEN"),
-            admin_ids=list(map(int, env.list("ADMINS"))),
-            use_redis=env.bool("USE_REDIS"),
+            token="1845830694:AAHDriEm2khKbhl_PDOwlAmhya6-b3FPa38",
+            admin_ids=[],
+            use_redis=False
         ),
         db=DbConfig(
-            host=env.str('DB_HOST'),
-            password=env.str('DB_PASS'),
-            user=env.str('DB_USER'),
-            database=env.str('DB_NAME')
+            host="postgresql://postgres@localhost/crypto_exchange_bot",
+            password="43154814",
         ),
-        misc=Miscellaneous()
+
     )

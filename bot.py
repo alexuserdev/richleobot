@@ -1,22 +1,31 @@
 import asyncio
 import logging
 
-from aiogram import Bot, Dispatcher
+from aiogram import Bot, Dispatcher, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage
 
 from tgbot.config import load_config
 from tgbot.filters.admin import AdminFilter
+from tgbot.handlers.balance import register_balance
+from tgbot.handlers.deposit import register_deposit
+from tgbot.handlers.escrow import register_escrow
+from tgbot.handlers.operations import register_operations
 from tgbot.handlers.admin import register_admin
-from tgbot.handlers.echo import register_echo
 from tgbot.handlers.user import register_user
+from tgbot.handlers.start import register_start
+from tgbot.handlers.settings import register_settings
+from tgbot.handlers.help import register_help
+from tgbot.misc.db_api.database import create_conn
 from tgbot.middlewares.db import DbMiddleware
+from tgbot.middlewares.keyboard_remover import RemoveMiddleware
 
 logger = logging.getLogger(__name__)
 
 
 def register_all_middlewares(dp):
     dp.setup_middleware(DbMiddleware())
+    dp.setup_middleware(RemoveMiddleware())
 
 
 def register_all_filters(dp):
@@ -24,28 +33,31 @@ def register_all_filters(dp):
 
 
 def register_all_handlers(dp):
+    register_start(dp)
+    register_operations(dp)
+    register_balance(dp)
+    register_deposit(dp)
+    register_escrow(dp)
     register_admin(dp)
-    register_user(dp)
-
-    register_echo(dp)
+    register_settings(dp)
+    register_help(dp)
 
 
 async def main():
-    logging.basicConfig(
-        level=logging.INFO,
-        format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
-
-    )
+    logging.basicConfig(format=u'%(filename)s [LINE:%(lineno)d] #%(levelname)-8s [%(asctime)s]  %(message)s',
+                        level=logging.INFO)
     logger.info("Starting bot")
-    config = load_config(".env")
+    config = load_config()
 
     if config.tg_bot.use_redis:
         storage = RedisStorage()
     else:
         storage = MemoryStorage()
 
+    loop = asyncio.get_event_loop()
+
     bot = Bot(token=config.tg_bot.token, parse_mode='HTML')
-    dp = Dispatcher(bot, storage=storage)
+    dp = Dispatcher(bot, storage=storage, loop=loop)
 
     bot['config'] = config
 
@@ -53,8 +65,8 @@ async def main():
     register_all_filters(dp)
     register_all_handlers(dp)
 
-    # start
     try:
+        await create_conn()
         await dp.start_polling()
     finally:
         await dp.storage.close()
