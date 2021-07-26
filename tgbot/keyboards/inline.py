@@ -138,21 +138,50 @@ class HelpKeyboards:
 
 class EscrowKeyboards:
     @staticmethod
-    def choose_currency(currency=None):
-        keyboard = types.InlineKeyboardMarkup(row_width=3)
-        for wallet in WALLETS:
-            if currency == wallet:
-                keyboard.insert(types.InlineKeyboardButton(text=f"✅{wallet}",
-                                                           callback_data=f"currency.{wallet}"))
-            else:
-                keyboard.insert(types.InlineKeyboardButton(text=wallet,
-                                                           callback_data=f"currency.{wallet}"))
+    def main():
+        keyboard = types.InlineKeyboardMarkup(row_width=1)
+        keyboard.add(types.InlineKeyboardButton(text="Create deal",
+                                                callback_data="create_escrow_deal"))
+        keyboard.add(types.InlineKeyboardButton(text="Active deals",
+                                                callback_data="my_active_escrow"))
         return keyboard
 
     @staticmethod
-    async def in_deal(deal_id, user_id=None, status=None):
+    def choose_currency(currency=None, not_currency=None):
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        for wallet in WALLETS:
+            if wallet != not_currency:
+                if currency == wallet:
+                    keyboard.insert(types.InlineKeyboardButton(text=f"✅{wallet}",
+                                                               callback_data=f"currency.{wallet}"))
+                else:
+                    keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                                                               callback_data=f"currency.{wallet}"))
+        return keyboard
+
+    @staticmethod
+    async def in_deal(deal_id, status=None):
+        keyboard = types.InlineKeyboardMarkup(row_width=2)
         if status:
-            pass
-        else:
-            info = await EscrowDb.parse_deal(deal_id)
+            return
+        keyboard.add(types.InlineKeyboardButton(text="Accept",
+                                                callback_data=f"accept_deal.{deal_id}"))
+        keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
+                                                callback_data=f"cancel_deal.{deal_id}"))
+        return keyboard
+        # if status is not None:
+        #     if status is False:
+        #         keyboard.add(types.InlineKeyboardButton(text="Cancel",
+        #                                                 callback_data="cancel_deal"))
+        #         keyboard.add(types.InlineKeyboardButton(text="",
+        #                                                 callback_data=))
+        # else:
+        #     info = await EscrowDb.parse_deal(deal_id)
+        #     if user_id == info[0]:
+        #         status = info[-2]
+        #     elif user_id == info[1]:
+        #         status = info[-1]
+
+
+
 

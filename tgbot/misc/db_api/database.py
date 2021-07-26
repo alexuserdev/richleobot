@@ -86,3 +86,16 @@ class EscrowDb:
     async def parse_deal(id):
         query = f"select * from escrow where id = {id}"
         return await conn.fetchrow(query)
+
+    @staticmethod
+    async def delete_deal(id):
+        query = f"select seller_id, buyer_id from escrow where id = {id}"
+        seller_id, buyer_id = await conn.fetchrow(query)
+        query = f"delete from escrow where id = {id}"
+        await conn.execute(query)
+        return seller_id, buyer_id
+
+    @staticmethod
+    async def parse_active_deals(user_id):
+        query = f"select * from escrow where seller_id = {user_id} or buyer_id = {user_id}"
+        return await conn.fetch(query)

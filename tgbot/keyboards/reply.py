@@ -21,6 +21,7 @@ def escrow_deal_keyboard():
     keyboard.add(types.KeyboardButton(text="Cancel"))
     return keyboard
 
+
 class RegistrationKeyboards:
     def __init__(self, state: FSMContext):
         self.state = state
