@@ -5,7 +5,6 @@ from aiogram.utils.exceptions import MessageNotModified
 from tgbot.handlers.start import start
 from tgbot.keyboards.inline import EscrowKeyboards, OperationsKeyboard
 from tgbot.keyboards.reply import main_menu_buttons, escrow_deal_keyboard, main_menu_keyboard
-from tgbot.misc.crypto_work import parse_balances
 from tgbot.misc.db_api.database import RequestsDb, UsersDb, EscrowDb
 from tgbot.misc.states import EscrowStates
 
@@ -25,9 +24,15 @@ async def cancel_deal(call: types.CallbackQuery):
 
 async def accept_deal(call: types.CallbackQuery):
     deal_id = int(call.data.split(".")[1])
-    await call.message.answer("Wallet is empty.",
-                              reply_markup=OperationsKeyboard.deposit())
-    await call.answer()
+    res = await EscrowDb.accept_deal(call.message.chat.id, deal_id)
+    if res is True:
+        pass
+    elif res is False:
+        await call.message.answer("Wallet is empty.",
+                                  reply_markup=OperationsKeyboard.deposit())
+        await call.answer()
+    else:
+        pass
 
 
 async def cancel_escrow(message: types.Message, state: FSMContext):

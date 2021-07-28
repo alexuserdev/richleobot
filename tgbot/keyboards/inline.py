@@ -2,11 +2,31 @@ from aiogram import types
 
 from tgbot.misc.db_api.database import EscrowDb
 
+CRYPTOS = ["BTC", "ETH", "USDT"]
 WALLETS = ["BTC", "ETH", "USDT", "NGN"]
 
 
 class ExchangeKeyboards:
-    pass
+    @staticmethod
+    def main_exchange(currencys, choose=None):
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        for currency in currencys:
+            if choose == currency:
+                keyboard.insert(types.InlineKeyboardButton(text=f"✅{currency}",
+                                                           callback_data=f"to_exchange.{currency}"))
+            else:
+                keyboard.insert(types.InlineKeyboardButton(text=currency,
+                                                           callback_data=f"to_exchange.{currency}"))
+
+    @staticmethod
+    def exchange2(currency):
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        for wallet in CRYPTOS:
+            if wallet != currency:
+                keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                                                           callback_data=f"to_get.{wallet}"))
+        print(keyboard)
+        return keyboard
 
 
 class OperationsKeyboard:
@@ -79,6 +99,13 @@ class BalanceKeyboard:
             else:
                 keyboard.insert(types.InlineKeyboardButton(text=wallet,
                                                            callback_data=f"deposit.{wallet}"))
+        return keyboard
+
+    @staticmethod
+    def deposit_check():
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton(text="Check",
+                                                callback_data="check"))
         return keyboard
 
 
@@ -181,7 +208,6 @@ class EscrowKeyboards:
         #         status = info[-2]
         #     elif user_id == info[1]:
         #         status = info[-1]
-
 
 
 

@@ -43,3 +43,11 @@ class RegistrationKeyboards:
         for button in answers_buttons[self.index]:
             keyboard.insert(types.KeyboardButton(text=button))
         return keyboard
+
+
+class BalanceKeyboardReply:
+    @staticmethod
+    def cancel():
+        keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        keyboard.add(types.KeyboardButton(text="Cancel"))
+        return keyboard

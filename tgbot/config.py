@@ -25,11 +25,15 @@ class TgBot:
 class BinanceData:
     API_KEY: str = "G76QeFkMdvW9Q3MQpOHRvNP2ncs2WGHUmf7QF4NopN9jOQCafQd53CYjDKLcV6Ad"
     API_SECRET: str = "fvbnpjKWQOIkHitbmdWv2f6u0HxP0tIjtUm0uLjjoPgmpqsKHtiwKUyU864x2MYM"
+    btc_address: str = "19uQe9XuKAfkT7QT44ke4ryeZm44hBHFVx"
+    eth_address: str = "0xd959a62d66f50bf3646265ae6309efd6eaa18e90"
+    usdt_address: str = "0xd959a62d66f50bf3646265ae6309efd6eaa18e90"
 
 
 @dataclass
 class CryptoInformation:
     deposit_amounts: dict
+
 
 CryptoInformation = CryptoInformation(
             deposit_amounts={'BTC': [0.001, 0],
@@ -47,7 +51,7 @@ class Config:
 def load_config(path: str = None):
     return Config(
         tg_bot=TgBot(
-            token="1845830694:AAHDriEm2khKbhl_PDOwlAmhya6-b3FPa38",
+            token="1944359439:AAGZ5LyAd-QXoejAPrpgxBAb-JR5QAtWpTM",
             admin_ids=[],
             use_redis=False
         ),

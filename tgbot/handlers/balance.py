@@ -3,12 +3,11 @@ from aiogram.dispatcher import FSMContext
 
 from tgbot.keyboards.inline import BalanceKeyboard
 from tgbot.keyboards.reply import main_menu_buttons
-from tgbot.misc.crypto_work import parse_balances
 from tgbot.misc.db_api import UsersDb
 
 
 async def main_balance(message: types.Message, state: FSMContext):
-    balances = await parse_balances(message.chat.id)
+    balances = await UsersDb.parse_balance(message.chat.id)
     await message.answer_sticker("CAACAgIAAxkBAAICS2D1mF3tYRb7-39tdRQ_4qV6_0CwAAL_DQACo_ugSsQaq2gMY49PIAQ")
     msg = await message.answer(gen_balance_text(message, balances),
                                reply_markup=BalanceKeyboard.main())

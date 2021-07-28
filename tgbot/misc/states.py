@@ -14,3 +14,13 @@ class EscrowStates(StatesGroup):
     first = State()
     second = State()
     enter_user_id = State()
+
+
+class ExchangeStates(StatesGroup):
+    first = State()
+    confirming = State()
+
+
+class DepositStates(StatesGroup):
+    enter_amount = State()
+    check_transaction = State()

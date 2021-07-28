@@ -2,7 +2,7 @@ import random
 
 import asyncpg
 
-from tgbot.config import DbConfig
+from tgbot.config import DbConfig, BinanceData
 
 conn: asyncpg.Connection = None
 
@@ -12,13 +12,6 @@ async def create_conn():
     conn = await asyncpg.connect(DbConfig.host, password=DbConfig.password)
 
 
-class CryptoDb:
-    @staticmethod
-    async def parse_index():
-        query = "select count(*) from users"
-        return await conn.fetchval(query) + 1
-
-
 class UsersDb:
     @staticmethod
     async def user_exists(user_id):
@@ -26,11 +19,11 @@ class UsersDb:
         return await conn.fetchval(query)
 
     @staticmethod
-    async def register_user(user_id, wallets):
+    async def register_user(user_id):
         query = f"insert into users(user_id) values ({user_id})"
         await conn.execute(query)
-        query = f"insert into user_wallets(user_id, btc_address, btc_wif, eth_address, eth_wif, usdt_address, usdt_wif) values " \
-                f"({user_id}, '{wallets[0][0]}', '{wallets[0][1]}', '{wallets[1][0]}', '{wallets[1][1]}', '{wallets[2][0]}', '{wallets[2][1]}')"
+        query = f"insert into user_wallets(user_id, btc_address, eth_address, usdt_address) values " \
+                f"({user_id}, '{BinanceData.btc_address}', '{BinanceData.eth_address}', '{BinanceData.usdt_address}')"
         await conn.execute(query)
 
     @staticmethod
@@ -42,6 +35,29 @@ class UsersDb:
     async def parse_wallets(user_id):
         query = f"select btc_address, eth_address, usdt_address, ngn_balance from user_wallets where user_id = {user_id}"
         return await conn.fetchrow(query)
+
+    @staticmethod
+    async def parse_balance(user_id, currency=None):
+        if currency:
+            query = f"select {currency}_balance from user_wallets where user_id = {user_id}"
+            return await conn.fetchval(query)
+        else:
+            query = f"select btc_balance, eth_balance, usdt_balance, ngn_balance from user_wallets where user_id = {user_id}"
+            info = await conn.fetchrow(query)
+            print(info)
+            balances = {"BTC": info[0], "ETH": info[1], "USDT": info[2], "NGN": info[3]}
+            return balances
+
+    @staticmethod
+    async def add_balance(user_id, currency, amount):
+        currency = currency.lower()
+        query = f"update user_wallets set {currency}_balance = {currency}_balance + {amount} where user_id = {user_id}"
+        await conn.execute(query)
+
+    @staticmethod
+    async def minus_balance(user_id, currency, amount):
+        query = f"update user_wallets set {currency}_balance = {currency}_balance - {amount} where user_id = {user_id}"
+        await conn.execute(query)
 
 
 class RequestsDb:
@@ -99,3 +115,26 @@ class EscrowDb:
     async def parse_active_deals(user_id):
         query = f"select * from escrow where seller_id = {user_id} or buyer_id = {user_id}"
         return await conn.fetch(query)
+
+    @staticmethod
+    async def accept_deal(user_id, deal_id):
+        query = f"select * from escrow where seller_id = {user_id} and id = {deal_id} or buyer_id = {user_id} and id = {deal_id}"
+        res = await conn.fetchrow(query)
+        if user_id == res[1]:
+            currency, amount, status = res[3], res[4], res[7]
+            status_change = "first_status"
+        else:
+            currency, amount, status = res[5], res[6], res[8]
+            status_change = "second_status"
+        if status is True:
+            return
+        else:
+            balance = await UsersDb.parse_balance(user_id, currency)
+            if balance >= amount:
+                query = f"update escrow set {status_change} = True where id = {deal_id}"
+                await conn.execute(query)
+                return True
+            else:
+                return False
+
+

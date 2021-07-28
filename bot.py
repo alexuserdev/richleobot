@@ -10,6 +10,7 @@ from tgbot.filters.admin import AdminFilter
 from tgbot.handlers.balance import register_balance
 from tgbot.handlers.deposit import register_deposit
 from tgbot.handlers.escrow import register_escrow
+from tgbot.handlers.exchange import register_exchange
 from tgbot.handlers.operations import register_operations
 from tgbot.handlers.admin import register_admin
 from tgbot.handlers.user import register_user
@@ -38,6 +39,7 @@ def register_all_handlers(dp):
     register_balance(dp)
     register_deposit(dp)
     register_escrow(dp)
+    register_exchange(dp)
     register_admin(dp)
     register_settings(dp)
     register_help(dp)

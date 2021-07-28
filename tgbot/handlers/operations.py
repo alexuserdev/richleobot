@@ -7,8 +7,7 @@ from aiogram.utils.deep_linking import get_start_link
 
 from tgbot.keyboards.inline import OperationsKeyboard
 from tgbot.keyboards.reply import main_menu_buttons
-from tgbot.misc.crypto_work import parse_balances
-from tgbot.misc.db_api.database import RequestsDb
+from tgbot.misc.db_api.database import RequestsDb, UsersDb
 from tgbot.misc.states import RequestStates
 
 
@@ -21,7 +20,7 @@ async def main_operations(message: types.Message, state: FSMContext):
 
 
 async def join_send(call: types.CallbackQuery):
-    balances = await parse_balances(call.message.chat.id)
+    balances = await UsersDb.parse_balance(call.message.chat.id)
     flag = False
     for k, v in balances.items():
         if v:
