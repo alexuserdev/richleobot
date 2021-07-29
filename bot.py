@@ -13,6 +13,7 @@ from tgbot.handlers.escrow import register_escrow
 from tgbot.handlers.exchange import register_exchange
 from tgbot.handlers.operations import register_operations
 from tgbot.handlers.admin import register_admin
+from tgbot.handlers.p2p import register_p2p
 from tgbot.handlers.user import register_user
 from tgbot.handlers.start import register_start
 from tgbot.handlers.settings import register_settings
@@ -39,6 +40,7 @@ def register_all_handlers(dp):
     register_balance(dp)
     register_deposit(dp)
     register_escrow(dp)
+    register_p2p(dp)
     register_exchange(dp)
     register_admin(dp)
     register_settings(dp)

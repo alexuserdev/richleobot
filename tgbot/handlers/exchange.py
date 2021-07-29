@@ -9,8 +9,6 @@ from tgbot.misc import binance_work
 from tgbot.misc.db_api.database import UsersDb, CommissionsDb
 from tgbot.misc.states import ExchangeStates
 
-dp = Dispatcher.get_current()
-
 
 async def join_exchange(call: types.CallbackQuery):
     balances = await UsersDb.parse_balance(call.message.chat.id)

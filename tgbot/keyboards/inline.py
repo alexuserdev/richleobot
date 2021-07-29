@@ -6,6 +6,39 @@ CRYPTOS = ["BTC", "ETH", "USDT"]
 WALLETS = ["BTC", "ETH", "USDT", "NGN"]
 
 
+class P2PKeyboards:
+    @staticmethod
+    def main():
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton(text="Active orders",
+                                                callback_data="active_p2p_orders"))
+        keyboard.add(types.InlineKeyboardButton(text="Create order",
+                                                callback_data="create_p2p_order"))
+        return keyboard
+
+    @staticmethod
+    def p2p_1(currency=None):
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        for wallet in WALLETS:
+            if wallet != currency:
+                keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                                                           callback_data=f"to_give_p2p.{wallet}"))
+        return keyboard
+
+    @staticmethod
+    def p2p_2(currency=None, not_currency=None):
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        for wallet in WALLETS:
+            if wallet != not_currency:
+                if currency == wallet:
+                    keyboard.insert(types.InlineKeyboardButton(text=f"✅{wallet}",
+                                                               callback_data=f"to_get_p2p.{wallet}"))
+                else:
+                    keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                                                               callback_data=f"to_get_p2p.{wallet}"))
+        return keyboard
+
+
 class ExchangeKeyboards:
     @staticmethod
     def main_exchange(currencys, choose=None):
@@ -42,6 +75,8 @@ class OperationsKeyboard:
                                                 callback_data="exchange"))
         keyboard.insert(types.InlineKeyboardButton(text="Escrow exchange",
                                                    callback_data="escrow"))
+        keyboard.add(types.InlineKeyboardButton(text="P2P",
+                                                callback_data="p2p"))
         keyboard.add(types.InlineKeyboardButton(text="🎯StrikeWin lottery",
                                                 callback_data="hdd"))
         return keyboard
@@ -107,6 +142,27 @@ class BalanceKeyboard:
         keyboard = types.InlineKeyboardMarkup()
         keyboard.add(types.InlineKeyboardButton(text="Check",
                                                 callback_data="check"))
+        return keyboard
+
+    @staticmethod
+    def main_withdraw(currencys, choose=None):
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        for currency in currencys:
+            if choose == currency:
+                keyboard.insert(types.InlineKeyboardButton(text=f"✅{currency}",
+                                                           callback_data=f"withdraw.{currency}"))
+            else:
+                keyboard.insert(types.InlineKeyboardButton(text=currency,
+                                                           callback_data=f"withdraw.{currency}"))
+        return keyboard
+
+    @staticmethod
+    def withdraw_confirming():
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton(text="Confirm",
+                                                callback_data="confirm_withdraw"))
+        keyboard.add(types.InlineKeyboardButton(text="Cancel",
+                                                callback_data="cancel_withdraw"))
         return keyboard
 
 

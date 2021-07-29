@@ -5,7 +5,7 @@ from aiogram import Dispatcher
 from binance import Client, ThreadedWebsocketManager, ThreadedDepthCacheManager
 
 from tgbot.config import BinanceData
-
+from tgbot.misc.db_api import UsersDb
 
 client = Client(BinanceData.API_KEY, BinanceData.API_SECRET)
 
@@ -49,3 +49,7 @@ async def get_pair_price(first, second, count, dp):
         price = await dp.loop.run_in_executor(executor, partial(client.get_avg_price, symbol=f"{second}{first}"))
         price = float(price['price'])
         return count / price
+
+
+async def create_withdraw_request(user_id, currency, amount, address):
+    await UsersDb.minus_balance(user_id, currency, amount)

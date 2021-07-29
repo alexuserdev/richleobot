@@ -112,7 +112,7 @@ async def enter_amount_of_first_wallet(message: types.Message, state: FSMContext
 async def choosed_second_wallet(call: types.CallbackQuery, state: FSMContext):
     currency = call.data.split(".")[1]
     data = await state.get_data()
-    msg = await call.message.edit_text(f"Enter amount of {currency} ypu want to get",
+    msg = await call.message.edit_text(f"Enter amount of {currency} you want to get",
                                        reply_markup=EscrowKeyboards.choose_currency(currency,
                                                                                     not_currency=data['first_currency']))
     await state.update_data(second_currency=currency)

@@ -10,6 +10,12 @@ class RequestStates(StatesGroup):
     enter_count = State()
 
 
+class P2PStates(StatesGroup):
+    first = State()
+    second = State()
+    confirm = State()
+
+
 class EscrowStates(StatesGroup):
     first = State()
     second = State()
@@ -24,3 +30,9 @@ class ExchangeStates(StatesGroup):
 class DepositStates(StatesGroup):
     enter_amount = State()
     check_transaction = State()
+
+
+class WithdrawStates(StatesGroup):
+    enter_count = State()
+    enter_address = State()
+    confirming = State()

@@ -143,3 +143,15 @@ class CommissionsDb:
     async def parse_exchange_commission():
         query = f"select exchange_commission from service_settings"
         return await conn.fetchval(query)
+
+
+class P2PDb:
+    @staticmethod
+    async def parse_all_orders(first_currency=None, second_currency=None):
+        if first_currency:
+            pass
+        elif second_currency:
+            pass
+        else:
+            query = f"select * from p2p_orders"
+            return await conn.fetch(query)
