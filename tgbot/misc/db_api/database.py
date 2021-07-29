@@ -138,3 +138,8 @@ class EscrowDb:
                 return False
 
 
+class CommissionsDb:
+    @staticmethod
+    async def parse_exchange_commission():
+        query = f"select exchange_commission from service_settings"
+        return await conn.fetchval(query)

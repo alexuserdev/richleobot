@@ -17,11 +17,12 @@ class ExchangeKeyboards:
             else:
                 keyboard.insert(types.InlineKeyboardButton(text=currency,
                                                            callback_data=f"to_exchange.{currency}"))
+        return keyboard
 
     @staticmethod
     def exchange2(currency):
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        for wallet in CRYPTOS:
+        for wallet in WALLETS:
             if wallet != currency:
                 keyboard.insert(types.InlineKeyboardButton(text=wallet,
                                                            callback_data=f"to_get.{wallet}"))

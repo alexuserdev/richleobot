@@ -31,12 +31,13 @@ def gen_balance_text(message: types.Message, balances):
         if sum:
             good_balances[wallet] = sum
     if good_balances:
-        for wallet, sum in balances.items():
-            text += f"{wallet}: {round(sum, 2)}\n"
+        for wallet, sum in good_balances.items():
+            sum = int(sum) if sum % 10 == 0 else sum
+            text += f"{wallet} — {sum}\n"
     else:
         text += "Wallet is empty\n\n"
 
-    text += "I can help you to <b>Deposit</b> or <b>Withdraw</b> something. \n\n" \
+    text += "\nI can help you to <b>Deposit</b> or <b>Withdraw</b> something. \n\n" \
             "If you want to perform any kind of Operation you should talk to Leo."
 
     return text
