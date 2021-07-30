@@ -77,7 +77,7 @@ async def approve_payment(call: types.CallbackQuery, state: FSMContext):
         await state.finish()
         await UsersDb.add_balance(call.message.chat.id, payment.currency, payment.amount)
     elif check == "Pending":
-        pass
+        await call.answer("Transaction is fount but not confirmed. Please wait")
     else:
         await call.answer("Transaction not found. Please wait")
 

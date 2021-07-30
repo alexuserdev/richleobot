@@ -118,7 +118,7 @@ class EscrowDb:
 
     @staticmethod
     async def accept_deal(user_id, deal_id):
-        query = f"select * from escrow where seller_id = {user_id} and id = {deal_id} or buyer_id = {user_id} and id = {deal_id}"
+        query = f"select * from escrow where id = {deal_id}"
         res = await conn.fetchrow(query)
         if user_id == res[1]:
             currency, amount, status = res[3], res[4], res[7]
@@ -133,7 +133,25 @@ class EscrowDb:
             if balance >= amount:
                 query = f"update escrow set {status_change} = True where id = {deal_id}"
                 await conn.execute(query)
-                return True
+                query = f"select * from escrow where id = {deal_id}"
+                res = await conn.fetchrow(query)
+                if res[-2] and res[-1]:
+                    seller_id, first_currency, first_amount = res[0], res[2], res[3]
+                    buyer_id, second_currency, second_amount = res[1], res[4], res[5]
+                    if not await UsersDb.parse_balance(seller_id, first_currency) >= first_amount:
+                        query = f"update escrow set 'first_status' = False where id = {deal_id}"
+                        await conn.execute(query)
+                        return
+                    if not await UsersDb.parse_balance(buyer_id, second_currency) >= second_amount:
+                        query = f"update escrow set 'second_status' = False where id = {deal_id}"
+                        await conn.execute(query)
+                        return
+                    await UsersDb.minus_balance(seller_id, first_currency, first_amount)
+                    await UsersDb.minus_balance(buyer_id, first_currency, first_amount)
+                    percent = await CommissionsDb.parse_escrow_commission()
+                    await UsersDb.add_balance(seller_id, second_currency, second_amount - (second_amount / 100 * percent))
+                    await UsersDb.add_balance(buyer_id, first_currency, first_amount - (first_amount / 100 * percent))
+                    return seller_id, buyer_id, res[0]
             else:
                 return False
 
@@ -144,14 +162,26 @@ class CommissionsDb:
         query = f"select exchange_commission from service_settings"
         return await conn.fetchval(query)
 
+    @staticmethod
+    async def parse_escrow_commission():
+        query = f"select escrow_exchange from service_settings"
+        return await conn.fetchval(query)
+
 
 class P2PDb:
     @staticmethod
     async def parse_all_orders(first_currency=None, second_currency=None):
         if first_currency:
-            pass
-        elif second_currency:
-            pass
+            query = f"select * from p2p_orders where first_currency = '{second_currency}' and second_currency = '{first_currency}'"
+            lst = await conn.fetch(query)
+            return [i[0] for i in lst]
         else:
             query = f"select * from p2p_orders"
-            return await conn.fetch(query)
+            lst = await conn.fetch(query)
+            return [i[0] for i in lst]
+
+    @staticmethod
+    async def create_new_order(user_id, first_currency, first_amount, second_currency, second_amount):
+        query = f"insert into p2p_orders(user_id, first_currency, first_amount, second_currency, second_amount) values " \
+                f"({user_id}, '{first_currency}', {first_amount}, '{second_currency}', '{second_amount}')"
+        await conn.execute(query)

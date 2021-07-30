@@ -17,10 +17,36 @@ class P2PKeyboards:
         return keyboard
 
     @staticmethod
+    def p2p_active_1():
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        for wallet in WALLETS:
+            keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                                                       callback_data=f"to_sell_active_p2p.{wallet}"))
+        return keyboard
+
+    @staticmethod
+    def p2p_active_2():
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        for wallet in WALLETS:
+            keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                                                       callback_data=f"to_get_active_p2p.{wallet}"))
+        return keyboard
+
+    @staticmethod
+    def in_order(order_id):
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton(text="Accept",
+                                                callback_data=f"accept_p2p_deal.{order_id}"))
+        return keyboard
+
+    @staticmethod
     def p2p_1(currency=None):
         keyboard = types.InlineKeyboardMarkup(row_width=3)
         for wallet in WALLETS:
-            if wallet != currency:
+            if wallet == currency:
+                keyboard.insert(types.InlineKeyboardButton(text=f"✅{wallet}",
+                                                           callback_data=f"to_give_p2p.{wallet}"))
+            else:
                 keyboard.insert(types.InlineKeyboardButton(text=wallet,
                                                            callback_data=f"to_give_p2p.{wallet}"))
         return keyboard
@@ -36,6 +62,15 @@ class P2PKeyboards:
                 else:
                     keyboard.insert(types.InlineKeyboardButton(text=wallet,
                                                                callback_data=f"to_get_p2p.{wallet}"))
+        return keyboard
+
+    @staticmethod
+    def order_create_confirming():
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton(text="Create",
+                                                callback_data="confirm_order_create"))
+        keyboard.add(types.InlineKeyboardButton(text="Cancel",
+                                                callback_data="cancel_order_create"))
         return keyboard
 
 

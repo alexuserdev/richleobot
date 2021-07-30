@@ -25,8 +25,12 @@ async def cancel_deal(call: types.CallbackQuery):
 async def accept_deal(call: types.CallbackQuery):
     deal_id = int(call.data.split(".")[1])
     res = await EscrowDb.accept_deal(call.message.chat.id, deal_id)
-    if res is True:
-        pass
+    if res:
+        seller_id, buyer_id, id = res
+        dp = Dispatcher.get_current()
+        await call.message.delete()
+        await dp.bot.send_message(seller_id, f"Escrow exchange №{id} was completed successfully")
+        await dp.bot.send_message(buyer_id, f"Escrow exchange №{id} was completed successfully")
     elif res is False:
         await call.message.answer("Wallet is empty.",
                                   reply_markup=OperationsKeyboard.deposit())
