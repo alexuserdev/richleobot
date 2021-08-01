@@ -88,7 +88,8 @@ async def entered_amount(message: types.Message, state: FSMContext):
 
 
 async def accept_exchange(call: types.CallbackQuery, state: FSMContext):
-    pass
+    await call.answer()
+    return
 
 
 async def cancel_exchange(call: types.CallbackQuery, state: FSMContext):

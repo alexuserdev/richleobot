@@ -36,7 +36,8 @@ async def accept_deal(call: types.CallbackQuery):
                                   reply_markup=OperationsKeyboard.deposit())
         await call.answer()
     else:
-        pass
+        await call.answer("Accepted")
+        await call.message.edit_reply_markup(await EscrowKeyboards.in_deal(deal_id, 'accepted'))
 
 
 async def cancel_escrow(message: types.Message, state: FSMContext):
@@ -72,6 +73,7 @@ async def all_active_deals(call: types.CallbackQuery):
             for_seller = True if call.message.chat.id == deal[1] else False
             text = gen_deal_text(data, deal[0], for_seller)
             status = deal[-2] if for_seller else deal[-1]
+            print(status)
             await call.message.answer(text,
                                       reply_markup=await EscrowKeyboards.in_deal(deal[0], status))
     else:
@@ -103,6 +105,8 @@ async def enter_amount_of_first_wallet(message: types.Message, state: FSMContext
         return
     try:
         amount = float(message.text)
+        if amount <= 0:
+            raise ValueError
         msg = await message.answer("Which currency you want to get",
                                    reply_markup=EscrowKeyboards.choose_currency(not_currency=currency))
         await EscrowStates.next()
@@ -130,6 +134,8 @@ async def enter_amount_of_second_wallet(message: types.Message, state: FSMContex
         return
     try:
         amount = float(message.text)
+        if amount <= 0:
+            raise ValueError
         await message.answer("Enter ID of second transaction participants")
         await EscrowStates.next()
         dp = Dispatcher.get_current()

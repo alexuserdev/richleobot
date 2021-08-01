@@ -25,11 +25,12 @@ class P2PKeyboards:
         return keyboard
 
     @staticmethod
-    def p2p_active_2():
+    def p2p_active_2(currency):
         keyboard = types.InlineKeyboardMarkup(row_width=3)
         for wallet in WALLETS:
-            keyboard.insert(types.InlineKeyboardButton(text=wallet,
-                                                       callback_data=f"to_get_active_p2p.{wallet}"))
+            if wallet != currency:
+                keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                                                           callback_data=f"to_get_active_p2p.{wallet}"))
         return keyboard
 
     @staticmethod
@@ -145,7 +146,26 @@ class OperationsKeyboard:
                                                   callback_data=f"confirm.{id}"))
         return keyboard
 
+    @staticmethod
+    def main_send(currencys, choose=None):
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        for currency in currencys:
+            if choose == currency:
+                keyboard.insert(types.InlineKeyboardButton(text=f"✅{currency}",
+                                                           callback_data=f"send.{currency}"))
+            else:
+                keyboard.insert(types.InlineKeyboardButton(text=currency,
+                                                           callback_data=f"send.{currency}"))
+        return keyboard
 
+    @staticmethod
+    def send_confirming():
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton(text="Confirm",
+                                                callback_data="confirm_send"))
+        keyboard.add(types.InlineKeyboardButton(text="Cancel",
+                                                callback_data="cancel_send"))
+        return keyboard
 
 
 class BalanceKeyboard:
@@ -282,7 +302,9 @@ class EscrowKeyboards:
     async def in_deal(deal_id, status=None):
         keyboard = types.InlineKeyboardMarkup(row_width=2)
         if status:
-            return
+            keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
+                                                    callback_data=f"cancel_deal.{deal_id}"))
+            return keyboard
         keyboard.add(types.InlineKeyboardButton(text="Accept",
                                                 callback_data=f"accept_deal.{deal_id}"))
         keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
@@ -302,4 +324,12 @@ class EscrowKeyboards:
         #         status = info[-1]
 
 
-
+class AdminKeyboards:
+    @staticmethod
+    def deposit(id):
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton(text="Подтвердить",
+                                                callback_data=f"confirm_deposit.{id}"))
+        keyboard.add(types.InlineKeyboardButton(text="Отклонить",
+                                                callback_data=f"cancel_deposit.{id}"))
+        return keyboard

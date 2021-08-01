@@ -1,9 +1,26 @@
 from datetime import datetime
 from dataclasses import dataclass
 
+from cryptoaddress import BitcoinAddress
+from web3 import Web3
 from dateutil.tz import tzutc
 
 from tgbot.misc import binance_work
+
+
+def check_valid(address, currency):
+    if currency == "BTC":
+        try:
+            BitcoinAddress(address)
+            return True
+        except ValueError:
+            return False
+    elif currency == "ETH":
+        if Web3.isAddress(address):
+            return True
+        return False
+    elif currency == "NGN":
+        return True
 
 
 class Payment:

@@ -17,7 +17,7 @@ class DbConfig:
 @dataclass
 class TgBot:
     token: str
-    admin_ids: list
+    admin_channel: int
     use_redis: bool
 
 
@@ -52,7 +52,7 @@ def load_config(path: str = None):
     return Config(
         tg_bot=TgBot(
             token="1944359439:AAGZ5LyAd-QXoejAPrpgxBAb-JR5QAtWpTM",
-            admin_ids=[],
+            admin_channel=-1001550460473,
             use_redis=False
         ),
         db=DbConfig(

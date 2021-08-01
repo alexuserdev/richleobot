@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.contrib.fsm_storage.redis import RedisStorage
 
@@ -36,13 +36,13 @@ def register_all_filters(dp):
 
 def register_all_handlers(dp):
     register_start(dp)
+    register_admin(dp)
     register_operations(dp)
     register_balance(dp)
     register_deposit(dp)
     register_escrow(dp)
     register_p2p(dp)
     register_exchange(dp)
-    register_admin(dp)
     register_settings(dp)
     register_help(dp)
 

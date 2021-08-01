@@ -36,3 +36,9 @@ class WithdrawStates(StatesGroup):
     enter_count = State()
     enter_address = State()
     confirming = State()
+
+
+class SendStates(StatesGroup):
+    enter_amount = State()
+    enter_user_id = State()
+    confirming = State()

@@ -15,4 +15,4 @@ class AdminFilter(BoundFilter):
         if self.is_admin is None:
             return True
         config: Config = obj.bot.get('config')
-        return obj.from_user.id in config.tg_bot.admin_ids
+        return obj.chat.id == config.tg_bot.admin_channel

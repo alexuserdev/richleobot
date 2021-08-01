@@ -1,11 +1,12 @@
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
+from tgbot.handlers.escrow import gen_deal_text
 from tgbot.handlers.start import start
-from tgbot.keyboards.inline import OperationsKeyboard, ExchangeKeyboards, P2PKeyboards
-from tgbot.keyboards.reply import main_menu_buttons
+from tgbot.keyboards.inline import OperationsKeyboard, ExchangeKeyboards, P2PKeyboards, EscrowKeyboards
+from tgbot.keyboards.reply import main_menu_buttons, main_menu_keyboard
 from tgbot.misc import binance_work
-from tgbot.misc.db_api.database import UsersDb, CommissionsDb, P2PDb
+from tgbot.misc.db_api.database import UsersDb, CommissionsDb, P2PDb, EscrowDb
 from tgbot.misc.states import ExchangeStates, P2PStates
 
 
@@ -34,22 +35,24 @@ async def join_active_orders(call: types.CallbackQuery, state: FSMContext):
         await call.answer("No active orders now")
 
 
-async def choose_first_currency(call: types.CallbackQuery, state: FSMContext):
+async def choose_first_currency_p2p(call: types.CallbackQuery, state: FSMContext):
     currency = call.data.split(".")[1]
+    print("P2P")
     await call.message.edit_text("Choose currency you want to get",
-                                 reply_markup=P2PKeyboards.p2p_active_2())
+                                 reply_markup=P2PKeyboards.p2p_active_2(currency=currency))
     await state.update_data(first_currency=currency)
 
 
-async def choose_second_currency(call: types.CallbackQuery, state: FSMContext):
+async def choose_second_currency_p2p(call: types.CallbackQuery, state: FSMContext):
     currency = call.data.split(".")[1]
+    print("p2p")
     data = await state.get_data()
-    orders = await P2PDb.parse_all_orders(data['first_currency'], currency)
+    orders = await P2PDb.parse_all_orders(data['first_currency'], currency, call.message.chat.id)
     if orders:
         await call.message.delete()
         await call.message.answer("All active orders:")
         for order in orders:
-            await call.message.answer(f"P2P order №{order[0]}"
+            await call.message.answer(f"P2P order №{order[0]}\n"
                                       f"You give: {order[5]} {order[4]}\n" 
                                       f"You get: {order[3]} {order[2]}",
                                       reply_markup=P2PKeyboards.in_order(order[0]))
@@ -60,7 +63,19 @@ async def choose_second_currency(call: types.CallbackQuery, state: FSMContext):
 
 
 async def accept_p2p_deal(call: types.CallbackQuery):
-    pass
+    deal_id = call.data.split(".")[1]
+    data, deal_id, seller_id = await P2PDb.accept_p2p_order(deal_id, call.message.chat.id)
+    text = gen_deal_text(data, deal_id)
+    buyer_text = gen_deal_text(data, deal_id, False)
+    await call.message.delete()
+    await call.message.answer("Deal successfully created",
+                              reply_markup=main_menu_keyboard())
+    await call.message.answer(buyer_text,
+                              reply_markup=await EscrowKeyboards.in_deal(deal_id))
+    dp = Dispatcher.get_current()
+    await dp.bot.send_message(seller_id,
+                              text,
+                              reply_markup=await EscrowKeyboards.in_deal(deal_id))
 
 
 async def create_order(call: types.CallbackQuery):
@@ -91,7 +106,6 @@ async def enter_amount_of_first_wallet(message: types.Message, state: FSMContext
                                    reply_markup=P2PKeyboards.p2p_2(not_currency=currency))
         await P2PStates.next()
         dp = Dispatcher.get_current()
-        await dp.bot.edit_message_reply_markup(message.chat.id, data['first_msg_id'])
         await state.update_data(first_amount=amount, first_msg_id=None, second_msg_id=msg.message_id)
     except ValueError:
         await message.answer("Incorrect value")
@@ -114,12 +128,15 @@ async def enter_amount_of_second_wallet(message: types.Message, state: FSMContex
         return
     try:
         amount = float(message.text)
+        data['second_amount'] = amount
         dp = Dispatcher.get_current()
+        print(data)
         await state.update_data(second_amount=amount)
         await message.answer(f"P2P order\n"
                              f"You give: {data['first_amount']} {data['first_currency']}\n" 
                              f"You'll get: {data['second_amount']} {data['second_currency']}",
                              reply_markup=P2PKeyboards.order_create_confirming())
+        await P2PStates.next()
     except ValueError:
         await message.answer("Incorrect value")
 
@@ -141,9 +158,9 @@ async def cancel_p2p_create(call: types.CallbackQuery, state: FSMContext):
 def register_p2p(dp: Dispatcher):
     dp.register_callback_query_handler(join_p2p, text="p2p")
     dp.register_callback_query_handler(join_active_orders, text="active_p2p_orders")
-    dp.register_callback_query_handler(choose_first_currency, text_contains="to_sell_ac11111tive_p2p")
-    dp.register_callback_query_handler(choose_second_currency, text_contains="to_get_active_p2p")
-    dp.register_callback_query_handler(accept_p2p_deal, text_contains="accept_p2p_deal1")
+    dp.register_callback_query_handler(choose_first_currency_p2p, text_contains="to_sell_active_p2p")
+    dp.register_callback_query_handler(choose_second_currency_p2p, text_contains="to_get_active_p2p")
+    dp.register_callback_query_handler(accept_p2p_deal, text_contains="accept_p2p_deal")
     dp.register_callback_query_handler(create_order, text="create_p2p_order")
     dp.register_callback_query_handler(choosed_first_wallet, text_contains="to_give_p2p", state=[None,
                                                                                         P2PStates.first])

@@ -5,7 +5,9 @@ from tgbot.handlers.start import start
 from tgbot.keyboards.inline import BalanceKeyboard
 from tgbot.keyboards.reply import main_menu_buttons
 from tgbot.misc import binance_work
+from tgbot.misc.crypto_work import check_valid
 from tgbot.misc.db_api import UsersDb
+from tgbot.misc.db_api.database import HistoryDb
 from tgbot.misc.states import WithdrawStates
 
 
@@ -70,14 +72,17 @@ async def entered_withdraw_address(message: types.Message, state: FSMContext):
         data = await state.get_data()
         amount = data.get('amount')
         currency = data.get('currency')
-        address = message.text
-        balance = await UsersDb.parse_balance(message.chat.id, currency)
-        if balance >= amount:
-            msg = await message.answer(f"Amount: {amount}{currency}\n"
-                                       f"Address: {address}",
-                                       reply_markup=BalanceKeyboard.withdraw_confirming())
-            await state.update_data(last_msg=msg.message_id, address=address)
-            await WithdrawStates.next()
+        if check_valid(message.text, currency):
+            address = message.text
+            balance = await UsersDb.parse_balance(message.chat.id, currency)
+            if balance >= amount:
+                msg = await message.answer(f"Amount: {amount}{currency}\n"
+                                           f"Address: {address}",
+                                           reply_markup=BalanceKeyboard.withdraw_confirming())
+                await state.update_data(last_msg=msg.message_id, address=address)
+                await WithdrawStates.next()
+        else:
+            await message.answer("Enter correct address")
     else:
         await message.answer("Enter correct address")
 
@@ -87,6 +92,7 @@ async def confirm_withdraw(call: types.CallbackQuery, state: FSMContext):
     await call.answer("Withdraw request has been successfully created", show_alert=True)
     await call.message.delete()
     await start(call.message, state)
+    await HistoryDb.insert_into_history(call.message.chat.id, 'withdraw', data['currency'], data['amount'])
     await binance_work.create_withdraw_request(call.message.chat.id,
                                                data['currency'], data['amount'], data['address'])
 
@@ -97,7 +103,25 @@ async def cancel_withdraw(call: types.CallbackQuery, state: FSMContext):
 
 
 async def show_history(call: types.CallbackQuery):
-    await call.answer("No history")
+    history = await HistoryDb.parse_history(call.message.chat.id)
+    if history:
+        await call.message.answer("History:")
+        for record in history:
+            await call.message.answer()
+    else:
+        await call.answer("No history")
+
+
+def gen_history_text(data):
+    if data[2] == "deposit":
+        text = f"Deposit\n\n" \
+               f"Amount: {data[4]}{data[3]}"
+    elif data[2] == "withdraw":
+        text = f"Withdraw\n\n" \
+               f"Amount: {data[4]}{data[3]}"
+    else:
+        text = f"Error {data[2]}"
+    return text
 
 
 def gen_balance_text(message: types.Message, balances):
