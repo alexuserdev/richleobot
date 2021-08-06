@@ -23,8 +23,10 @@ class TgBot:
 
 @dataclass
 class BinanceData:
-    API_KEY: str = "G76QeFkMdvW9Q3MQpOHRvNP2ncs2WGHUmf7QF4NopN9jOQCafQd53CYjDKLcV6Ad"
-    API_SECRET: str = "fvbnpjKWQOIkHitbmdWv2f6u0HxP0tIjtUm0uLjjoPgmpqsKHtiwKUyU864x2MYM"
+    # API_KEY: str = "G76QeFkMdvW9Q3MQpOHRvNP2ncs2WGHUmf7QF4NopN9jOQCafQd53CYjDKLcV6Ad"
+    # API_SECRET: str = "fvbnpjKWQOIkHitbmdWv2f6u0HxP0tIjtUm0uLjjoPgmpqsKHtiwKUyU864x2MYM"
+    API_KEY: str = "5Sx4RSXqlvuKClrkEunQz1kwbKPIqmf5EkCfED7QkgTT6MXva52mV6eJS4xabBXY"
+    API_SECRET: str = "x1xADOmxfZyn6oyt38GWJTzl7rBmVTs3Mi1r0cGqui4ovNWg3gBeRSRDxitDOi4E"
     btc_address: str = "19uQe9XuKAfkT7QT44ke4ryeZm44hBHFVx"
     eth_address: str = "0xd959a62d66f50bf3646265ae6309efd6eaa18e90"
     usdt_address: str = "0xd959a62d66f50bf3646265ae6309efd6eaa18e90"

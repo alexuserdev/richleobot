@@ -3,9 +3,10 @@ from aiogram.dispatcher import FSMContext
 
 from tgbot.handlers.escrow import gen_deal_text
 from tgbot.handlers.start import start
-from tgbot.keyboards.inline import OperationsKeyboard, ExchangeKeyboards, P2PKeyboards, EscrowKeyboards
+from tgbot.keyboards.inline import OperationsKeyboard, ExchangeKeyboards, P2PKeyboards, EscrowKeyboards, FIAT
 from tgbot.keyboards.reply import main_menu_buttons, main_menu_keyboard
 from tgbot.misc import binance_work
+from tgbot.misc.chat_create import create_chat
 from tgbot.misc.db_api.database import UsersDb, CommissionsDb, P2PDb, EscrowDb
 from tgbot.misc.states import ExchangeStates, P2PStates
 
@@ -37,7 +38,7 @@ async def join_active_orders(call: types.CallbackQuery, state: FSMContext):
 
 async def choose_first_currency_p2p(call: types.CallbackQuery, state: FSMContext):
     currency = call.data.split(".")[1]
-    print("P2P")
+    print(currency)
     await call.message.edit_text("Choose currency you want to get",
                                  reply_markup=P2PKeyboards.p2p_active_2(currency=currency))
     await state.update_data(first_currency=currency)
@@ -45,17 +46,34 @@ async def choose_first_currency_p2p(call: types.CallbackQuery, state: FSMContext
 
 async def choose_second_currency_p2p(call: types.CallbackQuery, state: FSMContext):
     currency = call.data.split(".")[1]
-    print("p2p")
     data = await state.get_data()
     orders = await P2PDb.parse_all_orders(data['first_currency'], currency, call.message.chat.id)
+    dp = Dispatcher.get_current()
     if orders:
+        rates = {}
         await call.message.delete()
         await call.message.answer("All active orders:")
         for order in orders:
-            await call.message.answer(f"P2P order №{order[0]}\n"
-                                      f"You give: {order[5]} {order[4]}\n" 
-                                      f"You get: {order[3]} {order[2]}",
-                                      reply_markup=P2PKeyboards.in_order(order[0]))
+            rate = rates.get(f"{order[4]}{order[2]}")
+            is_fiat = True if order[4] in FIAT else False
+            if not rate:
+                if order[2] in FIAT:
+                    rate = await binance_work.get_pair_price(order[4], order[2], 1, dp, is_fiat)
+                else:
+                    rate = await binance_work.get_pair_price(order[2], order[4], 1, dp, is_fiat)
+                rates[f"{order[4]}{order[2]}"] = rate
+            if is_fiat:
+                await call.message.answer(f"P2P order №{order[0]}\n"
+                                          f"You give: {order[5]} {order[4]}\n"
+                                          f"You get: {order[3]} {order[2]}\n"
+                                          f"Rate: 1 {order[2]} = {round(rate, 5)} {order[4]}",
+                                          reply_markup=P2PKeyboards.in_order(order[0]))
+            else:
+                await call.message.answer(f"P2P order №{order[0]}\n"
+                                          f"You give: {order[5]} {order[4]}\n" 
+                                          f"You get: {order[3]} {order[2]}\n"
+                                          f"Rate: 1 {order[4]} = {round(rate, 5)} {order[2]}",
+                                          reply_markup=P2PKeyboards.in_order(order[0]))
     else:
         await call.message.edit_text("No active orders now with selected params",
                                      reply_markup=None)
@@ -64,18 +82,26 @@ async def choose_second_currency_p2p(call: types.CallbackQuery, state: FSMContex
 
 async def accept_p2p_deal(call: types.CallbackQuery):
     deal_id = call.data.split(".")[1]
-    data, deal_id, seller_id = await P2PDb.accept_p2p_order(deal_id, call.message.chat.id)
-    text = gen_deal_text(data, deal_id)
-    buyer_text = gen_deal_text(data, deal_id, False)
-    await call.message.delete()
+    data, deal_id, status, seller_id = await P2PDb.accept_p2p_order(deal_id, call.message.chat.id)
+    chat_link, chat_id = await create_chat(deal_id)
+    text, buyer_text = gen_deal_text(data, deal_id, chat_link=chat_link), \
+                       gen_deal_text(data, deal_id, False, chat_link=chat_link)
+    dp = Dispatcher.get_current()
+    rate = await binance_work.get_pair_price(data['first_currency'], data['second_currency'], 1, dp)
+    text += f"\nRate: 1 {data['first_currency']} = {rate} {data['second_currency']}"
+    buyer_text += f"\nRate: 1 {data['second_currency']} = {rate} {data['first`_currency']}"
     await call.message.answer("Deal successfully created",
                               reply_markup=main_menu_keyboard())
+    if data['first_currency'] in FIAT:
+        seller_markup, buyer_markup = None, await EscrowKeyboards.in_deal(deal_id)
+    else:
+        seller_markup, buyer_markup = await EscrowKeyboards.in_deal(deal_id), None
     await call.message.answer(buyer_text,
-                              reply_markup=await EscrowKeyboards.in_deal(deal_id))
+                              reply_markup=buyer_markup)
     dp = Dispatcher.get_current()
     await dp.bot.send_message(seller_id,
                               text,
-                              reply_markup=await EscrowKeyboards.in_deal(deal_id))
+                              reply_markup=seller_markup)
 
 
 async def create_order(call: types.CallbackQuery):
@@ -101,7 +127,7 @@ async def enter_amount_of_first_wallet(message: types.Message, state: FSMContext
     if not currency:
         return
     try:
-        amount = float(message.text)
+        amount = float(message.text.replace(",", "."))
         msg = await message.answer("Which currency you want to get",
                                    reply_markup=P2PKeyboards.p2p_2(not_currency=currency))
         await P2PStates.next()
@@ -117,7 +143,7 @@ async def choosed_second_wallet(call: types.CallbackQuery, state: FSMContext):
     msg = await call.message.edit_text(f"Enter amount of {currency} you want to get",
                                        reply_markup=P2PKeyboards.p2p_2(currency,
                                                                        not_currency=data['first_currency']))
-    await state.update_data(second_currency=currency)
+    await state.update_data(second_currency=currency, last_msg=msg.message_id)
     await call.answer()
 
 
@@ -127,7 +153,7 @@ async def enter_amount_of_second_wallet(message: types.Message, state: FSMContex
     if not currency:
         return
     try:
-        amount = float(message.text)
+        amount = float(message.text.replace(",", "."))
         data['second_amount'] = amount
         dp = Dispatcher.get_current()
         print(data)
@@ -155,9 +181,28 @@ async def cancel_p2p_create(call: types.CallbackQuery, state: FSMContext):
     await start(call.message, state)
 
 
+async def my_p2p_orders(call: types.CallbackQuery):
+    orders = await P2PDb.parse_users_p2p_orders(call.message.chat.id)
+    await call.message.edit_text("Your active p2p orders:")
+    for order in orders:
+        await call.message.answer(f"P2P order №{order[0]}\n"
+                                  f"You give: {order[5]} {order[4]}\n"
+                                  f"You get: {order[3]} {order[2]}",
+                                  reply_markup=P2PKeyboards.manage_order(order[0]))
+
+
+async def delete_p2p_order(call: types.CallbackQuery):
+    order_id = call.data.split(".")[1]
+    await call.answer(f"Order №{order_id} has been delete")
+    await call.message.delete()
+    await P2PDb.delete_p2p_order(order_id)
+
+
 def register_p2p(dp: Dispatcher):
     dp.register_callback_query_handler(join_p2p, text="p2p")
     dp.register_callback_query_handler(join_active_orders, text="active_p2p_orders")
+    dp.register_callback_query_handler(my_p2p_orders, text="my_p2p_orders")
+    dp.register_callback_query_handler(delete_p2p_order, text_contains="delete_p2p_deal")
     dp.register_callback_query_handler(choose_first_currency_p2p, text_contains="to_sell_active_p2p")
     dp.register_callback_query_handler(choose_second_currency_p2p, text_contains="to_get_active_p2p")
     dp.register_callback_query_handler(accept_p2p_deal, text_contains="accept_p2p_deal")

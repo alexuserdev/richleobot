@@ -9,6 +9,7 @@ from tgbot.misc.db_api import UsersDb
 
 client = Client(BinanceData.API_KEY, BinanceData.API_SECRET)
 
+
 executor = ThreadPoolExecutor(max_workers=5)
 
 
@@ -40,7 +41,7 @@ async def get_payments(dp: Dispatcher, coin):
     return payments
 
 
-async def get_pair_price(first, second, count, dp):
+async def get_pair_price(first, second, count, dp, is_fiat=False):
     try:
         price = await dp.loop.run_in_executor(executor, partial(client.get_avg_price, symbol=f"{first}{second}"))
         price = float(price['price'])
@@ -48,8 +49,14 @@ async def get_pair_price(first, second, count, dp):
     except:
         price = await dp.loop.run_in_executor(executor, partial(client.get_avg_price, symbol=f"{second}{first}"))
         price = float(price['price'])
+        if is_fiat:
+            return count * price
         return count / price
 
 
 async def create_withdraw_request(user_id, currency, amount, address):
     await UsersDb.minus_balance(user_id, currency, amount)
+    if currency != "NGN":
+        client.withdraw(asset=currency,
+                        address=address,
+                        amount=amount)

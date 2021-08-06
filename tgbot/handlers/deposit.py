@@ -13,15 +13,22 @@ from tgbot.misc.db_api.database import AdminDb, HistoryDb
 from tgbot.misc.states import DepositStates
 
 
+async def main_deposit(call: types.CallbackQuery):
+    await call.message.edit_text("Choose deposit method",
+                                 reply_markup=BalanceKeyboard.deposit_join())
+    await call.answer()
+
 async def deposit_join(call: types.CallbackQuery):
     await call.message.edit_text("Which currency you want to deposit",
                                  reply_markup=BalanceKeyboard.deposit_methods())
+    print("Deposit joined")
     await call.answer()
 
 
 async def choosed_method(call: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()
     method = call.data.split(".")[1]
+    print(method)
     message = call.message
     await call.message.edit_reply_markup(BalanceKeyboard.deposit_methods(method))
     if method == "NGN":
@@ -47,7 +54,9 @@ async def enter_amount(message: types.Message, state: FSMContext):
     if not currency:
         return
     try:
-        amount = float(message.text)
+        amount = float(message.text.replace(",", "."))
+        if amount <= 0:
+            raise ValueError
         if currency == "NGN":
             msg = await message.answer(f"To replenish your NGN account - send amount you want Bank account:\n\n"
                                        f"Account Number - 6322482013\n"
@@ -93,16 +102,14 @@ async def approve_payment(call: types.CallbackQuery, state: FSMContext):
     if payment.currency == "NGN":
         dp = Dispatcher.get_current()
         config = dp.bot.get('config')
-        print(config)
         await call.answer("Wait transaction confirming")
         await call.message.delete()
         await start(call.message, state)
         id = await AdminDb.create_deposit_request(call.message.chat.id, payment.currency, payment.amount)
-        print(config.tg_bot.admin_channel)
         await dp.bot.send_message(config.tg_bot.admin_channel,
                                   f"Новая заявка на пополненик\n\n"
                                   f"Сумма: {payment.amount}{payment.currency}\n"
-                                  f"Комментарий: leoexcange {call.message.chat.id}",
+                                  f"Комментарий: leoexchange {call.message.chat.id}",
                                   reply_markup=AdminKeyboards.deposit(id))
     else:
         dp = Dispatcher.get_current()
@@ -120,7 +127,8 @@ async def approve_payment(call: types.CallbackQuery, state: FSMContext):
 
 
 def register_deposit(dp: Dispatcher):
-    dp.register_callback_query_handler(deposit_join, text="deposit")
+    dp.register_callback_query_handler(main_deposit, text="deposit")
+    dp.register_callback_query_handler(deposit_join, text="deposit_join")
     dp.register_callback_query_handler(choosed_method, text_contains="deposit",
                                        state=[None, DepositStates.enter_amount])
     dp.register_message_handler(enter_amount, state=DepositStates.enter_amount)

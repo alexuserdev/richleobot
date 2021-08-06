@@ -54,7 +54,7 @@ async def entered_amount_to_send(message: types.Message, state: FSMContext):
     if not currency:
         return
     try:
-        amount = float(message.text)
+        amount = float(message.text.replace(",", "."))
         if amount <= 0:
             raise ValueError
         balance = await UsersDb.parse_balance(message.chat.id, currency)
@@ -123,7 +123,7 @@ async def choosed_request_method(call: types.CallbackQuery, state: FSMContext):
 async def amount_entered(message: types.Message, state: FSMContext):
     method = (await state.get_data()).get("method")
     try:
-        amount = float(message.text)
+        amount = float(message.text.replace(",", "."))
         link = await get_start_link(await RequestsDb.create_request(message.chat.id, method, amount))
         qr = qrcode.make(link)
         qr.save(f"{message.chat.id}")

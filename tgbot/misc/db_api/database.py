@@ -3,6 +3,7 @@ import random
 import asyncpg
 
 from tgbot.config import DbConfig, BinanceData
+from tgbot.keyboards.inline import FIAT
 
 conn: asyncpg.Connection = None
 
@@ -14,9 +15,23 @@ async def create_conn():
 
 class UsersDb:
     @staticmethod
-    async def user_exists(user_id):
-        query = f"select * from users where user_id = {user_id}"
+    async def parse_user_id(username):
+        query = f"select user_id from users where username = '{username}'"
         return await conn.fetchval(query)
+
+    @staticmethod
+    async def user_exists(user_id):
+        if type(user_id) is int:
+            query = f"select * from users where user_id = {user_id}"
+        else:
+            query = f"select * from users where username = '{user_id}'"
+        return await conn.fetchval(query)
+
+    @staticmethod
+    async def update_name(user_id, full_name):
+        query = f"update users set username = '{full_name}' where user_id = {user_id}"
+        print(query)
+        await conn.execute(query)
 
     @staticmethod
     async def register_user(user_id):
@@ -93,16 +108,33 @@ class RequestsDb:
 
 class EscrowDb:
     @staticmethod
-    async def create_deal(info):
-        query = f"insert into escrow(seller_id, buyer_id, first_currency, first_amount, second_currency, second_amount) values " \
-                f"({info['seller_id']}, {info['buyer_id']}, '{info['first_currency']}', {info['first_amount']}, " \
-                f"'{info['second_currency']}', {info['second_amount']}) returning id"
-        return await conn.fetchval(query)
+    async def create_deal(info, type):
+        if type == "p2p":
+            if info['second_currency'] in FIAT:
+                query = f"insert into escrow(seller_id, buyer_id, first_currency, first_amount, second_currency, second_amount, second_status, type) values " \
+                        f"({info['seller_id']}, {info['buyer_id']}, '{info['first_currency']}', {info['first_amount']}, " \
+                        f"'{info['second_currency']}', {info['second_amount']}, True, 'p2p') returning id"
+
+            else:
+                query = f"insert into escrow(seller_id, buyer_id, first_currency, first_amount, second_currency, second_amount, first_status, type) values " \
+                        f"({info['seller_id']}, {info['buyer_id']}, '{info['first_currency']}', {info['first_amount']}, " \
+                        f"'{info['second_currency']}', {info['second_amount']}, True, 'p2p') returning id"
+            return await conn.fetchval(query), "p2p"
+        else:
+            query = f"insert into escrow(seller_id, buyer_id, first_currency, first_amount, second_currency, second_amount, type) values " \
+                    f"({info['seller_id']}, {info['buyer_id']}, '{info['first_currency']}', {info['first_amount']}, " \
+                    f"'{info['second_currency']}', {info['second_amount']}, 'escrow') returning id"
+            return await conn.fetchval(query), "escrow"
 
     @staticmethod
     async def parse_deal(id):
         query = f"select * from escrow where id = {id}"
         return await conn.fetchrow(query)
+
+    @staticmethod
+    async def parse_deal_chat(id):
+        query = f"select link from escrow_chats where id = {id}"
+        return await conn.fetchval(query)
 
     @staticmethod
     async def delete_deal(id):
@@ -136,30 +168,42 @@ class EscrowDb:
                 await conn.execute(query)
                 query = f"select * from escrow where id = {deal_id}"
                 res = await conn.fetchrow(query)
-                if res[-2] and res[-1]:
+                if res[-3] and res[-2]:
                     seller_id, first_currency, first_amount = res[1], res[3], res[4]
                     buyer_id, second_currency, second_amount = res[2], res[5], res[6]
-                    print(first_currency)
-                    if not await UsersDb.parse_balance(seller_id, first_currency) >= first_amount:
-                        query = f"update escrow set 'first_status' = False where id = {deal_id}"
+                    if type == "escrow":
+                        if not await UsersDb.parse_balance(seller_id, first_currency) >= first_amount:
+                            query = f"update escrow set 'first_status' = False where id = {deal_id}"
+                            await conn.execute(query)
+                            return
+                        if not await UsersDb.parse_balance(buyer_id, second_currency) >= second_amount:
+                            query = f"update escrow set 'second_status' = False where id = {deal_id}"
+                            await conn.execute(query)
+                            return
+                        query = f"delete from escrow where id = {deal_id}"
                         await conn.execute(query)
-                        return
-                    if not await UsersDb.parse_balance(buyer_id, second_currency) >= second_amount:
-                        query = f"update escrow set 'second_status' = False where id = {deal_id}"
-                        await conn.execute(query)
-                        return
-                    query = f"delete from escrow where id = {deal_id}"
-                    await conn.execute(query)
-                    await UsersDb.minus_balance(seller_id, first_currency, first_amount)
-                    await UsersDb.minus_balance(buyer_id, second_currency, second_amount)
-                    percent = await CommissionsDb.parse_escrow_commission()
-                    await UsersDb.add_balance(seller_id, second_currency, second_amount - (second_amount / 100 * percent))
-                    await UsersDb.add_balance(buyer_id, first_currency, first_amount - (first_amount / 100 * percent))
-                    return seller_id, buyer_id, res[0]
+                        await UsersDb.minus_balance(seller_id, first_currency, first_amount)
+                        await UsersDb.minus_balance(buyer_id, second_currency, second_amount)
+                        percent = await CommissionsDb.parse_escrow_commission()
+                        await UsersDb.add_balance(seller_id, second_currency, second_amount - (second_amount / 100 * percent))
+                        await UsersDb.add_balance(buyer_id, first_currency, first_amount - (first_amount / 100 * percent))
+                        return seller_id, buyer_id, res[0], second_currency
+                    else:
+                        await UsersDb.minus_balance(seller_id, first_currency, first_amount)
+                        return seller_id, buyer_id, res[0], "p2p"
                 else:
                     return 'Accepted'
             else:
                 return False
+
+    @staticmethod
+    async def accept_fiat_deal(deal_id):
+        res = await EscrowDb.parse_deal(deal_id)
+        seller_id, buyer_id, currency, amount, status = res[1], res[2], res[3], res[4], res[7]
+        percent = await CommissionsDb.parse_escrow_commission()
+        await UsersDb.add_balance(buyer_id, currency, amount - (amount / 100 * percent))
+        await conn.execute(f"delete from escrow where id = {deal_id}")
+        return seller_id, buyer_id, res[0]
 
 
 class CommissionsDb:
@@ -171,6 +215,11 @@ class CommissionsDb:
     @staticmethod
     async def parse_escrow_commission():
         query = f"select escrow_exchange from service_settings"
+        return await conn.fetchval(query)
+
+    @staticmethod
+    async def parse_course_percent():
+        query = f"select cource_percent from service_settings"
         return await conn.fetchval(query)
 
 
@@ -185,6 +234,16 @@ class P2PDb:
             query = f"select * from p2p_orders"
             lst = await conn.fetch(query)
             return [i[0] for i in lst]
+
+    @staticmethod
+    async def parse_users_p2p_orders(user_id):
+        query = f"select * from p2p_orders where user_id = {user_id}"
+        return await conn.fetch(query)
+
+    @staticmethod
+    async def delete_p2p_order(order_id):
+        query = f"delete from p2p_orders where id = {order_id}"
+        await conn.execute(query)
 
     @staticmethod
     async def create_new_order(user_id, first_currency, first_amount, second_currency, second_amount):
@@ -203,8 +262,8 @@ class P2PDb:
         seller_id = data[1]
         data = {'seller_id': data[1], 'buyer_id': user_id, 'first_currency': data[2], 'first_amount': data[3],
                 'second_currency': data[4], 'second_amount': data[5]}
-        deal_id = await EscrowDb.create_deal(data)
-        return data, deal_id, seller_id
+        deal_id, status = await EscrowDb.create_deal(data, "p2p")
+        return data, deal_id, status, seller_id
 
 
 class AdminDb:
@@ -215,7 +274,7 @@ class AdminDb:
 
     @staticmethod
     async def confirm_deposit_request(id):
-        query = f"select * from create table deposit_request(id serial primary key, user_id bigint, currency varchar(20), amount decimal)deposit_request where id = {id}"
+        query = f"select * from deposit_request where id = {id}"
         id, user_id, currency, amount = await conn.fetchrow(query)
         await UsersDb.add_balance(user_id, currency, amount)
         await conn.execute(f"delete from deposit_request where id = {id}")
@@ -231,5 +290,5 @@ class HistoryDb:
 
     @staticmethod
     async def parse_history(user_id):
-        query = f"select * from history where user_id = {user_id} limit 5 order by id desc"
+        query = f"select * from history where user_id = {user_id} order by id desc limit 5"
         return await conn.fetch(query)

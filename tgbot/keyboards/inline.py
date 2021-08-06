@@ -1,8 +1,7 @@
 from aiogram import types
 
-from tgbot.misc.db_api.database import EscrowDb
-
 CRYPTOS = ["BTC", "ETH", "USDT"]
+FIAT = ["NGN"]
 WALLETS = ["BTC", "ETH", "USDT", "NGN"]
 
 
@@ -14,6 +13,15 @@ class P2PKeyboards:
                                                 callback_data="active_p2p_orders"))
         keyboard.add(types.InlineKeyboardButton(text="Create order",
                                                 callback_data="create_p2p_order"))
+        keyboard.add(types.InlineKeyboardButton(text="My orders",
+                                                callback_data="my_p2p_orders"))
+        return keyboard
+
+    @staticmethod
+    def manage_order(order_id):
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.add(types.InlineKeyboardButton(text="Delete",
+                                                callback_data=f"delete_p2p_deal.{order_id}"))
         return keyboard
 
     @staticmethod
@@ -27,10 +35,13 @@ class P2PKeyboards:
     @staticmethod
     def p2p_active_2(currency):
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        for wallet in WALLETS:
-            if wallet != currency:
-                keyboard.insert(types.InlineKeyboardButton(text=wallet,
-                                                           callback_data=f"to_get_active_p2p.{wallet}"))
+        if currency in FIAT:
+            lst = CRYPTOS
+        else:
+            lst = FIAT
+        for wallet in lst:
+           keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                                                       callback_data=f"to_get_active_p2p.{wallet}"))
         return keyboard
 
     @staticmethod
@@ -55,14 +66,17 @@ class P2PKeyboards:
     @staticmethod
     def p2p_2(currency=None, not_currency=None):
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        for wallet in WALLETS:
-            if wallet != not_currency:
-                if currency == wallet:
-                    keyboard.insert(types.InlineKeyboardButton(text=f"✅{wallet}",
-                                                               callback_data=f"to_get_p2p.{wallet}"))
-                else:
-                    keyboard.insert(types.InlineKeyboardButton(text=wallet,
-                                                               callback_data=f"to_get_p2p.{wallet}"))
+        if not_currency in FIAT:
+            lst = CRYPTOS
+        else:
+            lst = FIAT
+        for wallet in lst:
+            if currency == wallet:
+                keyboard.insert(types.InlineKeyboardButton(text=f"✅{wallet}",
+                                                           callback_data=f"to_get_p2p.{wallet}"))
+            else:
+                keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                                                           callback_data=f"to_get_p2p.{wallet}"))
         return keyboard
 
     @staticmethod
@@ -103,18 +117,16 @@ class OperationsKeyboard:
     @staticmethod
     def main():
         keyboard = types.InlineKeyboardMarkup(row_width=2)
-        keyboard.insert(types.InlineKeyboardButton(text="💸Send",
-                                                callback_data="send"))
-        keyboard.insert(types.InlineKeyboardButton(text="💸Request",
-                                                callback_data="request"))
-        keyboard.insert(types.InlineKeyboardButton(text="📊Exchange",
+        keyboard.insert(types.InlineKeyboardButton(text="📥Deposit",
+                                                   callback_data="deposit"))
+        keyboard.insert(types.InlineKeyboardButton(text="📤Withdraw",
+                                                   callback_data="withdraw"))
+        keyboard.insert(types.InlineKeyboardButton(text="📊Fast exchange",
                                                 callback_data="exchange"))
-        keyboard.insert(types.InlineKeyboardButton(text="Escrow exchange",
+        keyboard.insert(types.InlineKeyboardButton(text="📊Escrow exchange",
                                                    callback_data="escrow"))
-        keyboard.add(types.InlineKeyboardButton(text="P2P",
+        keyboard.add(types.InlineKeyboardButton(text="🎯P2P",
                                                 callback_data="p2p"))
-        keyboard.add(types.InlineKeyboardButton(text="🎯StrikeWin lottery",
-                                                callback_data="hdd"))
         return keyboard
 
     @staticmethod
@@ -176,8 +188,19 @@ class BalanceKeyboard:
                                                    callback_data="deposit"))
         keyboard.insert(types.InlineKeyboardButton(text="📤Withdraw",
                                                    callback_data="withdraw"))
+        keyboard.add(types.InlineKeyboardButton(text="💸Send",
+                                                callback_data="send"))
         keyboard.insert(types.InlineKeyboardButton(text="🖨History",
                                                    callback_data="history"))
+        return keyboard
+
+    @staticmethod
+    def deposit_join():
+        keyboard = types.InlineKeyboardMarkup()
+        keyboard.insert(types.InlineKeyboardButton(text="📥Deposit",
+                                                   callback_data="deposit_join"))
+        keyboard.insert(types.InlineKeyboardButton(text="💸Request",
+                                                   callback_data="request"))
         return keyboard
 
     @staticmethod
@@ -310,18 +333,21 @@ class EscrowKeyboards:
         keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
                                                 callback_data=f"cancel_deal.{deal_id}"))
         return keyboard
-        # if status is not None:
-        #     if status is False:
-        #         keyboard.add(types.InlineKeyboardButton(text="Cancel",
-        #                                                 callback_data="cancel_deal"))
-        #         keyboard.add(types.InlineKeyboardButton(text="",
-        #                                                 callback_data=))
-        # else:
-        #     info = await EscrowDb.parse_deal(deal_id)
-        #     if user_id == info[0]:
-        #         status = info[-2]
-        #     elif user_id == info[1]:
-        #         status = info[-1]
+
+    @staticmethod
+    def in_deal_fiat(deal_id, status=None):
+        keyboard = types.InlineKeyboardMarkup(row_width=2)
+        if status is True:
+            keyboard.add(types.InlineKeyboardButton(text="Confirm receipt",
+                                                    callback_data=f"accept_fiat_deal.{deal_id}"))
+            keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
+                                                    callback_data=f"cancel_deal.{deal_id}"))
+            return keyboard
+        keyboard.add(types.InlineKeyboardButton(text="Accept",
+                                                callback_data=f"accept_deal.{deal_id}"))
+        keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
+                                                callback_data=f"cancel_deal.{deal_id}"))
+        return keyboard
 
 
 class AdminKeyboards:

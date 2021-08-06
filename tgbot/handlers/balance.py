@@ -52,7 +52,7 @@ async def entered_amount_to_withdraw(message: types.Message, state: FSMContext):
     if not currency:
         return
     try:
-        amount = float(message.text)
+        amount = float(message.text.replace(",", "."))
         if amount <= 0:
             raise ValueError
         balance = await UsersDb.parse_balance(message.chat.id, currency)
@@ -107,7 +107,8 @@ async def show_history(call: types.CallbackQuery):
     if history:
         await call.message.answer("History:")
         for record in history:
-            await call.message.answer()
+            text = gen_history_text(record)
+            await call.message.answer(text)
     else:
         await call.answer("No history")
 

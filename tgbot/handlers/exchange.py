@@ -24,13 +24,19 @@ async def join_exchange(call: types.CallbackQuery):
         dp = Dispatcher.get_current()
         for k, v in balances.items():
             if v:
-                currencys.append(k)
                 price = await binance_work.course_for_coin(dp, k)
-                text += f"{k}\n"
-                for i, j in price.items():
-                    text += f"1 = {float(j)} {i}\n"
+                if price:
+                    text += f"{k}\n"
+                    currencys.append(k)
+                try:
+                    for i, j in price.items():
+                        j = float(j)
+                        j = j - (j / 100 * float(await CommissionsDb.parse_course_percent()))
+                        text += f"1 = {float(j)} {i}\n"
 
-                text += "\n"
+                    text += "\n"
+                except:
+                    pass
 
         text += "\nWhat do you want to exchange?"
 
@@ -62,7 +68,7 @@ async def choosed_second_currency(call: types.CallbackQuery, state: FSMContext):
 async def entered_amount(message: types.Message, state: FSMContext):
     try:
         data = await state.get_data()
-        count = float(message.text)
+        count = float(message.text.replace(",", "."))
         count = round(count, 10)
         if count <= await UsersDb.parse_balance(message.chat.id, data['currency1']):
             count = int(count) if count % 10 == 0 else count
@@ -70,6 +76,7 @@ async def entered_amount(message: types.Message, state: FSMContext):
             sum = await binance_work.get_pair_price(data['currency1'], data['currency2'], count, dp)
             sum = round(sum, 7)
             sum = sum - (sum / 100 * float(await CommissionsDb.parse_exchange_commission()))
+            sum = sum - (sum / 100 * float(await CommissionsDb.parse_course_percent()))
             keyboard = types.InlineKeyboardMarkup()
             keyboard.add(types.InlineKeyboardButton(text="Confirm",
                                                     callback_data="yes"))
