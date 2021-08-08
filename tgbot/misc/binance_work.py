@@ -3,6 +3,7 @@ from functools import partial
 
 from aiogram import Dispatcher
 from binance import Client, ThreadedWebsocketManager, ThreadedDepthCacheManager
+from binance.exceptions import BinanceAPIException
 
 from tgbot.config import BinanceData
 from tgbot.misc.db_api import UsersDb
@@ -69,3 +70,15 @@ async def create_withdraw_request(user_id, currency, amount, address):
         client.withdraw(asset=currency,
                         address=address,
                         amount=amount)
+
+async def make_exchange(first_currency, second_currency, amount):
+    try:
+        client.order_market_buy()
+        order = client.create_order(symbol=f"{first_currency}{second_currency}",
+                                    side="BUY",
+                                    type="MARKET",
+                                    timeInForce='GTC',
+                                    quantity=amount)
+        print(order)
+    except BinanceAPIException as e:
+        print(e)

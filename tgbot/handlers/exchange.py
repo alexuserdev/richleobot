@@ -109,6 +109,8 @@ async def accept_exchange(call: types.CallbackQuery, state: FSMContext):
     second_currency = data.get('currency2')
     count = data.get('count')
     sum = data.get('sum')
+    if first_currency != "NGN" or second_currency != "NGN":
+        await binance_work.make_exchange(first_currency, second_currency, count)
     await UsersDb.minus_balance(call.message.chat.id, first_currency, count)
     await UsersDb.add_balance(call.message.chat.id, second_currency, sum)
     await call.message.edit_text("Successfully exchanged")

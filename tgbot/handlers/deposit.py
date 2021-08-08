@@ -87,7 +87,6 @@ async def enter_amount(message: types.Message, state: FSMContext):
 
             payment.create()
             if payment.amount < 0.1:
-                print("THERR")
                 await message.answer(f'Send {("%.17f" % payment.amount).rstrip("0").rstrip(".")} {currency} on address below to deposit {currency}',
                                      reply_markup=BalanceKeyboardReply.cancel())
             else:

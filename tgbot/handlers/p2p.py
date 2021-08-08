@@ -60,7 +60,7 @@ async def choose_second_currency_p2p(call: types.CallbackQuery, state: FSMContex
                 if order[2] in FIAT:
                     rate = await binance_work.get_pair_price(order[4], order[2], 1, dp, is_fiat)
                 else:
-                    rate = await binance_work.get_pair_price(order[2], order[4], 1, dp, is_fiat)
+                                rate = await binance_work.get_pair_price(order[2], order[4], 1, dp, is_fiat)
                 rates[f"{order[4]}{order[2]}"] = rate
             if is_fiat:
                 await call.message.answer(f"P2P order №{order[0]}\n"
