@@ -292,14 +292,11 @@ class AdminDb:
 
     @staticmethod
     async def change_param(param, value):
-        if param == "course":
-            param = "course_percent"
-        elif param == "commission":
-            param = "exchange_commission"
-        else:
+        try:
+            query = f"update service_settings set {param} = {value}"
+            await conn.execute(query)
+        except:
             raise KeyError
-        query = f"update service_settings set {param} = {value}"
-        await conn.execute(query)
 
     @staticmethod
     async def create_deposit_request(user_id, currency, amount):

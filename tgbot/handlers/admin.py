@@ -5,7 +5,6 @@ from tgbot.misc.db_api.database import AdminDb
 
 
 async def change(message: types.Message):
-    print("IN CHANGE")
     type, percent = message.text.split()[1], message.text.split()[2]
     try:
         await AdminDb.change_param(type, percent)

@@ -3,7 +3,6 @@ import logging
 
 from aiogram import Bot, Dispatcher
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
-from aiogram.contrib.fsm_storage.redis import RedisStorage
 
 from tgbot.config import load_config
 from tgbot.filters.admin import AdminFilter
@@ -54,7 +53,7 @@ async def main():
     config = load_config()
 
     if config.tg_bot.use_redis:
-        storage = RedisStorage()
+        storage = MemoryStorage()
     else:
         storage = MemoryStorage()
 
