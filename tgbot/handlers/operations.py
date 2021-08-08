@@ -38,7 +38,7 @@ async def join_send(call: types.CallbackQuery, state: FSMContext):
             flag = True
             currencys.append(k)
     if flag:
-        await call.message.edit_text("Choose currency to withdraw",
+        await call.message.edit_text("Choose currency to send",
                                      reply_markup=OperationsKeyboard.main_send(currencys))
         await state.update_data(currencys=currencys)
     else:
@@ -50,7 +50,7 @@ async def join_send(call: types.CallbackQuery, state: FSMContext):
 async def choosed_currency_to_send(call: types.CallbackQuery, state: FSMContext):
     currency = call.data.split(".")[1]
     data = await state.get_data()
-    msg = await call.message.edit_text(f"Enter amount of {currency} you want to withdraw",
+    msg = await call.message.edit_text(f"Enter amount of {currency} you want to send to another user",
                                        reply_markup=OperationsKeyboard.main_send(data['currencys'], currency))
     await state.update_data(currency=currency, msg_id=msg.message_id)
     await call.answer()
@@ -70,7 +70,7 @@ async def entered_amount_to_send(message: types.Message, state: FSMContext):
         if balance < amount:
             raise ValueError
         else:
-            await message.answer("Enter user_id")
+            await message.answer("Enter user_id or user's nickname on Telegram")
             await SendStates.next()
             await state.update_data(amount=amount)
     except ValueError:
@@ -79,7 +79,12 @@ async def entered_amount_to_send(message: types.Message, state: FSMContext):
 
 async def entered_user_id(message: types.Message, state: FSMContext):
     try:
-        user_id = int(message.text)
+        try:
+            user_id = int(message.text)
+        except ValueError:
+            user_id = message.text
+            user_id = user_id if not user_id[0] == "@" else user_id[1:]
+            user_id = await UsersDb.parse_user_id(user_id)
         if not await UsersDb.user_exists(user_id) or user_id == message.chat.id:
             raise ValueError
         data = await state.get_data()
@@ -106,7 +111,7 @@ async def confirm_send(call: types.CallbackQuery, state: FSMContext):
     await UsersDb.minus_balance(call.message.chat.id, currency, amount)
     await UsersDb.add_balance(user_id, currency, amount)
     dp = Dispatcher.get_current()
-    await dp.bot.send_message(f"You got {amount}{currency} from <a href='tg://user?id={user_id}'>{user_id}</a>")
+    await dp.bot.send_message(user_id, f"You got {amount}{currency} from <a href='tg://user?id={user_id}'>{user_id}</a>")
 
 
 async def cancel_send(call: types.CallbackQuery, state: FSMContext):

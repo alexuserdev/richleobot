@@ -32,8 +32,11 @@ async def join_exchange(call: types.CallbackQuery):
                     for i, j in price.items():
                         j = float(j)
                         j = j - (j / 100 * float(await CommissionsDb.parse_course_percent()))
-                        text += f"1 = {float(j)} {i}\n"
-
+                        j = round(j, 3) if j > 1 else j
+                        if j > 1:
+                            text += f'1 = {j} {i}\n'
+                        else:
+                            text += f'1 = {("%.17f" % j).rstrip("0").rstrip(".")} {i}\n'
                     text += "\n"
                 except:
                     pass
@@ -81,10 +84,11 @@ async def entered_amount(message: types.Message, state: FSMContext):
                 sum = float(sum)
             sum = sum - (sum / 100 * float(await CommissionsDb.parse_exchange_commission()))
             sum = sum - (sum / 100 * float(await CommissionsDb.parse_course_percent()))
+            sum = round(sum, 3) if sum > 1 else sum
             keyboard = types.InlineKeyboardMarkup()
             keyboard.add(types.InlineKeyboardButton(text="Confirm",
                                                     callback_data="yes"))
-
+            await state.update_data(count=count, sum=sum)
             keyboard.add(types.InlineKeyboardButton(text="Cancel",
                                                         callback_data="no"))
             msg = await message.answer(f"You sell: {count} {data['currency1']}\n"
@@ -100,6 +104,14 @@ async def entered_amount(message: types.Message, state: FSMContext):
 
 async def accept_exchange(call: types.CallbackQuery, state: FSMContext):
     await call.answer()
+    data = await state.get_data()
+    first_currency = data.get('currency1')
+    second_currency = data.get('currency2')
+    count = data.get('count')
+    sum = data.get('sum')
+    await UsersDb.minus_balance(call.message.chat.id, first_currency, count)
+    await UsersDb.add_balance(call.message.chat.id, second_currency, sum)
+    await call.message.edit_text("Successfully exchanged")
     return
 
 

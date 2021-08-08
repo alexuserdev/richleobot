@@ -274,11 +274,20 @@ class AdminDb:
 
     @staticmethod
     async def get_pair_price(first_currency, second_currency, count):
+        first_currency = first_currency.lower()
+        second_currency = second_currency.lower()
+        first = f"{first_currency}{second_currency}"
+        second = f"{second_currency}{first_currency}"
+        print(first, second)
         try:
-            course = await conn.fetchval(f"select {first_currency}{second_currency} from service_settings")
+            query = f"select {first} from service_settings"
+            course = await conn.fetchval(query)
+            course = float(course)
             return count * course
         except:
-            course = await conn.fetchval(f"select {second_currency}{first_currency} from service_settings")
+            query = f"select {second} from service_settings"
+            course = await conn.fetchval(query)
+            course = float(course)
             return count / course
 
     @staticmethod

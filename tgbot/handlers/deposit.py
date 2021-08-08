@@ -77,7 +77,7 @@ async def enter_amount(message: types.Message, state: FSMContext):
             if currency == "BTC":
                 payment = Payment(amount=amount + randint(10, 500) / 100000000, currency=currency)
                 address = BinanceData.btc_address
-                print(payment.amount)
+                print(str(payment.amount))
             elif currency == "ETH":
                 payment = Payment(amount=amount + randint(10, 500) / 100000, currency=currency)
                 address = BinanceData.eth_address
@@ -86,9 +86,14 @@ async def enter_amount(message: types.Message, state: FSMContext):
                 address = BinanceData.usdt_address
 
             payment.create()
+            if payment.amount < 0.1:
+                print("THERR")
+                await message.answer(f'Send {("%.17f" % payment.amount).rstrip("0").rstrip(".")} {currency} on address below to deposit {currency}',
+                                     reply_markup=BalanceKeyboardReply.cancel())
+            else:
 
-            await message.answer(f"Send {payment.amount} {currency} on address below to deposit {currency}",
-                                 reply_markup=BalanceKeyboardReply.cancel())
+                await message.answer(f'Send {payment.amount} {currency} on address below to deposit {currency}',
+                                     reply_markup=BalanceKeyboardReply.cancel())
             msg = await message.answer(address,
                                        reply_markup=BalanceKeyboard.deposit_check())
             await DepositStates.next()
