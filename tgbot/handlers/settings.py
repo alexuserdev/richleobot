@@ -9,8 +9,8 @@ from tgbot.keyboards.reply import main_menu_buttons
 async def main_settings(message: types.Message, state: FSMContext):
     await message.answer_sticker("CAACAgIAAxkBAAICTWD1mWuhkj0O7ipXK31fBcznLt6IAAJiDgACrAipSnab1LAKNz4WIAQ")
     msg = await message.answer("<b>WARNING</b>: Leo is in a BETA test mode, issues may occur. \n\n"
-                               "Feedback / questions: @alicebobhelp \n\n"
-                               "Official website: www.leo.exchange",
+                               "Feedback / questions: @RichLeoSupportBot\n\n"
+                               "Official website: rich-leo.com",
                                reply_markup=SettingsKeyboards.main())
     await state.update_data(last_msg=msg.message_id)
     await state.reset_state(with_data=False)
@@ -18,8 +18,8 @@ async def main_settings(message: types.Message, state: FSMContext):
 
 async def back_settings(call: types.CallbackQuery):
     await call.message.edit_text("<b>WARNING</b>: Leo is in a BETA test mode, issues may occur. \n\n"
-                                 "Feedback / questions: @alicebobhelp \n\n"
-                                 "Official website: www.leo.exchange",
+                                 "Feedback / questions: @RichLeoSupportBot \n\n"
+                                 "Official website: rich-leo.com",
                                  reply_markup=SettingsKeyboards.main())
     await call.answer()
 

@@ -4,6 +4,16 @@ from aiogram.types import Message
 from tgbot.misc.db_api.database import AdminDb
 
 
+async def change(message: types.Message):
+    print("IN CHANGE")
+    type, percent = message.text.split()[1], message.text.split()[2]
+    try:
+        await AdminDb.change_param(type, percent)
+        await message.answer("Successfully changed")
+    except KeyError:
+        await message.answer("Please input correct command")
+
+
 async def admin_start(message: Message):
     print(message.chat.id)
     await message.reply("Hello, admin!")
@@ -24,5 +34,6 @@ async def cancel_deposit(call: types.CallbackQuery):
 
 def register_admin(dp: Dispatcher):
     dp.register_channel_post_handler(admin_start, state="*")
+    dp.register_message_handler(change, commands=["change"])
     dp.register_callback_query_handler(confirm_deposit, text_contains="confirm_deposit")
     dp.register_callback_query_handler(cancel_deposit, text_contains="cancel_deposit")

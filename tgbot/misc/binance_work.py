@@ -6,6 +6,7 @@ from binance import Client, ThreadedWebsocketManager, ThreadedDepthCacheManager
 
 from tgbot.config import BinanceData
 from tgbot.misc.db_api import UsersDb
+from tgbot.misc.db_api.database import AdminDb
 
 client = Client(BinanceData.API_KEY, BinanceData.API_SECRET)
 
@@ -18,15 +19,23 @@ async def course_for_coin(dp: Dispatcher, coin):
         #При покупке кол-во во второй валюте
         btceth = await get_pair_price("BTC", "ETH", 1, dp)
         btcusdt = await get_pair_price("BTC", "USDT", 1, dp)
-        return {"ETH": btceth, "USDT": btcusdt}
+        btcngn = await AdminDb.parse_course("BTCNGN")
+        return {"ETH": btceth, "USDT": btcusdt, "NGN": btcngn}
     elif coin == "ETH":
         ethbtc = await get_pair_price("ETH", "BTC", 1, dp)
         ethusdt = await get_pair_price("ETH", "USDT", 1, dp)
-        return {"BTC": ethbtc, "USDT": ethusdt}
+        ethngn = await AdminDb.parse_course("ETHNGN")
+        return {"BTC": ethbtc, "USDT": ethusdt, "NGN": ethngn}
     elif coin == "USDT":
         usdtbtc = await get_pair_price("USDT", "BTC", 1, dp)
         usdteth = await get_pair_price("USDT", "ETH", 1, dp)
-        return {"BTC": usdtbtc, "ETH": usdteth}
+        usdtngn = await AdminDb.parse_course("USDTNGN")
+        return {"BTC": usdtbtc, "ETH": usdteth, "NGN": usdtngn}
+    elif coin == "NGN":
+        btcngn = await AdminDb.parse_course("BTCNGN")
+        ethngn = await AdminDb.parse_course("ETHNGN")
+        usdtngn = await AdminDb.parse_course("USDTNGN")
+        return {"BTC": 1 / btcngn, "ETH": 1 /ethngn, "USDT": 1 / usdtngn}
 
 
 async def get_coins_course(dp: Dispatcher):

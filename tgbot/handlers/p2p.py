@@ -89,7 +89,8 @@ async def accept_p2p_deal(call: types.CallbackQuery):
     dp = Dispatcher.get_current()
     rate = await binance_work.get_pair_price(data['first_currency'], data['second_currency'], 1, dp)
     text += f"\nRate: 1 {data['first_currency']} = {rate} {data['second_currency']}"
-    buyer_text += f"\nRate: 1 {data['second_currency']} = {rate} {data['first`_currency']}"
+    buyer_text += f"\nRate: 1 {data['second_currency']} = {rate} {data['first_currency']}"
+    await call.message.delete()
     await call.message.answer("Deal successfully created",
                               reply_markup=main_menu_keyboard())
     if data['first_currency'] in FIAT:

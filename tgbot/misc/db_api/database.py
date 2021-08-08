@@ -268,6 +268,31 @@ class P2PDb:
 
 class AdminDb:
     @staticmethod
+    async def parse_course(pair):
+        query = f"select {pair} from service_settings"
+        return await conn.fetchval(query)
+
+    @staticmethod
+    async def get_pair_price(first_currency, second_currency, count):
+        try:
+            course = await conn.fetchval(f"select {first_currency}{second_currency} from service_settings")
+            return count * course
+        except:
+            course = await conn.fetchval(f"select {second_currency}{first_currency} from service_settings")
+            return count / course
+
+    @staticmethod
+    async def change_param(param, value):
+        if param == "course":
+            param = "course_percent"
+        elif param == "commission":
+            param = "exchange_commission"
+        else:
+            raise KeyError
+        query = f"update service_settings set {param} = {value}"
+        await conn.execute(query)
+
+    @staticmethod
     async def create_deposit_request(user_id, currency, amount):
         query = f"insert into deposit_request(user_id, currency, amount) values ({user_id}, '{currency}', {amount}) returning id"
         return await conn.fetchval(query)
@@ -285,7 +310,7 @@ class HistoryDb:
     @staticmethod
     async def insert_into_history(user_id, type, first_currency, first_amount, second_currency=None, second_amount=None):
         query = f"insert into history(user_id, type, first_currency, first_amount, second_currency, second_amount) values " \
-                f"({user_id}, '{type}', '{first_currency}', {first_amount}, '{second_currency}', {second_amount})"
+                f"({user_id}, '{type}', '{first_currency}', {first_amount}, '{second_currency}', {second_amount if second_amount else 0})"
         await conn.execute(query)
 
     @staticmethod

@@ -14,9 +14,10 @@ from tgbot.misc.states import DepositStates
 
 
 async def main_deposit(call: types.CallbackQuery):
-    await call.message.edit_text("Choose deposit method",
-                                 reply_markup=BalanceKeyboard.deposit_join())
+    await call.message.edit_text("Which currency you want to deposit",
+                                 reply_markup=BalanceKeyboard.deposit_methods())
     await call.answer()
+
 
 async def deposit_join(call: types.CallbackQuery):
     await call.message.edit_text("Which currency you want to deposit",
@@ -59,10 +60,9 @@ async def enter_amount(message: types.Message, state: FSMContext):
             raise ValueError
         if currency == "NGN":
             msg = await message.answer(f"To replenish your NGN account - send amount you want Bank account:\n\n"
-                                       f"Account Number - 6322482013\n"
-                                       f"Account Holder - HPL ALLIANCE NIGERIA LTD\n"
-                                       f"Bank - FIRST CITY MONUMENT BANK (FCMB) PLC\n"
-                                       f"Bank Sort Code - 214\n\n"
+                                       f"Bank Name: keystone PLC\n"
+                                       f"Account Name: Opal Trade Limited\n" 
+                                       f"Account Number: 1012241234\n\n"
                                        f"Amount: {amount} NGN\n"
                                        f"Comment: leoexchange {message.chat.id}\n\n"
                                        f"🚨🚨🚨ATTENTION!🚨🚨🚨\n\n"
@@ -77,6 +77,7 @@ async def enter_amount(message: types.Message, state: FSMContext):
             if currency == "BTC":
                 payment = Payment(amount=amount + randint(10, 500) / 100000000, currency=currency)
                 address = BinanceData.btc_address
+                print(payment.amount)
             elif currency == "ETH":
                 payment = Payment(amount=amount + randint(10, 500) / 100000, currency=currency)
                 address = BinanceData.eth_address
@@ -86,7 +87,7 @@ async def enter_amount(message: types.Message, state: FSMContext):
 
             payment.create()
 
-            await message.answer(f"Send {payment.amount:f}{currency} on address below to deposit {currency}",
+            await message.answer(f"Send {payment.amount} {currency} on address below to deposit {currency}",
                                  reply_markup=BalanceKeyboardReply.cancel())
             msg = await message.answer(address,
                                        reply_markup=BalanceKeyboard.deposit_check())
@@ -107,8 +108,8 @@ async def approve_payment(call: types.CallbackQuery, state: FSMContext):
         await start(call.message, state)
         id = await AdminDb.create_deposit_request(call.message.chat.id, payment.currency, payment.amount)
         await dp.bot.send_message(config.tg_bot.admin_channel,
-                                  f"Новая заявка на пополненик\n\n"
-                                  f"Сумма: {payment.amount}{payment.currency}\n"
+                                  f"Новая заявка на пополнениe\n\n"
+                                  f"Сумма: {payment.amount} {payment.currency}\n"
                                   f"Комментарий: leoexchange {call.message.chat.id}",
                                   reply_markup=AdminKeyboards.deposit(id))
     else:

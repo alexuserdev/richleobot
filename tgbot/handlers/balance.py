@@ -1,6 +1,7 @@
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
 
+from tgbot import config
 from tgbot.handlers.start import start
 from tgbot.keyboards.inline import BalanceKeyboard
 from tgbot.keyboards.reply import main_menu_buttons
@@ -8,7 +9,7 @@ from tgbot.misc import binance_work
 from tgbot.misc.crypto_work import check_valid
 from tgbot.misc.db_api import UsersDb
 from tgbot.misc.db_api.database import HistoryDb
-from tgbot.misc.states import WithdrawStates
+from tgbot.misc.states import WithdrawStates, WithdrawNgnStates
 
 
 async def main_balance(message: types.Message, state: FSMContext):
@@ -59,9 +60,13 @@ async def entered_amount_to_withdraw(message: types.Message, state: FSMContext):
         if balance < amount:
             raise ValueError
         else:
-            dp = Dispatcher.get_current()
-            await message.answer("Enter address")
-            await WithdrawStates.next()
+            if not currency == "NGN":
+                dp = Dispatcher.get_current()
+                await message.answer("Enter address")
+                await WithdrawStates.next()
+            else:
+                await WithdrawNgnStates.first()
+                await message.answer("Enter bank name")
             await state.update_data(amount=amount)
     except ValueError:
         await message.answer("Incorrect value")
@@ -93,8 +98,60 @@ async def confirm_withdraw(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
     await start(call.message, state)
     await HistoryDb.insert_into_history(call.message.chat.id, 'withdraw', data['currency'], data['amount'])
-    await binance_work.create_withdraw_request(call.message.chat.id,
-                                               data['currency'], data['amount'], data['address'])
+    if data['currency'] != "NGN":
+        await binance_work.create_withdraw_request(call.message.chat.id,
+                                                   data['currency'], data['amount'], data['address'])
+    else:
+        dp = Dispatcher.get_current()
+        amount = data.get('amount')
+        currency = data.get('currency')
+        bank_name = data.get("bank_name")
+        account_name = data.get("account_name")
+        account_number = data.get("account_number")
+        dp = Dispatcher.get_current()
+        config = dp.bot.get('config')
+        await dp.bot.send_message(config.tg_bot.admin_channel,
+                                  f"Создана новая заявка на вывод:\n\n"
+                                  f"Amount: {amount} {currency}\n"
+                                  f"Bank Name: {bank_name}\n"
+                                  f"Account Name: {account_name}\n"
+                                  f"Account Number: {account_number}")
+        await UsersDb.minus_balance(call.message.chat.id, currency, amount)
+
+
+async def entered_bank_name(message: types.Message, state: FSMContext):
+    await state.update_data(bank_name=message.text)
+    await message.answer("Enter account name")
+    await WithdrawNgnStates.next()
+
+
+async def entered_account_name(message: types.Message, state: FSMContext):
+    await state.update_data(account_name=message.text)
+    await message.answer("Enter account number")
+    await WithdrawNgnStates.next()
+
+
+async def entered_account_number(message: types.Message, state: FSMContext):
+    await state.update_data(account_number=message.text)
+    data = await state.get_data()
+    amount = data.get('amount')
+    currency = data.get('currency')
+    bank_name = data.get("bank_name")
+    account_name = data.get("account_name")
+    account_number = data.get("account_number")
+    balance = await UsersDb.parse_balance(message.chat.id, currency)
+    if balance >= amount:
+        msg = await message.answer(f"Amount: {amount} {currency}\n"
+                                   f"Bank Name: {bank_name}\n"
+                                   f"Account Name: {account_name}\n"
+                                   f"Account Number: {account_number}",
+                                   reply_markup=BalanceKeyboard.withdraw_confirming())
+        await state.update_data(last_msg=msg.message_id)
+        await WithdrawStates.confirming.set()
+
+
+async def confirming_ngn_withdraw(message: types.Message, state: FSMContext):
+    pass
 
 
 async def cancel_withdraw(call: types.CallbackQuery, state: FSMContext):
@@ -152,6 +209,11 @@ def register_balance(dp: Dispatcher):
                                                                                                    WithdrawStates.enter_count])
     dp.register_message_handler(entered_amount_to_withdraw, state=WithdrawStates.enter_count)
     dp.register_message_handler(entered_withdraw_address, state=WithdrawStates.enter_address)
+    dp.register_message_handler(entered_bank_name, state=WithdrawNgnStates.bank_name)
+    dp.register_message_handler(entered_account_name, state=WithdrawNgnStates.account_name)
+    dp.register_message_handler(entered_account_number, state=WithdrawNgnStates.account_number)
+    dp.register_callback_query_handler(confirm_withdraw, text="confirm_withdraw", state=WithdrawNgnStates.confirming)
     dp.register_callback_query_handler(confirm_withdraw, text="confirm_withdraw", state=WithdrawStates.confirming)
-    dp.register_callback_query_handler(cancel_withdraw, text="cancel_withdraw", state=WithdrawStates.confirming)
+    dp.register_callback_query_handler(cancel_withdraw, text="cancel_withdraw", state=[WithdrawStates.confirming,
+                                                                                       WithdrawNgnStates.confirming])
     dp.register_callback_query_handler(show_history, text="history")

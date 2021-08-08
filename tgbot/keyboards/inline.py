@@ -3,6 +3,7 @@ from aiogram import types
 CRYPTOS = ["BTC", "ETH", "USDT"]
 FIAT = ["NGN"]
 WALLETS = ["BTC", "ETH", "USDT", "NGN"]
+DEPOSIT_WALLETS = ["BTC(BTC)", "ETH(ERC20)", "USDT(TRC20)", "NGN (Bank Transfer)"]
 
 
 class P2PKeyboards:
@@ -206,12 +207,13 @@ class BalanceKeyboard:
     @staticmethod
     def deposit_methods(choose=None):
         keyboard = types.InlineKeyboardMarkup(row_width=3)
-        for wallet in WALLETS:
+        for i in range(len(WALLETS)):
+            wallet = WALLETS[i]
             if choose == wallet:
-                keyboard.insert(types.InlineKeyboardButton(text=f"✅{wallet}",
+                keyboard.insert(types.InlineKeyboardButton(text=f"✅{DEPOSIT_WALLETS[i]}",
                                                            callback_data=f"deposit.{wallet}"))
             else:
-                keyboard.insert(types.InlineKeyboardButton(text=wallet,
+                keyboard.insert(types.InlineKeyboardButton(text=DEPOSIT_WALLETS[i],
                                                            callback_data=f"deposit.{wallet}"))
         return keyboard
 
@@ -226,13 +228,26 @@ class BalanceKeyboard:
     def main_withdraw(currencys, choose=None):
         keyboard = types.InlineKeyboardMarkup(row_width=3)
         for currency in currencys:
+            currency_text = BalanceKeyboard.conv_currency(currency)
             if choose == currency:
-                keyboard.insert(types.InlineKeyboardButton(text=f"✅{currency}",
+                keyboard.insert(types.InlineKeyboardButton(text=f"✅{currency_text}",
                                                            callback_data=f"withdraw.{currency}"))
             else:
-                keyboard.insert(types.InlineKeyboardButton(text=currency,
+                keyboard.insert(types.InlineKeyboardButton(text=currency_text,
                                                            callback_data=f"withdraw.{currency}"))
         return keyboard
+
+    @staticmethod
+    def conv_currency(currency):
+        if currency == "BTC":
+            plus = "(BTC)"
+        elif currency == "ETH":
+            plus = "(ERC20)"
+        elif currency == "USDT":
+            plus = "(TRC20)"
+        elif currency == "NGN":
+            plus = " (Bank Transfer)"
+        return currency + plus
 
     @staticmethod
     def withdraw_confirming():
@@ -272,11 +287,11 @@ class HelpKeyboards:
     def main():
         keyboard = types.InlineKeyboardMarkup(row_width=2)
         keyboard.insert(types.InlineKeyboardButton(text="❓Ask",
-                                                   callback_data="fdsf"))
+                                                   url="https://t.me/RichLeoSupportBot"))
         keyboard.insert(types.InlineKeyboardButton(text="🔀Exchange rates",
                                                    callback_data="exchange_rates"))
         keyboard.insert(types.InlineKeyboardButton(text="👫Community",
-                                                   callback_data="oisi"))
+                                                   url="https://t.me/joinchat/jvqdlHctpMZkNTgy"))
         keyboard.insert(types.InlineKeyboardButton(text="🔢Fees",
                                                    callback_data="fees"))
         return keyboard

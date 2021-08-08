@@ -6,7 +6,7 @@ from tgbot.handlers.start import start
 from tgbot.keyboards.inline import OperationsKeyboard, ExchangeKeyboards
 from tgbot.keyboards.reply import main_menu_buttons
 from tgbot.misc import binance_work
-from tgbot.misc.db_api.database import UsersDb, CommissionsDb
+from tgbot.misc.db_api.database import UsersDb, CommissionsDb, AdminDb
 from tgbot.misc.states import ExchangeStates
 
 
@@ -73,8 +73,12 @@ async def entered_amount(message: types.Message, state: FSMContext):
         if count <= await UsersDb.parse_balance(message.chat.id, data['currency1']):
             count = int(count) if count % 10 == 0 else count
             dp = Dispatcher.get_current()
-            sum = await binance_work.get_pair_price(data['currency1'], data['currency2'], count, dp)
-            sum = round(sum, 7)
+            if not data['currency1'] == "NGN" and not data['currency2'] == "NGN":
+                sum = await binance_work.get_pair_price(data['currency1'], data['currency2'], count, dp)
+                sum = round(sum, 7)
+            else:
+                sum = await AdminDb.get_pair_price(data['currency1'], data['currency2'], count)
+                sum = float(sum)
             sum = sum - (sum / 100 * float(await CommissionsDb.parse_exchange_commission()))
             sum = sum - (sum / 100 * float(await CommissionsDb.parse_course_percent()))
             keyboard = types.InlineKeyboardMarkup()
@@ -82,9 +86,9 @@ async def entered_amount(message: types.Message, state: FSMContext):
                                                     callback_data="yes"))
 
             keyboard.add(types.InlineKeyboardButton(text="Cancel",
-                                                    callback_data="no"))
+                                                        callback_data="no"))
             msg = await message.answer(f"You sell: {count} {data['currency1']}\n"
-                                       f"You get: {sum} {data['currency2']}\n\n",
+                                       f"You get: {sum:f} {data['currency2']}\n\n",
                                        reply_markup=keyboard)
             await state.update_data(last_msg=msg.message_id)
             await ExchangeStates.confirming.set()

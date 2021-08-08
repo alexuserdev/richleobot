@@ -27,9 +27,12 @@ class BinanceData:
     # API_SECRET: str = "fvbnpjKWQOIkHitbmdWv2f6u0HxP0tIjtUm0uLjjoPgmpqsKHtiwKUyU864x2MYM"
     API_KEY: str = "5Sx4RSXqlvuKClrkEunQz1kwbKPIqmf5EkCfED7QkgTT6MXva52mV6eJS4xabBXY"
     API_SECRET: str = "x1xADOmxfZyn6oyt38GWJTzl7rBmVTs3Mi1r0cGqui4ovNWg3gBeRSRDxitDOi4E"
-    btc_address: str = "19uQe9XuKAfkT7QT44ke4ryeZm44hBHFVx"
-    eth_address: str = "0xd959a62d66f50bf3646265ae6309efd6eaa18e90"
-    usdt_address: str = "0xd959a62d66f50bf3646265ae6309efd6eaa18e90"
+    # btc_address: str = "19uQe9XuKAfkT7QT44ke4ryeZm44hBHFVx"
+    # eth_address: str = "0xd959a62d66f50bf3646265ae6309efd6eaa18e90"
+    # usdt_address: str = "0xd959a62d66f50bf3646265ae6309efd6eaa18e90"
+    btc_address: str = "16ciZf1f4kcm5fjD6pzQsL84pe9uPqc644"
+    eth_address: str = "0xf30f2e847cfe48b61098068f07fabaedeef6bb0d"
+    usdt_address: str = "TAMKQi3VV2yffKCweqbZuXM9wepvGSnRmd"
 
 
 @dataclass

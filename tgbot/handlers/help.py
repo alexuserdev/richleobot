@@ -8,7 +8,7 @@ from tgbot.misc.binance_work import get_coins_course
 
 async def main_help(message: types.Message, state: FSMContext):
     await message.answer_sticker("CAACAgIAAxkBAAICSmD1l-wnns05EFPxMtEe1D-_H0spAALGDQACumaoSk8qVRdX17H8IAQ")
-    msg = await message.answer("Official website: www.leo.exchange\n\n"
+    msg = await message.answer("Official website: rich-leo.com\n\n"
                                "If you have any questions, don't hesitate asking them after clicking on '❓Ask'\n\n"
                                "Join our 👫🏼Community to discuss Leo\n\n"
                                "If you want to check what are the 🔀exchange rates or 🔢fees - click correspond buttons below",
@@ -18,7 +18,7 @@ async def main_help(message: types.Message, state: FSMContext):
 
 
 async def back_help(call: types.CallbackQuery):
-    await call.message.edit_text("Official website: www.leo.exchange\n\n"
+    await call.message.edit_text("Official website: rich-leo.com\n\n"
                                "If you have any questions, don't hesitate asking them after clicking on '❓Ask'\n\n"
                                "Join our 👫🏼Community to discuss Leo\n\n"
                                "If you want to check what are the 🔀exchange rates or 🔢fees - click correspond buttons below",

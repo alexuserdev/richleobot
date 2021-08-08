@@ -14,7 +14,16 @@ from tgbot.misc.states import RequestStates, SendStates
 
 async def main_operations(message: types.Message, state: FSMContext):
     await message.answer_sticker("CAACAgIAAxkBAAICVmD1mvmVX5-aB7P0jyVDHubhuuhkAAL_DQACo_ugSsQaq2gMY49PIAQ")
-    msg = await message.answer("What would you like to do? 👩🏼‍🦰",
+    msg = await message.answer("What would you like to do? 👩🏼‍🦰\n"
+"\n"
+"• <b>Deposit</b> money on your account in the bot\n"
+"• <b>Withdraw money</b> from the bot to your personal account\n"
+"\n"
+"• <b>Fast Exchange</b> - Just  choose what you want to give and get & make your trade\n"
+""
+"• <b>Escrow Exchange</b> - Exchange crypto with a person chosen by you\n"
+"\n"
+"• <b>P2P</b> - Make and take orders to trade crypto",
                                reply_markup=OperationsKeyboard.main())
     await state.update_data(last_msg=msg.message_id)
     await state.reset_state(with_data=False)

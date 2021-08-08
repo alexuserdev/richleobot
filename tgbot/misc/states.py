@@ -3,7 +3,6 @@ from aiogram.dispatcher.filters.state import State, StatesGroup
 
 class FirstRegistrationStates(StatesGroup):
     first_answer = State()
-    second_asnwer = State()
 
 
 class RequestStates(StatesGroup):
@@ -35,6 +34,13 @@ class DepositStates(StatesGroup):
 class WithdrawStates(StatesGroup):
     enter_count = State()
     enter_address = State()
+    confirming = State()
+
+
+class WithdrawNgnStates(StatesGroup):
+    bank_name = State()
+    account_name = State()
+    account_number = State()
     confirming = State()
 
 
