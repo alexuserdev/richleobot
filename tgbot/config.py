@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+from pathlib import Path
+
+from envparse import env
 
 
 @dataclass
@@ -10,15 +13,21 @@ class Wallets:
 
 @dataclass
 class DbConfig:
-    host: str = "postgresql://postgres@localhost/crypto_exchange_bot"
-    password: str = "43154814"
+    POSTGRES_HOST = env.str("POSTGRES_HOST", default="localhost")
+    POSTGRES_PORT = env.int("POSTGRES_PORT", default=5432)
+    POSTGRES_PASSWORD = env.str("POSTGRES_PASSWORD", default="0434")
+    POSTGRES_USER = env.str("POSTGRES_USER", default="postgres")
+    POSTGRES_DB = env.str("POSTGRES_DB", default="aiogram")
+
+    POSTGRES_URI = "postgresql://postgres:43154814@localhost/crypto_exchange_bot"
+    #f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}"
 
 
 @dataclass
 class TgBot:
-    token: str
     admin_channel: int
     use_redis: bool
+    token: str = env.str("TELEGRAM_TOKEN")
 
 
 @dataclass
@@ -51,18 +60,15 @@ CryptoInformation = CryptoInformation(
 class Config:
     tg_bot: TgBot
     db: DbConfig
+    BASE_DIR = Path(__file__).parent
+    LOCALES_DIR = BASE_DIR / 'locales'
+    I18N_DOMAIN = "bot"
 
 
 def load_config(path: str = None):
     return Config(
         tg_bot=TgBot(
-            token="1944359439:AAGZ5LyAd-QXoejAPrpgxBAb-JR5QAtWpTM",
             admin_channel=-1001550460473,
             use_redis=False
         ),
-        db=DbConfig(
-            host="postgresql://postgres@localhost/crypto_exchange_bot",
-            password="43154814",
-        ),
-
     )

@@ -1,10 +1,17 @@
-FROM python:3.9-slim
-ENV BOT_NAME=$BOT_NAME
+FROM python:3.8
 
-WORKDIR /usr/src/app/"${BOT_NAME:-tg_bot}"
+ENV PYTHONPATH "${PYTHONPATH}:/app"
+ENV PATH "/app/scripts:${PATH}"
 
-COPY requirements.txt /usr/src/app/"${BOT_NAME:-tg_bot}"
-RUN pip install -r /usr/src/app/"${BOT_NAME:-tg_bot}"/requirements.txt
-COPY . /usr/src/app/"${BOT_NAME:-tg_bot}"
 
-CMD python3 -m bot
+WORKDIR /app
+COPY bot.py requirements* /app/
+RUN python -m pip install --upgrade pip
+
+RUN pip install -r requirements.txt
+ADD . /app/
+
+RUN ["chmod", "+x", "/app/scripts/bot-entrypoint.sh"]
+ENTRYPOINT bot-entrypoint.sh
+
+

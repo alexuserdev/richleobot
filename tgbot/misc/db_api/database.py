@@ -10,7 +10,7 @@ conn: asyncpg.Connection = None
 
 async def create_conn():
     global conn
-    conn = await asyncpg.connect(DbConfig.host, password=DbConfig.password)
+    conn = await asyncpg.connect(DbConfig.POSTGRES_URI)
 
 
 class UsersDb:
@@ -30,6 +30,13 @@ class UsersDb:
     @staticmethod
     async def update_name(user_id, full_name):
         query = f"update users set username = '{full_name}' where user_id = {user_id}"
+        print(query)
+        await conn.execute(query)
+
+    @staticmethod
+    async def update_language(user_id: int, language: str) -> None:
+        query = "update users set language = '{lang}' where user_id = {user_id}".format(lang=language,
+                                                                                        user_id=user_id)
         print(query)
         await conn.execute(query)
 

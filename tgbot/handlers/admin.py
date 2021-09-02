@@ -2,6 +2,7 @@ from aiogram import Dispatcher, types
 from aiogram.types import Message
 
 from tgbot.misc.db_api.database import AdminDb
+from bot import bot
 
 
 async def change(message: types.Message):

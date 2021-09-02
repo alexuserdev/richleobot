@@ -1,4 +1,6 @@
 from aiogram import types
+from tgbot.models.language import Language
+
 
 CRYPTOS = ["BTC", "ETH", "USDT"]
 FIAT = ["NGN"]
@@ -275,8 +277,14 @@ class SettingsKeyboards:
     @staticmethod
     def choose_language():
         keyboard = types.InlineKeyboardMarkup(row_width=1)
-        keyboard.insert(types.InlineKeyboardButton(text="🇬🇧English",
-                                                   callback_data="language.END"))
+        for lang_obj in Language:
+            lang_item = lang_obj.value
+            lang_label = lang_item.get('name')
+            lang_cb = lang_label.get('id')
+
+            keyboard.insert(types.InlineKeyboardButton(text=lang_label,
+                                                        callback_data="language.{id_}".format(id_=lang_cb)))
+
         keyboard.insert(types.InlineKeyboardButton(text="🔙Back",
                                                    callback_data="back_settings"))
         return keyboard
