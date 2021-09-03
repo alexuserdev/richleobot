@@ -10,20 +10,20 @@ DEPOSIT_WALLETS = ["BTC(BTC)", "ETH(ERC20)", "USDT(TRC20)", "NGN (Bank Transfer)
 
 class P2PKeyboards:
     @staticmethod
-    def main():
+    def main(_):
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton(text="Active orders",
+        keyboard.add(types.InlineKeyboardButton(text=_("Active orders"),
                                                 callback_data="active_p2p_orders"))
-        keyboard.add(types.InlineKeyboardButton(text="Create order",
+        keyboard.add(types.InlineKeyboardButton(text=_("Create order"),
                                                 callback_data="create_p2p_order"))
-        keyboard.add(types.InlineKeyboardButton(text="My orders",
+        keyboard.add(types.InlineKeyboardButton(text=_("My orders"),
                                                 callback_data="my_p2p_orders"))
         return keyboard
 
     @staticmethod
-    def manage_order(order_id):
+    def manage_order(order_id, _):
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton(text="Delete",
+        keyboard.add(types.InlineKeyboardButton(text=_("Delete"),
                                                 callback_data=f"delete_p2p_deal.{order_id}"))
         return keyboard
 
@@ -48,9 +48,9 @@ class P2PKeyboards:
         return keyboard
 
     @staticmethod
-    def in_order(order_id):
+    def in_order(order_id, _):
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton(text="Accept",
+        keyboard.add(types.InlineKeyboardButton(text=_("Accept"),
                                                 callback_data=f"accept_p2p_deal.{order_id}"))
         return keyboard
 
@@ -83,11 +83,11 @@ class P2PKeyboards:
         return keyboard
 
     @staticmethod
-    def order_create_confirming():
+    def order_create_confirming(_):
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton(text="Create",
+        keyboard.add(types.InlineKeyboardButton(text=_("Create"),
                                                 callback_data="confirm_order_create"))
-        keyboard.add(types.InlineKeyboardButton(text="Cancel",
+        keyboard.add(types.InlineKeyboardButton(text=_("Cancel"),
                                                 callback_data="cancel_order_create"))
         return keyboard
 
@@ -118,24 +118,24 @@ class ExchangeKeyboards:
 
 class OperationsKeyboard:
     @staticmethod
-    def main():
+    def main(_):
         keyboard = types.InlineKeyboardMarkup(row_width=2)
-        keyboard.insert(types.InlineKeyboardButton(text="📥Deposit",
+        keyboard.insert(types.InlineKeyboardButton(text=_("📥Deposit"),
                                                    callback_data="deposit"))
-        keyboard.insert(types.InlineKeyboardButton(text="📤Withdraw",
+        keyboard.insert(types.InlineKeyboardButton(text=_("📤Withdraw"),
                                                    callback_data="withdraw"))
-        keyboard.insert(types.InlineKeyboardButton(text="📊Fast exchange",
+        keyboard.insert(types.InlineKeyboardButton(text=_("📊Fast exchange"),
                                                 callback_data="exchange"))
-        keyboard.insert(types.InlineKeyboardButton(text="📊Escrow exchange",
+        keyboard.insert(types.InlineKeyboardButton(text=_("📊Escrow exchange"),
                                                    callback_data="escrow"))
-        keyboard.add(types.InlineKeyboardButton(text="🎯P2P",
+        keyboard.add(types.InlineKeyboardButton(text=_("🎯P2P"),
                                                 callback_data="p2p"))
         return keyboard
 
     @staticmethod
-    def deposit():
+    def deposit(_):
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton(text="📥Deposit",
+        keyboard.add(types.InlineKeyboardButton(text=_("📥Deposit"),
                                                 callback_data="deposit"))
         return keyboard
 
@@ -153,11 +153,11 @@ class OperationsKeyboard:
         return keyboard
 
     @staticmethod
-    def in_request(id):
+    def in_request(id, _):
         keyboard = types.InlineKeyboardMarkup(row_width=2)
-        keyboard.insert(types.InlineKeyboardButton(text="Reject",
+        keyboard.insert(types.InlineKeyboardButton(text=_("Reject"),
                                                    callback_data=f"reject.{id}"))
-        keyboard.insert(types.InlineKeyboardButton(text="Confirm",
+        keyboard.insert(types.InlineKeyboardButton(text=_("Confirm"),
                                                   callback_data=f"confirm.{id}"))
         return keyboard
 
@@ -174,35 +174,35 @@ class OperationsKeyboard:
         return keyboard
 
     @staticmethod
-    def send_confirming():
+    def send_confirming(_):
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton(text="Confirm",
+        keyboard.add(types.InlineKeyboardButton(text=_("Confirm"),
                                                 callback_data="confirm_send"))
-        keyboard.add(types.InlineKeyboardButton(text="Cancel",
+        keyboard.add(types.InlineKeyboardButton(text=_("Cancel"),
                                                 callback_data="cancel_send"))
         return keyboard
 
 
 class BalanceKeyboard:
     @staticmethod
-    def main():
+    def main(_):
         keyboard = types.InlineKeyboardMarkup(row_width=2)
-        keyboard.insert(types.InlineKeyboardButton(text="📥Deposit",
+        keyboard.insert(types.InlineKeyboardButton(text=_("📥Deposit"),
                                                    callback_data="deposit"))
-        keyboard.insert(types.InlineKeyboardButton(text="📤Withdraw",
+        keyboard.insert(types.InlineKeyboardButton(text=_("📤Withdraw"),
                                                    callback_data="withdraw"))
-        keyboard.add(types.InlineKeyboardButton(text="💸Send",
+        keyboard.add(types.InlineKeyboardButton(text=_("💸Send"),
                                                 callback_data="send"))
-        keyboard.insert(types.InlineKeyboardButton(text="🖨History",
+        keyboard.insert(types.InlineKeyboardButton(text=_("🖨History"),
                                                    callback_data="history"))
         return keyboard
 
     @staticmethod
-    def deposit_join():
+    def deposit_join(_):
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.insert(types.InlineKeyboardButton(text="📥Deposit",
+        keyboard.insert(types.InlineKeyboardButton(text=_("📥Deposit"),
                                                    callback_data="deposit_join"))
-        keyboard.insert(types.InlineKeyboardButton(text="💸Request",
+        keyboard.insert(types.InlineKeyboardButton(text=_("💸Request"),
                                                    callback_data="request"))
         return keyboard
 
@@ -220,9 +220,9 @@ class BalanceKeyboard:
         return keyboard
 
     @staticmethod
-    def deposit_check():
+    def deposit_check(_):
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton(text="Check",
+        keyboard.add(types.InlineKeyboardButton(text=_("Check"),
                                                 callback_data="check"))
         return keyboard
 
@@ -252,20 +252,20 @@ class BalanceKeyboard:
         return currency + plus
 
     @staticmethod
-    def withdraw_confirming():
+    def withdraw_confirming(_):
         keyboard = types.InlineKeyboardMarkup()
-        keyboard.add(types.InlineKeyboardButton(text="Confirm",
+        keyboard.add(types.InlineKeyboardButton(text=_("Confirm"),
                                                 callback_data="confirm_withdraw"))
-        keyboard.add(types.InlineKeyboardButton(text="Cancel",
+        keyboard.add(types.InlineKeyboardButton(text=_("Cancel"),
                                                 callback_data="cancel_withdraw"))
         return keyboard
 
 
 class SettingsKeyboards:
     @staticmethod
-    def main():
+    def main(_):
         keyboard = types.InlineKeyboardMarkup(row_width=1)
-        keyboard.insert(types.InlineKeyboardButton(text="🌍Language",
+        keyboard.insert(types.InlineKeyboardButton(text=_("🌍Language"),
                                                    callback_data="change_language"))
         keyboard.insert(types.InlineKeyboardButton(text="Privacy policy",
                                                    callback_data="d"))
@@ -275,7 +275,7 @@ class SettingsKeyboards:
         return keyboard
 
     @staticmethod
-    def choose_language():
+    def choose_language(_):
         keyboard = types.InlineKeyboardMarkup(row_width=1)
         for lang_obj in Language:
             lang_item = lang_obj.value
@@ -286,49 +286,49 @@ class SettingsKeyboards:
             keyboard.insert(types.InlineKeyboardButton(text=f"{lang_flag} {lang_label}",
                                                         callback_data="language.{id_}".format(id_=lang_country)))
 
-        keyboard.insert(types.InlineKeyboardButton(text="🔙Back",
+        keyboard.insert(types.InlineKeyboardButton(text=_("🔙Back"),
                                                    callback_data="back_settings"))
         return keyboard
 
 
 class HelpKeyboards:
     @staticmethod
-    def main():
+    def main(_):
         keyboard = types.InlineKeyboardMarkup(row_width=2)
         keyboard.insert(types.InlineKeyboardButton(text="❓Ask",
                                                    url="https://t.me/RichLeoSupportBot"))
-        keyboard.insert(types.InlineKeyboardButton(text="🔀Exchange rates",
+        keyboard.insert(types.InlineKeyboardButton(text=_("🔀Exchange rates"),
                                                    callback_data="exchange_rates"))
-        keyboard.insert(types.InlineKeyboardButton(text="👫Community",
+        keyboard.insert(types.InlineKeyboardButton(text=_("👫Community"),
                                                    url="https://t.me/joinchat/jvqdlHctpMZkNTgy"))
-        keyboard.insert(types.InlineKeyboardButton(text="🔢Fees",
+        keyboard.insert(types.InlineKeyboardButton(text=_("🔢Fees"),
                                                    callback_data="fees"))
         return keyboard
 
     @staticmethod
-    def exchange_rates():
+    def exchange_rates(_):
         keyboard = types.InlineKeyboardMarkup(row_width=1)
-        keyboard.insert(types.InlineKeyboardButton(text="📊Exchange",
+        keyboard.insert(types.InlineKeyboardButton(text=_("📊Exchange"),
                                                    callback_data="exchange"))
-        keyboard.insert(types.InlineKeyboardButton(text="🔙Back",
+        keyboard.insert(types.InlineKeyboardButton(text=_("🔙Back"),
                                                    callback_data="back_help"))
         return keyboard
 
     @staticmethod
-    def fees():
+    def fees(_):
         keyboard = types.InlineKeyboardMarkup(row_width=1)
-        keyboard.insert(types.InlineKeyboardButton(text="🔙Back",
+        keyboard.insert(types.InlineKeyboardButton(text=_("🔙Back"),
                                                    callback_data="back_help"))
         return keyboard
 
 
 class EscrowKeyboards:
     @staticmethod
-    def main():
+    def main(_):
         keyboard = types.InlineKeyboardMarkup(row_width=1)
-        keyboard.add(types.InlineKeyboardButton(text="Create deal",
+        keyboard.add(types.InlineKeyboardButton(text=_("Create deal"),
                                                 callback_data="create_escrow_deal"))
-        keyboard.add(types.InlineKeyboardButton(text="Active deals",
+        keyboard.add(types.InlineKeyboardButton(text=_("Active deals"),
                                                 callback_data="my_active_escrow"))
         return keyboard
 
@@ -346,30 +346,30 @@ class EscrowKeyboards:
         return keyboard
 
     @staticmethod
-    async def in_deal(deal_id, status=None):
+    async def in_deal(deal_id, status=None, _=None):
         keyboard = types.InlineKeyboardMarkup(row_width=2)
         if status:
-            keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
+            keyboard.add(types.InlineKeyboardButton(text=_("Cancel deal"),
                                                     callback_data=f"cancel_deal.{deal_id}"))
             return keyboard
-        keyboard.add(types.InlineKeyboardButton(text="Accept",
+        keyboard.add(types.InlineKeyboardButton(text=_("Accept"),
                                                 callback_data=f"accept_deal.{deal_id}"))
-        keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
+        keyboard.add(types.InlineKeyboardButton(text=_("Cancel deal"),
                                                 callback_data=f"cancel_deal.{deal_id}"))
         return keyboard
 
     @staticmethod
-    def in_deal_fiat(deal_id, status=None):
+    def in_deal_fiat(deal_id, status=None, _=None):
         keyboard = types.InlineKeyboardMarkup(row_width=2)
         if status is True:
-            keyboard.add(types.InlineKeyboardButton(text="Confirm receipt",
+            keyboard.add(types.InlineKeyboardButton(text=_("Confirm receipt"),
                                                     callback_data=f"accept_fiat_deal.{deal_id}"))
-            keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
+            keyboard.add(types.InlineKeyboardButton(text=_("Cancel deal"),
                                                     callback_data=f"cancel_deal.{deal_id}"))
             return keyboard
-        keyboard.add(types.InlineKeyboardButton(text="Accept",
+        keyboard.add(types.InlineKeyboardButton(text=_("Accept"),
                                                 callback_data=f"accept_deal.{deal_id}"))
-        keyboard.add(types.InlineKeyboardButton(text="Cancel deal",
+        keyboard.add(types.InlineKeyboardButton(text=_("Cancel deal"),
                                                 callback_data=f"cancel_deal.{deal_id}"))
         return keyboard
 

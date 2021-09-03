@@ -1,14 +1,14 @@
-# Italian translations for PROJECT.
+# Italian translations for tgbot.
 # Copyright (C) 2021 ORGANIZATION
-# This file is distributed under the same license as the PROJECT project.
+# This file is distributed under the same license as the tgbot project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PROJECT VERSION\n"
+"Project-Id-Version: tgbot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-02 22:21+0000\n"
-"PO-Revision-Date: 2021-09-02 22:21+0000\n"
+"POT-Creation-Date: 2021-09-03 16:32+0300\n"
+"PO-Revision-Date: 2021-09-03 16:33+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
 "Language-Team: it <LL@li.org>\n"
@@ -18,6 +18,471 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
 
+#: tgbot/handlers/balance.py:33
+msgid "Choose currency to withdraw"
+msgstr ""
+
+#: tgbot/handlers/balance.py:37
+msgid "Your wallet is empty"
+msgstr ""
+
+#: tgbot/handlers/balance.py:43
+msgid "Enter amount of {currency} you want to withdraw"
+msgstr ""
+
+#: tgbot/handlers/balance.py:65
+msgid "Enter address"
+msgstr ""
+
+#: tgbot/handlers/balance.py:69
+msgid "Enter bank name"
+msgstr ""
+
+#: tgbot/handlers/balance.py:72 tgbot/handlers/deposit.py:108
+#: tgbot/handlers/escrow.py:176 tgbot/handlers/escrow.py:206
+#: tgbot/handlers/operations.py:79 tgbot/handlers/p2p.py:144
+#: tgbot/handlers/p2p.py:176
+msgid "Incorrect value"
+msgstr ""
+
+#: tgbot/handlers/balance.py:84
+msgid ""
+"Amount: {amount}{currency}\n"
+" Address: {address}"
+msgstr ""
+
+#: tgbot/handlers/balance.py:91 tgbot/handlers/balance.py:93
+msgid "Enter correct address"
+msgstr ""
+
+#: tgbot/handlers/balance.py:98
+msgid "Withdraw request has been successfully created"
+msgstr ""
+
+#: tgbot/handlers/balance.py:125
+msgid "Enter account name"
+msgstr ""
+
+#: tgbot/handlers/balance.py:131
+msgid "Enter account number"
+msgstr ""
+
+#: tgbot/handlers/balance.py:148
+msgid ""
+"Amount: {amount} {currency}\n"
+"Bank Name: {bank_name}\n"
+"Account Name: {account_name}\n"
+"Account Number: {account_number}"
+msgstr ""
+
+#: tgbot/handlers/balance.py:169
+msgid "History:"
+msgstr ""
+
+#: tgbot/handlers/balance.py:174
+msgid "No history"
+msgstr ""
+
+#: tgbot/handlers/balance.py:190
+msgid ""
+"Hi {fname}👋🏻👨🏻‍🔧\n"
+"\n"
+" Here is your balance:\n"
+"\n"
+msgstr ""
+
+#: tgbot/handlers/balance.py:200
+msgid ""
+"Wallet is empty\n"
+"\n"
+msgstr ""
+
+#: tgbot/handlers/balance.py:202
+msgid ""
+"\n"
+"I can help you to <b>Deposit</b> or <b>Withdraw</b> something. \n"
+"\n"
+"If you want to perform any kind of Operation you should talk to Leo."
+msgstr ""
+
+#: tgbot/handlers/deposit.py:17 tgbot/handlers/deposit.py:23
+msgid "Which currency you want to deposit"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:37 tgbot/handlers/deposit.py:44
+msgid "Enter amount of {currency} you want to deposit"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:70
+msgid ""
+"To replenish your NGN account - send amount you want Bank account:\n"
+"\n"
+"Bank Name: keystone PLC\n"
+"Account Name: Opal Trade Limited\n"
+"Account Number: 1012241234\n"
+"\n"
+"Amount: {amount} NGN\n"
+"Comment: leoexchange {msg}\n"
+"\n"
+"🚨🚨🚨ATTENTION!🚨🚨🚨\n"
+"\n"
+"It is REQUIRED to write code leoexchange {msg} in the comment section\n"
+"Otherwise, deposit will not be executed"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:94
+msgid "Send {data} {currency} on address below to deposit"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:99
+msgid "Send {amount} {currency} on address below to deposit {currency}"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:117
+msgid "Wait transaction confirming"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:133
+msgid "Successfully"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:136
+msgid "Transaction is found but not confirmed. Please wait"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:138
+msgid "Transaction not found. Please wait"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:17 tgbot/handlers/escrow.py:24
+msgid "Deal №{deal_id} has been canceled"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:32
+msgid "Deal has been canceled"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:37 tgbot/handlers/escrow.py:57
+msgid "Accepted"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:44 tgbot/handlers/escrow.py:45
+#: tgbot/handlers/escrow.py:68 tgbot/handlers/escrow.py:69
+msgid "Escrow exchange №{id} was completed successfully"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:51
+msgid ""
+"Payment for deal №{deal_id} was reserved in the service. Please send the "
+"money"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:53 tgbot/handlers/escrow.py:71
+#: tgbot/handlers/exchange.py:51 tgbot/handlers/operations.py:45
+#: tgbot/handlers/p2p.py:25
+msgid "Wallet is empty."
+msgstr ""
+
+#: tgbot/handlers/escrow.py:95 tgbot/handlers/p2p.py:22
+msgid "Select an action"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:105
+msgid "All active orders: "
+msgstr ""
+
+#: tgbot/handlers/escrow.py:113
+msgid ""
+"\n"
+"Rate: 1 {fcur} = {rate} {scur}"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:137
+msgid "You don't have active deals"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:142
+msgid "Escrow exchange"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:144
+msgid "Which currency you want to sell"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:151 tgbot/handlers/p2p.py:124
+msgid "Enter amount of {currency} you want to sell"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:169 tgbot/handlers/p2p.py:138
+msgid "Which currency you want to get"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:182 tgbot/handlers/p2p.py:150
+msgid "Enter amount of {currency} you want to get"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:200
+msgid "Enter username or ID of second transaction participant"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:229 tgbot/handlers/escrow.py:241
+#: tgbot/handlers/p2p.py:100
+msgid "Deal successfully created"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:252
+msgid "Incorrect value or user not registered in bot"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:270
+msgid ""
+"Deal №{deal_id} with <a "
+"href='tg://user?id={info['buyer_id']}'>{info['buyer_id']}</a>\n"
+"\n"
+"You give: {info['first_amount']} {info['first_currency']}\n"
+"You'll get: {info['second_amount']} {info['second_currency']}"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:276
+msgid ""
+"Deal №{deal_id} with <a "
+"href='tg://user?id={info['seller_id']}'>{info['seller_id']}</a>\n"
+"\n"
+"You give: {info['second_amount']} {info['second_currency']}\n"
+"You'll get: {info['first_amount']} {info['first_currency']}"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:280
+msgid ""
+"\n"
+"\n"
+"Chat: {chat_link}"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:16
+msgid ""
+"Ok, your <b>Balance</b>:\n"
+"\n"
+"\n"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:23
+msgid ""
+"\n"
+"Current <b>Rates</b> are:\n"
+"\n"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:44
+msgid ""
+"\n"
+"What do you want to exchange?"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:58
+msgid "What do you want to get"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:66
+msgid "How much {data['currency1']} do you want to sell?"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:89 tgbot/keyboards/inline.py:160
+#: tgbot/keyboards/inline.py:179 tgbot/keyboards/inline.py:257
+msgid "Confirm"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:94
+msgid ""
+"You sell: {count} {data['currency1']}\n"
+" You get: {sum:f} {data['currency2']}\n"
+"\n"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:101 tgbot/handlers/operations.py:156
+msgid "Invalid value"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:103
+msgid "Please, enter num"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:117
+msgid "Successfully exchanged"
+msgstr ""
+
+#: tgbot/handlers/help.py:11 tgbot/handlers/help.py:21
+msgid ""
+"Official website: rich-leo.com\n"
+"\n"
+"If you have any questions, don't hesitate asking them after clicking on "
+"'❓Ask'\n"
+"\n"
+"Join our 👫🏼Community to discuss Leo\n"
+"\n"
+"If you want to check what are the 🔀exchange rates or 🔢fees - click "
+"correspond buttons below"
+msgstr ""
+
+#: tgbot/handlers/help.py:40
+msgid "Fees"
+msgstr ""
+
+#: tgbot/handlers/operations.py:17
+msgid ""
+"What would you like to do? 👩🏼‍🦰\n"
+"\n"
+"• <b>Deposit</b> money on your account in the bot\n"
+"• <b>Withdraw money</b> from the bot to your personal account\n"
+"\n"
+"• <b>Fast Exchange</b> - Just  choose what you want to give and get & "
+"make your trade\n"
+"• <b>Escrow Exchange</b> - Exchange crypto with a person chosen by you\n"
+"\n"
+"• <b>P2P</b> - Make and take orders to trade crypto"
+msgstr ""
+
+#: tgbot/handlers/operations.py:41
+msgid "Choose currency to send"
+msgstr ""
+
+#: tgbot/handlers/operations.py:53
+msgid "Enter amount of {currency} you want to send to another user"
+msgstr ""
+
+#: tgbot/handlers/operations.py:75
+msgid "Enter user_id or user's nickname on Telegram"
+msgstr ""
+
+#: tgbot/handlers/operations.py:98
+msgid ""
+"Amount: {amount}{currency}\n"
+" User_id: {message.text}"
+msgstr ""
+
+#: tgbot/handlers/operations.py:105
+msgid "Enter correct user_id"
+msgstr ""
+
+#: tgbot/handlers/operations.py:117
+msgid ""
+"You got {amount}{currency} from <a "
+"href='tg://user?id={user_id}'>{user_id}</a>"
+msgstr ""
+
+#: tgbot/handlers/operations.py:129
+msgid ""
+"To request funds, please specify amount and pick the currency you want to"
+" receive.\n"
+"\n"
+msgstr ""
+
+#: tgbot/handlers/operations.py:135
+msgid "How much {method} you want to request"
+msgstr ""
+
+#: tgbot/handlers/operations.py:150
+msgid ""
+"To request {amount} {method} choose person from your contacts\n"
+"\n"
+" <b>Or show them this QR.</b>"
+msgstr ""
+
+#: tgbot/handlers/operations.py:164
+msgid "No much funds"
+msgstr ""
+
+#: tgbot/handlers/operations.py:170
+msgid "Transaction rejected."
+msgstr ""
+
+#: tgbot/handlers/p2p.py:33
+msgid "Choose currency to sell"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:36
+msgid "No active orders now"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:42
+msgid "Choose currency you want to get"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:55
+msgid "All active orders:"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:69
+msgid ""
+"P2P order №{order[0]}\n"
+"You give: {order[5]} {order[4]}\n"
+"You get: {order[3]} {order[2]}\n"
+"Rate: 1 {order[2]} = {round(rate, 5)} {order[4]}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:76
+msgid ""
+"P2P order №{order[0]}\n"
+"You give: {order[5]} {order[4]}\n"
+"You get: {order[3]} {order[2]}\n"
+"Rate: 1 {order[4]} = {round(rate, 5)} {order[2]}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:80
+msgid "No active orders now with selected params"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:93
+msgid ""
+"\n"
+"Rate: 1 {data['first_currency']} = {rate} {data['second_currency']}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:96
+msgid ""
+"\n"
+"Rate: 1 {data['second_currency']} = {rate} {data['first_currency']}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:116
+msgid "What do you want to give?"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:170
+msgid ""
+"P2P order\n"
+"You give: {data['first_amount']} {data['first_currency']}\n"
+"You'll get: {data['second_amount']} {data['second_currency']}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:183
+msgid "P2P order has been created"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:195
+msgid "Your active p2p orders:"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:199
+msgid ""
+"P2P order №{order[0]}\n"
+"You give: {order[5]} {order[4]}\n"
+"You get: {order[3]} {order[2]}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:207
+msgid "Order №{order_id} has been delete"
+msgstr ""
+
+#: tgbot/handlers/settings.py:12
+msgid ""
+"<b>WARNING</b>: Leo is in a BETA test mode, issues may occur. \n"
+"\n"
+"Feedback / questions: @RichLeoSupportBot\n"
+"\n"
+"Official website: rich-leo.com"
+msgstr ""
+
 #: tgbot/handlers/settings.py:21
 msgid ""
 "<b>WARNING</b>: Leo is in a BETA test mode, issues may occur. \n"
@@ -25,9 +490,183 @@ msgid ""
 "Feedback / questions: @RichLeoSupportBot \n"
 "\n"
 "Official website: rich-leo.com"
-msgstr "italy start menu"
+msgstr ""
 
-#: tgbot/handlers/settings.py:29
+#: tgbot/handlers/settings.py:30
 msgid "Choose language"
-msgstr "italy language choose language"
+msgstr ""
+
+#: tgbot/handlers/start.py:15
+msgid "{'User'} asks you to donate {info[3]} {info[2]}"
+msgstr ""
+
+#: tgbot/handlers/start.py:22 tgbot/handlers/start.py:39
+#: tgbot/handlers/start.py:49
+msgid ""
+"Welcome back {message.chat.first_name}.\n"
+"\n"
+" How we can help you?"
+msgstr ""
+
+#: tgbot/handlers/start.py:29
+msgid "Send location"
+msgstr ""
+
+#: tgbot/handlers/start.py:31
+msgid "Skip"
+msgstr ""
+
+#: tgbot/handlers/start.py:32
+msgid "Please send your location"
+msgstr ""
+
+#: tgbot/handlers/user.py:6
+msgid "Hello, user!"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:15
+msgid "Active orders"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:17
+msgid "Create order"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:19
+msgid "My orders"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:26
+msgid "Delete"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:53 tgbot/keyboards/inline.py:355
+#: tgbot/keyboards/inline.py:370
+msgid "Accept"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:88
+msgid "Create"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:90 tgbot/keyboards/inline.py:181
+#: tgbot/keyboards/inline.py:259 tgbot/keyboards/reply.py:21
+msgid "Cancel"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:123 tgbot/keyboards/inline.py:138
+#: tgbot/keyboards/inline.py:190 tgbot/keyboards/inline.py:203
+msgid "📥Deposit"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:125 tgbot/keyboards/inline.py:192
+msgid "📤Withdraw"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:127
+msgid "📊Fast exchange"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:129
+msgid "📊Escrow exchange"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:131
+msgid "🎯P2P"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:158
+msgid "Reject"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:194
+msgid "💸Send"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:196
+msgid "🖨History"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:205
+msgid "💸Request"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:225
+msgid "Check"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:268
+msgid "🌍Language"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:289 tgbot/keyboards/inline.py:313
+#: tgbot/keyboards/inline.py:320
+msgid "🔙Back"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:300
+msgid "🔀Exchange rates"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:302
+msgid "👫Community"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:304
+msgid "🔢Fees"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:311
+msgid "📊Exchange"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:329
+msgid "Create deal"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:331
+msgid "Active deals"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:352 tgbot/keyboards/inline.py:357
+#: tgbot/keyboards/inline.py:367 tgbot/keyboards/inline.py:372
+msgid "Cancel deal"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:365
+msgid "Confirm receipt"
+msgstr ""
+
+#: tgbot/keyboards/reply.py:15
+msgid "{button}"
+msgstr ""
+
+#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:463
+#, python-format
+msgid "Content purported to be compressed with %s but failed to decompress."
+msgstr ""
+
+#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:649
+#, python-format
+msgid "Unsupported value for qop: %s."
+msgstr ""
+
+#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:654
+#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:748
+#, python-format
+msgid "Unsupported value for algorithm: %s.algorithm"
+msgstr ""
+
+#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:743
+msgid "The challenge doesn't contain a server nonce, or this one is empty."
+msgstr ""
+
+#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:753
+#, python-format
+msgid "Unsupported value for pw-algorithm: %s.pw-algorithm"
+msgstr ""
+
+#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:1657
+msgid "Redirected but the response is missing a Location: header."
+msgstr ""
 

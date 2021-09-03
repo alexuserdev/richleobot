@@ -10,17 +10,17 @@ from tgbot.misc.db_api.database import UsersDb, CommissionsDb, AdminDb
 from tgbot.misc.states import ExchangeStates
 
 
-async def join_exchange(call: types.CallbackQuery):
+async def join_exchange(call: types.CallbackQuery, _):
     balances = await UsersDb.parse_balance(call.message.chat.id)
     flag = False
-    text = "Ok, your <b>Balance</b>:\n\n\n"
+    text = _("Ok, your <b>Balance</b>:\n\n\n")
     for k, v in balances.items():
         if v:
             flag = True
             text += f"{k} — {v}\n"
     if flag:
         currencys = []
-        text += "\nCurrent <b>Rates</b> are:\n\n"
+        text += _("\nCurrent <b>Rates</b> are:\n\n")
         dp = Dispatcher.get_current()
         for k, v in balances.items():
             if v:
@@ -41,34 +41,34 @@ async def join_exchange(call: types.CallbackQuery):
                 except:
                     pass
 
-        text += "\nWhat do you want to exchange?"
+        text += _("\nWhat do you want to exchange?")
 
         print(currencys)
 
         await call.message.edit_text(text,
                                      reply_markup=ExchangeKeyboards.main_exchange(currencys))
     else:
-        await call.message.edit_text("Wallet is empty.",
+        await call.message.edit_text(_("Wallet is empty."),
                                      reply_markup=OperationsKeyboard.deposit())
         await call.answer()
 
 
-async def choosed_first_currency(call: types.CallbackQuery, state: FSMContext):
+async def choosed_first_currency(call: types.CallbackQuery, state: FSMContext, _):
     currency = call.data.split(".")[1]
-    await call.message.edit_text("What do you want to get",
+    await call.message.edit_text(_("What do you want to get"),
                                  reply_markup=ExchangeKeyboards.exchange2(currency))
     await state.update_data(currency1=currency)
 
 
-async def choosed_second_currency(call: types.CallbackQuery, state: FSMContext):
+async def choosed_second_currency(call: types.CallbackQuery, state: FSMContext, _):
     currency = call.data.split(".")[1]
     data = await state.get_data()
-    await call.message.edit_text(f"How much {data['currency1']} do you want to sell?")
+    await call.message.edit_text(_("How much {data['currency1']} do you want to sell?".format(data=data)))
     await ExchangeStates.first.set()
     await state.update_data(currency2=currency)
 
 
-async def entered_amount(message: types.Message, state: FSMContext):
+async def entered_amount(message: types.Message, state: FSMContext, _):
     try:
         data = await state.get_data()
         count = float(message.text.replace(",", "."))
@@ -86,23 +86,24 @@ async def entered_amount(message: types.Message, state: FSMContext):
             sum = sum - (sum / 100 * float(await CommissionsDb.parse_course_percent()))
             sum = round(sum, 3) if sum > 1 else sum
             keyboard = types.InlineKeyboardMarkup()
-            keyboard.add(types.InlineKeyboardButton(text="Confirm",
+            keyboard.add(types.InlineKeyboardButton(text=_("Confirm"),
                                                     callback_data="yes"))
             await state.update_data(count=count, sum=sum)
             keyboard.add(types.InlineKeyboardButton(text="Cancel",
                                                         callback_data="no"))
-            msg = await message.answer(f"You sell: {count} {data['currency1']}\n"
-                                       f"You get: {sum:f} {data['currency2']}\n\n",
+            msg = await message.answer(_("You sell: {count} {data['currency1']}\n You get: {sum:f} {data['currency2']}\n\n".format(
+                sum=sum, data=data, count=count
+            )),
                                        reply_markup=keyboard)
             await state.update_data(last_msg=msg.message_id)
             await ExchangeStates.confirming.set()
         else:
-            await message.answer("Invalid value")
+            await message.answer(_("Invalid value"))
     except ValueError:
-        await message.answer("Пожалуйста, введите число")
+        await message.answer(_("Please, enter num"))
 
 
-async def accept_exchange(call: types.CallbackQuery, state: FSMContext):
+async def accept_exchange(call: types.CallbackQuery, state: FSMContext, _):
     await call.answer()
     data = await state.get_data()
     first_currency = data.get('currency1')
@@ -113,7 +114,7 @@ async def accept_exchange(call: types.CallbackQuery, state: FSMContext):
         await binance_work.make_exchange(first_currency, second_currency, count)
     await UsersDb.minus_balance(call.message.chat.id, first_currency, count)
     await UsersDb.add_balance(call.message.chat.id, second_currency, sum)
-    await call.message.edit_text("Successfully exchanged")
+    await call.message.edit_text(_("Successfully exchanged"))
     return
 
 

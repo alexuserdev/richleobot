@@ -12,7 +12,7 @@ from tgbot.misc.db_api.database import HistoryDb
 from tgbot.misc.states import WithdrawStates, WithdrawNgnStates
 
 
-async def main_balance(message: types.Message, state: FSMContext):
+async def main_balance(message: types.Message, state: FSMContext, _):
     balances = await UsersDb.parse_balance(message.chat.id)
     await message.answer_sticker("CAACAgIAAxkBAAICS2D1mF3tYRb7-39tdRQ_4qV6_0CwAAL_DQACo_ugSsQaq2gMY49PIAQ")
     msg = await message.answer(gen_balance_text(message, balances),
@@ -21,7 +21,7 @@ async def main_balance(message: types.Message, state: FSMContext):
     await state.reset_state(with_data=False)
 
 
-async def join_withdraw(call: types.CallbackQuery, state: FSMContext):
+async def join_withdraw(call: types.CallbackQuery, state: FSMContext, _):
     balances = await UsersDb.parse_balance(call.message.chat.id)
     flag = False
     currencys = []
@@ -30,24 +30,24 @@ async def join_withdraw(call: types.CallbackQuery, state: FSMContext):
             flag = True
             currencys.append(k)
     if flag:
-        await call.message.edit_text("Choose currency to withdraw",
+        await call.message.edit_text(_("Choose currency to withdraw"),
                                      reply_markup=BalanceKeyboard.main_withdraw(currencys))
         await state.update_data(currencys=currencys)
     else:
-        await call.answer("Your wallet is empty")
+        await call.answer(_("Your wallet is empty"))
 
 
-async def choosed_withdraw_currency(call: types.CallbackQuery, state: FSMContext):
+async def choosed_withdraw_currency(call: types.CallbackQuery, state: FSMContext, _):
     currency = call.data.split(".")[1]
     data = await state.get_data()
-    msg = await call.message.edit_text(f"Enter amount of {currency} you want to withdraw",
+    msg = await call.message.edit_text(_('Enter amount of {currency} you want to withdraw'.format(currency=currency)),
                                        reply_markup=BalanceKeyboard.main_withdraw(data['currencys'], currency))
     await state.update_data(currency=currency, msg_id=msg.message_id)
     await call.answer()
     await WithdrawStates.enter_count.set()
 
 
-async def entered_amount_to_withdraw(message: types.Message, state: FSMContext):
+async def entered_amount_to_withdraw(message: types.Message, state: FSMContext, _):
     data = await state.get_data()
     currency = data.get("currency")
     if not currency:
@@ -62,17 +62,17 @@ async def entered_amount_to_withdraw(message: types.Message, state: FSMContext):
         else:
             if not currency == "NGN":
                 dp = Dispatcher.get_current()
-                await message.answer("Enter address")
+                await message.answer(_("Enter address"))
                 await WithdrawStates.next()
             else:
                 await WithdrawNgnStates.first()
-                await message.answer("Enter bank name")
+                await message.answer(_("Enter bank name"))
             await state.update_data(amount=amount)
     except ValueError:
-        await message.answer("Incorrect value")
+        await message.answer(_("Incorrect value"))
 
 
-async def entered_withdraw_address(message: types.Message, state: FSMContext):
+async def entered_withdraw_address(message: types.Message, state: FSMContext, _):
     if len(message.text) <= 50:
         data = await state.get_data()
         amount = data.get('amount')
@@ -81,20 +81,21 @@ async def entered_withdraw_address(message: types.Message, state: FSMContext):
             address = message.text
             balance = await UsersDb.parse_balance(message.chat.id, currency)
             if balance >= amount:
-                msg = await message.answer(f"Amount: {amount}{currency}\n"
-                                           f"Address: {address}",
+                msg = await message.answer(_('Amount: {amount}{currency}\n Address: {address}'.format(
+                    amoun=amount, currency=currency, address=address
+                )),
                                            reply_markup=BalanceKeyboard.withdraw_confirming())
                 await state.update_data(last_msg=msg.message_id, address=address)
                 await WithdrawStates.next()
         else:
-            await message.answer("Enter correct address")
+            await message.answer(_("Enter correct address"))
     else:
-        await message.answer("Enter correct address")
+        await message.answer(_("Enter correct address"))
 
 
-async def confirm_withdraw(call: types.CallbackQuery, state: FSMContext):
+async def confirm_withdraw(call: types.CallbackQuery, state: FSMContext, _):
     data = await state.get_data()
-    await call.answer("Withdraw request has been successfully created", show_alert=True)
+    await call.answer(_("Withdraw request has been successfully created"), show_alert=True)
     await call.message.delete()
     await start(call.message, state)
     await HistoryDb.insert_into_history(call.message.chat.id, 'withdraw', data['currency'], data['amount'])
@@ -119,19 +120,19 @@ async def confirm_withdraw(call: types.CallbackQuery, state: FSMContext):
         await UsersDb.minus_balance(call.message.chat.id, currency, amount)
 
 
-async def entered_bank_name(message: types.Message, state: FSMContext):
+async def entered_bank_name(message: types.Message, state: FSMContext, _):
     await state.update_data(bank_name=message.text)
-    await message.answer("Enter account name")
+    await message.answer(_("Enter account name"))
     await WithdrawNgnStates.next()
 
 
-async def entered_account_name(message: types.Message, state: FSMContext):
+async def entered_account_name(message: types.Message, state: FSMContext, _):
     await state.update_data(account_name=message.text)
-    await message.answer("Enter account number")
+    await message.answer(_("Enter account number"))
     await WithdrawNgnStates.next()
 
 
-async def entered_account_number(message: types.Message, state: FSMContext):
+async def entered_account_number(message: types.Message, state: FSMContext, _):
     await state.update_data(account_number=message.text)
     data = await state.get_data()
     amount = data.get('amount')
@@ -141,10 +142,13 @@ async def entered_account_number(message: types.Message, state: FSMContext):
     account_number = data.get("account_number")
     balance = await UsersDb.parse_balance(message.chat.id, currency)
     if balance >= amount:
-        msg = await message.answer(f"Amount: {amount} {currency}\n"
-                                   f"Bank Name: {bank_name}\n"
-                                   f"Account Name: {account_name}\n"
-                                   f"Account Number: {account_number}",
+        msg = await message.answer(_('Amount: {amount} {currency}\n'
+                                   "Bank Name: {bank_name}\n"
+                                   "Account Name: {account_name}\n"
+                                   "Account Number: {account_number}".format(
+            amount=amount, currency=currency, bank_name=bank_name, account_name=account_name,
+            account_number=account_number
+        )),
                                    reply_markup=BalanceKeyboard.withdraw_confirming())
         await state.update_data(last_msg=msg.message_id)
         await WithdrawStates.confirming.set()
@@ -159,15 +163,15 @@ async def cancel_withdraw(call: types.CallbackQuery, state: FSMContext):
     await start(call.message, state)
 
 
-async def show_history(call: types.CallbackQuery):
+async def show_history(call: types.CallbackQuery, _):
     history = await HistoryDb.parse_history(call.message.chat.id)
     if history:
-        await call.message.answer("History:")
+        await call.message.answer(_("History:"))
         for record in history:
             text = gen_history_text(record)
             await call.message.answer(text)
     else:
-        await call.answer("No history")
+        await call.answer(_("No history"))
 
 
 def gen_history_text(data):
@@ -182,9 +186,8 @@ def gen_history_text(data):
     return text
 
 
-def gen_balance_text(message: types.Message, balances):
-    text = f"Hi {message.from_user.first_name}👋🏻👨🏻‍🔧\n\n" \
-           f"Here is your balance:\n\n"
+def gen_balance_text(message: types.Message, balances, _):
+    text = _("Hi {fname}👋🏻👨🏻‍🔧\n\n Here is your balance:\n\n".format(fname=message.from_user.first_name))
     good_balances = {}
     for wallet, sum in balances.items():
         if sum:
@@ -194,10 +197,10 @@ def gen_balance_text(message: types.Message, balances):
             sum = int(sum) if sum % 10 == 0 else sum
             text += f"{wallet} — {sum}\n"
     else:
-        text += "Wallet is empty\n\n"
+        text += _("Wallet is empty\n\n")
 
-    text += "\nI can help you to <b>Deposit</b> or <b>Withdraw</b> something. \n\n" \
-            "If you want to perform any kind of Operation you should talk to Leo."
+    text += _("\nI can help you to <b>Deposit</b> or <b>Withdraw</b> something. \n\n" \
+            "If you want to perform any kind of Operation you should talk to Leo.")
 
     return text
 

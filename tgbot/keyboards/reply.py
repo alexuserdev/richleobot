@@ -9,23 +9,24 @@ answers_buttons = [
 main_menu_buttons = ["📝 Operations", "💼 Balance", "🛠 Settings", "🔎 Help"]
 
 
-def main_menu_keyboard():
+def main_menu_keyboard(_):
     keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
     for button in main_menu_buttons:
-        keyboard.insert(types.KeyboardButton(text=button))
+        keyboard.insert(types.KeyboardButton(text=_("{button}".format(button=button))))
     return keyboard
 
 
-def escrow_deal_keyboard():
+def escrow_deal_keyboard(_):
     keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    keyboard.add(types.KeyboardButton(text="Cancel"))
+    keyboard.add(types.KeyboardButton(text=_("Cancel")))
     return keyboard
 
 
 class RegistrationKeyboards:
-    def __init__(self, state: FSMContext):
+    def __init__(self, state: FSMContext, _):
         self.state = state
         self.index = None
+        self._ = _
 
     async def get_keyboard(self):
         state_now = await self.state.get_state()
