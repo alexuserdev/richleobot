@@ -3,6 +3,6 @@ from enum import Enum
 
 class Language(Enum):
 
-    ENGLISH = {"name": '🇺🇸 English', "id": "english"}
-    SPANISH = {"name": '🇪🇸 Spanish', "id": "spanish"}
-    ITALIAN = {"name": '🇫🇷 Italian', "id": "italian"}
+    ENGLISH = {"flag": "🇺🇸", "label": 'English', "code": "us"}
+    SPANISH = {"flag": "🇪🇸", "label": 'Spanish', "code": "es"}
+    ITALIAN = {"flag": "🇫🇷", "label": 'Italian', "code": "it"}

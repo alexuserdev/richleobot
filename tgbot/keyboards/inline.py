@@ -279,11 +279,12 @@ class SettingsKeyboards:
         keyboard = types.InlineKeyboardMarkup(row_width=1)
         for lang_obj in Language:
             lang_item = lang_obj.value
-            lang_label = lang_item.get('name')
-            lang_cb = lang_label.get('id')
+            lang_flag = lang_item.get('flag')
+            lang_label = lang_item.get('label')
+            lang_country = lang_item.get('code')
 
-            keyboard.insert(types.InlineKeyboardButton(text=lang_label,
-                                                        callback_data="language.{id_}".format(id_=lang_cb)))
+            keyboard.insert(types.InlineKeyboardButton(text=f"{lang_flag} {lang_label}",
+                                                        callback_data="language.{id_}".format(id_=lang_country)))
 
         keyboard.insert(types.InlineKeyboardButton(text="🔙Back",
                                                    callback_data="back_settings"))

@@ -7,11 +7,11 @@ from tgbot.keyboards.reply import main_menu_buttons
 from tgbot.misc.db_api import UsersDb
 
 
-async def main_settings(message: types.Message, state: FSMContext):
+async def main_settings(message: types.Message, state: FSMContext, _):
     await message.answer_sticker("CAACAgIAAxkBAAICTWD1mWuhkj0O7ipXK31fBcznLt6IAAJiDgACrAipSnab1LAKNz4WIAQ")
-    msg = await message.answer("<b>WARNING</b>: Leo is in a BETA test mode, issues may occur. \n\n"
+    msg = await message.answer(_("<b>WARNING</b>: Leo is in a BETA test mode, issues may occur. \n\n"
                                "Feedback / questions: @RichLeoSupportBot\n\n"
-                               "Official website: rich-leo.com",
+                               "Official website: rich-leo.com"),
                                reply_markup=SettingsKeyboards.main())
     await state.update_data(last_msg=msg.message_id)
     await state.reset_state(with_data=False)
@@ -25,7 +25,8 @@ async def back_settings(call: types.CallbackQuery, _):
     await call.answer()
 
 
-async def change_language(call: types.CallbackQuery, _):
+async def change_language(call: types.CallbackQuery, _, i18n):
+    print(i18n.__dir__())
     await call.message.edit_text(_("Choose language"),
                                  reply_markup=SettingsKeyboards.choose_language())
     await call.answer()

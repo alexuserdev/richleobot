@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 def register_all_middlewares(dp):
     dp.setup_middleware(DbMiddleware())
     dp.setup_middleware(RemoveMiddleware())
-    dp.setup_middleware(I18nMiddleware(dp.bot.config.I18N_DOMAIN, dp.bot.config.LOCALES_DIR))
+    dp.setup_middleware(I18nMiddleware(dp.bot["config"].I18N_DOMAIN, dp.bot["config"].LOCALES_DIR))
 
 
 def register_all_filters(dp):

@@ -41,6 +41,12 @@ class UsersDb:
         await conn.execute(query)
 
     @staticmethod
+    async def get_language(user_id: int) -> str:
+        query = "select language from users  where user_id = {user_id}".format(user_id=user_id)
+        print(query)
+        return await conn.fetchval(query)
+
+    @staticmethod
     async def register_user(user_id):
         query = f"insert into users(user_id) values ({user_id})"
         await conn.execute(query)
