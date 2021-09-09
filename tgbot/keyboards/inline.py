@@ -4,8 +4,17 @@ from tgbot.models.language import Language
 
 CRYPTOS = ["BTC", "ETH", "USDT"]
 FIAT = ["NGN"]
-WALLETS = ["BTC", "ETH", "USDT", "NGN"]
-DEPOSIT_WALLETS = ["BTC(BTC)", "ETH(ERC20)", "USDT(TRC20)", "NGN (Bank Transfer)"]
+WALLETS = ["BTC", "ETH", "USDT", "NGN", "USD", "BRL", "COP", "VEW"]
+DEPOSIT_WALLETS = [
+    "BTC(BTC)", 
+    "ETH(ERC20)", 
+    "USDT(TRC20)", 
+    "NGN (Bank Transfer)", 
+    "USD (Ecuador)", 
+    "BRL – Brazilian real",
+    "COP – Colombian peso",
+    "VES – Venezuelan bolívar",
+]
 
 
 class P2PKeyboards:

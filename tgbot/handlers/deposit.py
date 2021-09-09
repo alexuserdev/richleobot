@@ -75,6 +75,15 @@ async def enter_amount(message: types.Message, state: FSMContext, _):
             payment = Payment(amount=amount, currency="NGN")
             await DepositStates.next()
             await state.update_data(payment=payment, last_msg=msg.message_id)
+            
+        elif currency in ["USD", "BRL", "COP", "VES"]:
+            msg = await message.answer(_("To deposit {currency} send {amount} to our bank account:\nBank Acc. No.: ").format(
+                amount=amount, currency=currency
+            ))
+            payment = Payment(amount=amount, currency=currency)
+            await DepositStates.next()
+            await state.update_data(payment=payment, last_msg=msg.message_id)
+
         else:
             await state.update_data(first_amount=amount)
             if currency == "BTC":
