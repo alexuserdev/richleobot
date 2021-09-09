@@ -23,8 +23,7 @@ async def main_operations(message: types.Message, state: FSMContext, _):
 ""
 "• <b>Escrow Exchange</b> - Exchange crypto with a person chosen by you\n"
 "\n"
-"• <b>P2P</b> - Make and take orders to trade crypto"),
-                               reply_markup=OperationsKeyboard.main())
+"• <b>P2P</b> - Make and take orders to trade crypto"), reply_markup=OperationsKeyboard.main(_))
     await state.update_data(last_msg=msg.message_id)
     await state.reset_state(with_data=False)
 
@@ -43,7 +42,7 @@ async def join_send(call: types.CallbackQuery, state: FSMContext, _):
         await state.update_data(currencys=currencys)
     else:
         await call.message.edit_text(_("Wallet is empty."),
-                                     reply_markup=OperationsKeyboard.deposit())
+                                     reply_markup=OperationsKeyboard.deposit(_))
         await call.answer()
 
 
@@ -97,8 +96,7 @@ async def entered_user_id(message: types.Message, state: FSMContext, _):
         if balance >= amount:
             msg = await message.answer(_("Amount: {amount}{currency}\n User_id: {message.text}".format(
                 amount=amount, currency=currency, message=message
-            )),
-                                       reply_markup=OperationsKeyboard.send_confirming())
+            )), reply_markup=OperationsKeyboard.send_confirming(_))
             await state.update_data(last_msg=msg.message_id, user_id=user_id)
             await SendStates.next()
     except ValueError:
