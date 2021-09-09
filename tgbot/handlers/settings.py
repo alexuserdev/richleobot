@@ -12,7 +12,7 @@ async def main_settings(message: types.Message, state: FSMContext, _):
     msg = await message.answer(_("<b>WARNING</b>: Leo is in a BETA test mode, issues may occur. \n\n"
                                "Feedback / questions: @RichLeoSupportBot\n\n"
                                "Official website: rich-leo.com"),
-                               reply_markup=SettingsKeyboards.main())
+                               reply_markup=SettingsKeyboards.main(_))
     await state.update_data(last_msg=msg.message_id)
     await state.reset_state(with_data=False)
 
