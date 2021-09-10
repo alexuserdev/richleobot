@@ -22,7 +22,7 @@ async def start(message: types.Message, state: FSMContext, _):
         await message.answer(_("Welcome back {message.chat.first_name}.\n\n How we can help you?".format(
             message=message
         )),
-                             reply_markup=main_menu_keyboard())
+                             reply_markup=main_menu_keyboard(_))
     else:
         await FirstRegistrationStates.first()
         keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)

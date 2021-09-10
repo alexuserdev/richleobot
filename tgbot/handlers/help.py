@@ -12,7 +12,7 @@ async def main_help(message: types.Message, state: FSMContext, _):
                                "If you have any questions, don't hesitate asking them after clicking on '❓Ask'\n\n"
                                "Join our 👫🏼Community to discuss Leo\n\n"
                                "If you want to check what are the 🔀exchange rates or 🔢fees - click correspond buttons below"),
-                               reply_markup=HelpKeyboards.main())
+                               reply_markup=HelpKeyboards.main(_))
     await state.update_data(last_msg=msg.message_id)
     await state.reset_state(with_data=False)
 
@@ -22,23 +22,23 @@ async def back_help(call: types.CallbackQuery, _):
                                "If you have any questions, don't hesitate asking them after clicking on '❓Ask'\n\n"
                                "Join our 👫🏼Community to discuss Leo\n\n"
                                "If you want to check what are the 🔀exchange rates or 🔢fees - click correspond buttons below"),
-                                 reply_markup=HelpKeyboards.main())
+                                 reply_markup=HelpKeyboards.main(_))
     await call.answer()
 
 
-async def exchange_rates(call: types.CallbackQuery):
+async def exchange_rates(call: types.CallbackQuery, _):
     dp = Dispatcher.get_current()
     courses = await get_coins_course(dp)
     buy_courses = [round(i + (i / 100 * 2), 2) for i in courses]
     sell_courses = [round(i - (i / 100 * 2), 2) for i in courses]
     await call.message.edit_text(gen_exchange_info_text(buy_courses, sell_courses),
-                                 reply_markup=HelpKeyboards.exchange_rates())
+                                 reply_markup=HelpKeyboards.exchange_rates(_))
     await call.answer()
 
 
 async def fees(call: types.CallbackQuery, _):
     await call.message.edit_text(_("Fees"),
-                                 reply_markup=HelpKeyboards.fees())
+                                 reply_markup=HelpKeyboards.fees(_))
     await call.answer()
 
 

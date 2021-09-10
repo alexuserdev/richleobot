@@ -15,8 +15,8 @@ from tgbot.misc.states import WithdrawStates, WithdrawNgnStates
 async def main_balance(message: types.Message, state: FSMContext, _):
     balances = await UsersDb.parse_balance(message.chat.id)
     await message.answer_sticker("CAACAgIAAxkBAAICS2D1mF3tYRb7-39tdRQ_4qV6_0CwAAL_DQACo_ugSsQaq2gMY49PIAQ")
-    msg = await message.answer(gen_balance_text(message, balances),
-                               reply_markup=BalanceKeyboard.main())
+    msg = await message.answer(gen_balance_text(message, balances, _),
+                               reply_markup=BalanceKeyboard.main(_))
     await state.update_data(last_msg=msg.message_id)
     await state.reset_state(with_data=False)
 

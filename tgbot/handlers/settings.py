@@ -28,7 +28,7 @@ async def back_settings(call: types.CallbackQuery, _):
 async def change_language(call: types.CallbackQuery, _, i18n):
     print(i18n.__dir__())
     await call.message.edit_text(_("Choose language"),
-                                 reply_markup=SettingsKeyboards.choose_language())
+                                 reply_markup=SettingsKeyboards.choose_language(_))
     await call.answer()
 
 
@@ -36,7 +36,7 @@ async def changed_language(call: types.CallbackQuery, state: FSMContext):
     language = call.data.split(".")[1]
     await UsersDb.update_language(call.message.chat.id, language)
     await call.message.delete()
-    await start(call.message, state)
+    await start(call.message, state, _)
     await state.reset_data()
 
 

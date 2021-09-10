@@ -110,7 +110,7 @@ async def enter_amount(message: types.Message, state: FSMContext, _):
                 )),
                                      reply_markup=BalanceKeyboardReply.cancel())
             msg = await message.answer(address,
-                                       reply_markup=BalanceKeyboard.deposit_check())
+                                       reply_markup=BalanceKeyboard.deposit_check(_))
             await DepositStates.next()
             await state.update_data(payment=payment, last_msg=msg.message_id)
     except ValueError:

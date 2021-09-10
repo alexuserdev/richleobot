@@ -20,7 +20,7 @@ async def join_p2p(call: types.CallbackQuery, _):
             break
     if flag:
         await call.message.edit_text(_("Select an action"),
-                                     reply_markup=P2PKeyboards.main())
+                                     reply_markup=P2PKeyboards.main(_))
     else:
         await call.message.edit_text(_("Wallet is empty."),
                                      reply_markup=OperationsKeyboard.deposit())

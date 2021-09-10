@@ -1,306 +1,904 @@
-msgid "Successfully changed" 
-msgstr "Modifié avec succès" 
-
-msgid "Please input correct command" 
-msgstr "Veuillez saisir la commande correcte" 
-
-msgid "Hello, admin!" 
-msgstr "Bonjour, administrateur !" 
-
-msgid "Successfully confirmed" 
-msgstr "Confirmé avec succès" 
-
-msgid "Your NGN deposit was confirmed" 
-msgstr "Votre dépôt en NGN a été confirmé" 
-
-msgid "Choose currency to withdraw" 
-msgstr "Choisissez la devise à retirer" 
-
-msgid "Your wallet is empty" 
-msgstr "Votre portefeuille est vide" 
-
-msgid "Enter amount of" 
-msgstr "Saisissez le montant de" 
-
-msgid "you want to withdraw" 
-msgstr "vous voulez vous retirer" 
-
-msgid "Enter address" 
-msgstr "Entrer l'adresse" 
-
-msgid "Enter bank name" 
-msgstr "Saisissez le nom de la banque" 
-
-msgid "Incorrect value" 
-msgstr "Valeur incorrecte" 
-
-msgid "amount" 
-msgstr "montant" 
-
-msgid "currency" 
-msgstr "somme" 
-
-msgid "Enter correct address" 
-msgstr "Entrez l'adresse correcte" 
-
-msgid "Withdrawal request has been successfully created" 
-msgstr "La demande de retrait a été créée avec succès" 
-
-msgid "<b>Deposit</b> – top up your balance.
-<b>Withdraw</b> – take money out of your balance.
-<b>Send</b> – send an amount to another user of our platform. 
-<b>Hisory</b> – show the list of your operations. " 
-msgstr "<b>Déposer</b> – rechargez votre solde.
-<b>Retirer</b> – retirez de l'argent de votre solde.
-<b>Envoyer</b> – envoyer un montant à un autre utilisateur de notre plateforme.
-<b>Historique</b> – afficher la liste de vos opérations. " 
-
-msgid "Your balance:" 
-msgstr "Votre solde:" 
-
-msgid "History:" 
-msgstr "Histoire:" 
-
-msgid "No history" 
-msgstr "Pas d'historique" 
-
-msgid "If you want to perform any kind of Operation you should talk to Leo." 
-msgstr "Si vous souhaitez effectuer tout type d'opération, vous devez en parler à Leo." 
-
-msgid "Which currency you want to deposit?" 
-msgstr "Quelle devise vous souhaitez déposer ?" 
-
-msgid "Your deposit has been received" 
-msgstr "Votre dépôt a été reçu" 
-
-msgid "To replenish your NGN account - send amount you want Bank account:" 
-msgstr "nan" 
-
-msgid "Bank Name: keystone PLC" 
-msgstr "nan" 
-
-msgid "Account Name: Opal Trade Limited" 
-msgstr "nan" 
-
-msgid "Account Number: 1012241234" 
-msgstr "nan" 
-
-msgid "Amount:  NGN" 
-msgstr "nan" 
-
-msgid "Comment: leoexchange " 
-msgstr "nan" 
-
-msgid "<b>ATTENTION!</b>" 
-msgstr "<b>ATTENTION !</b>" 
-
-msgid "It is REQUIRED to write code {message.chat.id} in the comment section" 
-msgstr "Il est OBLIGATOIRE d'écrire le code {message.chat.id} dans la section commentaire" 
-
-msgid "Otherwise, your deposit will not be processed." 
-msgstr "Sinon, votre dépôt ne sera pas traité. " 
-
-msgid "on address below to deposit" 
-msgstr "à l'adresse ci-dessous pour déposer" 
-
-msgid "Wait for a transaction to be confirmed " 
-msgstr "Attendre qu'une transaction soit confirmée " 
-
-msgid "Success" 
-msgstr "Succès" 
-
-msgid "deposit" 
-msgstr "déposer" 
-
-msgid "Transaction is found but not confirmed. Please wait" 
-msgstr "La transaction est trouvée mais non confirmée. S'il vous plaît, attendez" 
-
-msgid "Transaction not found. Please wait" 
-msgstr "Transaction introuvable. S'il vous plaît, attendez" 
-
-msgid "The trade has been canceled" 
-msgstr "L'échange a été annulé " 
-
-msgid "accepted" 
-msgstr "accepté" 
-
-msgid "escrow" 
-msgstr "escrow" 
-
-msgid "Escrow trade no. {id} was completed successfully" 
-msgstr "L'echange escrow nº {id} a été terminé avec succès" 
-
-msgid "Payment for the trade no. {deal_id} was reserved by AltrEX." 
-msgstr "Le paiement pour l'échange nº {deal_id} a été réservé par AltrEX." 
-
-msgid "Please send the money" 
-msgstr "Veuillez envoyer l'argent" 
-
-msgid "Wallet is empty." 
-msgstr "Le portefeuille est vide." 
-
-msgid "Select an action" 
-msgstr "Sélectionnez une action" 
-
-msgid "All active offers: " 
-msgstr "Toutes les offres actives : " 
-
-msgid "There is no offers created by you" 
-msgstr "Il n'y a pas d'offres actives créées par vous " 
-
-msgid "Which currency do you want to sell?" 
-msgstr "Quelle devise voulez-vous vendre ? " 
-
-msgid "Enter an amount of {currency} you want to sell" 
-msgstr "Saisissez le montant de {currency} que vous souhaitez vendre" 
-
-msgid "Which currency you want to receive?" 
-msgstr "Quelle devise voulez-vous recevoir ? " 
-
-msgid "Enter Telegram username of your escrow partner" 
-msgstr "Saisissez le nom d'utilisateur sur Telegram de votre partenaire escrow" 
-
-msgid "The trade has been successfully started" 
-msgstr "L'échange a été lancé avec succès" 
-
-msgid "Incorrect value or user not registered on AltrEX" 
-msgstr "Valeur incorrecte ou utilisateur non enregistré sur AltrEX" 
-
-msgid "Your <b>balance</b>:" 
-msgstr "Votre <b>solde</b> :" 
-
-msgid "Current <b>rates</b>:" 
-msgstr "Les <b>taux</b> actuels :" 
-
-msgid "What do you want to exchange?" 
-msgstr "Que voulez-vous échanger ?" 
-
-msgid "What do you want to receive?" 
-msgstr "Que voulez-vous recevoir ? " 
-
-msgid "What amount of {data['currency1']} do you want to sell?" 
-msgstr "Combien de {data['currency1']} voulez-vous vendre ?" 
-
-msgid "No" 
-msgstr "Non" 
-
-msgid "Yes" 
-msgstr "Oui" 
-
-msgid "Confirm" 
-msgstr "Confirmer" 
-
-msgid "Cancel" 
-msgstr "Annuler" 
-
-msgid "Invalid value" 
-msgstr "Valeur invalide" 
-
-msgid "Please enter amount" 
-msgstr "S'il vous plaît, veuillez entrer le montant" 
-
-msgid "The trade has been successfully completed" 
-msgstr "L'échange a été effectué avec succès " 
-
-msgid "Official website: altrex.io" 
-msgstr "Site Web officiel : altrex.io" 
-
-msgid "If you have any questions, don't hesitate asking them after clicking on '❓Ask'" 
-msgstr "Si vous avez des questions, n'hésitez pas à les poser après avoir cliqué sur ' demander '" 
-
-msgid "Join our 👫🏼Community to be aware of the latest news and to discuss AltrEX" 
-msgstr "Rejoignez notre 👫🏼Communauté pour être au courant des dernières nouvelles et pour discuter d'AltrEX " 
-
-msgid "If you want to check what are the 🔀exchange rates and 🔢fees, please click on the corresponding button" 
-msgstr "Si vous voulez vérifier quels sont les 🔀taux de change et les frais, veuillez cliquer sur le bouton correspondant" 
-
-msgid "What would you like to do?" 
-msgstr "Que voudriez-vous faire ?" 
-
-msgid "<b>Deposit</b> money on your AltrEX account" 
-msgstr "<b>Déposez</b> de l'argent sur votre compte d'AltrEX" 
-
-msgid "<b>Withdraw</b> money from AltrEX to your personal account" 
-msgstr "<b>Retirer</b> de l'argent de AltrEX vers votre compte personnel" 
-
-msgid "<b>Fast Exchange</b>  – Just  choose what you want to give and get & make your trade" 
-msgstr "Échange rapide</b> – Choisissez juste ce que vous voulez donner et prendre en échange et faites votre transaction." 
-
-msgid "<b/>Escrow Exchange</b> – Trade with a person chosen by you" 
-msgstr "<b>Escrow Exchange</b>  – Echange de cryptomonnaie avec une personne choisie par vous" 
-
-msgid "<b>P2P</b> – Make and take offers to trade crypto" 
-msgstr "<b>P2P</b> – Faire et accepter des offres d'échange de cryptomonnaie " 
-
-msgid "Choose currency to send" 
-msgstr "Choisissez la devise à envoyer" 
-
-msgid "Enter amount of {currency} you want to send to another user" 
-msgstr "Saisissez le montant de {currency} que vous souhaitez envoyer à un autre utilisateur" 
-
-msgid "Enter username on Telegram" 
-msgstr "Saisissez le pseudo de l'utilisateur sur Telegram" 
-
-msgid "Enter correct username" 
-msgstr "Saisissez le bon nom d'utilisateur " 
-
-msgid "To request funds, please specify amount and pick the currency you want to receive." 
-msgstr "Pour demander des fonds, veuillez spécifier le montant et sélectionner la devise que vous souhaitez recevoir." 
-
-msgid "How much {method} you want to request" 
-msgstr "Combien {method} souhaitez-vous demander ?" 
-
-msgid "method" 
-msgstr "méthode" 
-
-msgid "To request {amount} {method} choose person from your contacts" 
-msgstr "Pour demander {amount} {method} choisissez la personne de vos contacts" 
-
-msgid "Or show them this QR." 
-msgstr "Ou montrez-leur ce QR." 
-
-msgid "Not sufficient funds" 
-msgstr "Pas de fonds suffisants" 
-
-msgid "Transaction rejected." 
-msgstr "Transaction refusée." 
-
-msgid "Choose currency to sell" 
-msgstr "Choisissez la devise à vendre" 
-
-msgid "No active offers now" 
-msgstr "Aucune offre active pour le moment" 
-
-msgid "Choose currency you want to get" 
-msgstr "Choisissez la devise que vous souhaitez obtenir" 
-
-msgid "All active offers:" 
-msgstr "Toutes les offres actives :" 
-
-msgid "P2P offers" 
-msgstr "Offres P2P" 
-
-msgid "You give:" 
-msgstr "Vous donnez:" 
-
-msgid "You get:" 
-msgstr "Vous recevez:" 
-
-msgid "Enter amount of {currency} you want to receive" 
-msgstr "Saisissez le montant de {currency} que vous souhaitez recevoir" 
-
-msgid "Your active P2P offers:" 
-msgstr "Vos offres P2P actives : " 
-
-msgid "The offer no. {order_id} has been cancelled" 
-msgstr "L'offre nº {order_id} a été annulé " 
-
-msgid "<b>WARNING</b>: AltrEX is in a BETA test mode, issues may occur. " 
-msgstr "<b>AVERTISSEMENT</b> : AltrEX est en un mode de test BETA, des problèmes peuvent survenir." 
-
-msgid "Feedback & questions: @AltrEXSupportBot " 
-msgstr "Commentaires et questions : @AltrEXSupportBot" 
-
-msgid "Official website: altrex.io" 
-msgstr "Site Web officiel : altrex.io" 
+# Italian translations for PROJECT.
+# Copyright (C) 2021 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2021.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2021-09-09 22:04+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: it\n"
+"Language-Team: it <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.9.1\n"
+
+#: tgbot/handlers/balance.py:33
+#, fuzzy
+msgid "Choose currency to withdraw"
+msgstr "Choisissez la devise à retirer"
+
+#: tgbot/handlers/balance.py:37
+#, fuzzy
+msgid "Your wallet is empty"
+msgstr "Votre portefeuille est vide"
+
+#: tgbot/handlers/balance.py:43
+#, fuzzy
+msgid "Enter amount of {currency} you want to withdraw"
+msgstr "Saisissez le montant de {currency} que vous souhaitez recevoir"
+
+#: tgbot/handlers/balance.py:65
+#, fuzzy
+msgid "Enter address"
+msgstr "Entrer l'adresse"
+
+#: tgbot/handlers/balance.py:69
+#, fuzzy
+msgid "Enter bank name"
+msgstr "Saisissez le nom de la banque"
+
+#: tgbot/handlers/balance.py:72 tgbot/handlers/deposit.py:117
+#: tgbot/handlers/escrow.py:176 tgbot/handlers/escrow.py:206
+#: tgbot/handlers/operations.py:78 tgbot/handlers/p2p.py:144
+#: tgbot/handlers/p2p.py:176
+#, fuzzy
+msgid "Incorrect value"
+msgstr "Valeur incorrecte"
+
+#: tgbot/handlers/balance.py:84
+msgid ""
+"Amount: {amount}{currency}\n"
+" Address: {address}"
+msgstr ""
+
+#: tgbot/handlers/balance.py:91 tgbot/handlers/balance.py:93
+#, fuzzy
+msgid "Enter correct address"
+msgstr "Entrez l'adresse correcte"
+
+#: tgbot/handlers/balance.py:98
+#, fuzzy
+msgid "Withdraw request has been successfully created"
+msgstr "La demande de retrait a été créée avec succès"
+
+#: tgbot/handlers/balance.py:125
+#, fuzzy
+msgid "Enter account name"
+msgstr "Saisissez le nom de la banque"
+
+#: tgbot/handlers/balance.py:131
+msgid "Enter account number"
+msgstr ""
+
+#: tgbot/handlers/balance.py:148
+msgid ""
+"Amount: {amount} {currency}\n"
+"Bank Name: {bank_name}\n"
+"Account Name: {account_name}\n"
+"Account Number: {account_number}"
+msgstr ""
+
+#: tgbot/handlers/balance.py:169
+msgid "History:"
+msgstr "Histoire:"
+
+#: tgbot/handlers/balance.py:174
+#, fuzzy
+msgid "No history"
+msgstr "Pas d'historique"
+
+#: tgbot/handlers/balance.py:190
+msgid ""
+"Hi {fname}👋🏻👨🏻‍🔧\n"
+"\n"
+" Here is your balance:\n"
+"\n"
+msgstr ""
+
+#: tgbot/handlers/balance.py:200
+#, fuzzy
+msgid ""
+"Wallet is empty\n"
+"\n"
+msgstr "Le portefeuille est vide."
+
+#: tgbot/handlers/balance.py:202
+msgid ""
+"\n"
+"I can help you to <b>Deposit</b> or <b>Withdraw</b> something. \n"
+"\n"
+"If you want to perform any kind of Operation you should talk to Leo."
+msgstr ""
+
+#: tgbot/handlers/deposit.py:17 tgbot/handlers/deposit.py:23
+#, fuzzy
+msgid "Which currency you want to deposit"
+msgstr "Quelle devise vous souhaitez déposer ?"
+
+#: tgbot/handlers/deposit.py:37 tgbot/handlers/deposit.py:44
+#, fuzzy
+msgid "Enter amount of {currency} you want to deposit"
+msgstr "Saisissez le montant de {currency} que vous souhaitez recevoir"
+
+#: tgbot/handlers/deposit.py:70
+msgid ""
+"To replenish your NGN account - send amount you want Bank account:\n"
+"\n"
+"Bank Name: keystone PLC\n"
+"Account Name: Opal Trade Limited\n"
+"Account Number: 1012241234\n"
+"\n"
+"Amount: {amount} NGN\n"
+"Comment: leoexchange {msg}\n"
+"\n"
+"🚨🚨🚨ATTENTION!🚨🚨🚨\n"
+"\n"
+"It is REQUIRED to write code leoexchange {msg} in the comment section\n"
+"Otherwise, deposit will not be executed"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:80
+msgid ""
+"To deposit {currency} send {amount} to our bank account:\n"
+"Bank Acc. No.: "
+msgstr ""
+
+#: tgbot/handlers/deposit.py:103
+msgid "Send {data} {currency} on address below to deposit"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:108
+msgid "Send {amount} {currency} on address below to deposit {currency}"
+msgstr ""
+
+#: tgbot/handlers/deposit.py:126
+#, fuzzy
+msgid "Wait transaction confirming"
+msgstr "Attendre qu'une transaction soit confirmée "
+
+#: tgbot/handlers/deposit.py:142
+#, fuzzy
+msgid "Successfully"
+msgstr "Modifié avec succès"
+
+#: tgbot/handlers/deposit.py:145
+#, fuzzy
+msgid "Transaction is found but not confirmed. Please wait"
+msgstr "La transaction est trouvée mais non confirmée. S'il vous plaît, attendez"
+
+#: tgbot/handlers/deposit.py:147
+#, fuzzy
+msgid "Transaction not found. Please wait"
+msgstr "Transaction introuvable. S'il vous plaît, attendez"
+
+#: tgbot/handlers/escrow.py:17 tgbot/handlers/escrow.py:24
+#, fuzzy
+msgid "Deal №{deal_id} has been canceled"
+msgstr "L'offre nº {order_id} a été annulé "
+
+#: tgbot/handlers/escrow.py:32
+#, fuzzy
+msgid "Deal has been canceled"
+msgstr "L'échange a été annulé "
+
+#: tgbot/handlers/escrow.py:37 tgbot/handlers/escrow.py:57
+#, fuzzy
+msgid "Accepted"
+msgstr "accepté"
+
+#: tgbot/handlers/escrow.py:44 tgbot/handlers/escrow.py:45
+#: tgbot/handlers/escrow.py:68 tgbot/handlers/escrow.py:69
+#, fuzzy
+msgid "Escrow exchange №{id} was completed successfully"
+msgstr "L'echange escrow nº {id} a été terminé avec succès"
+
+#: tgbot/handlers/escrow.py:51
+msgid ""
+"Payment for deal №{deal_id} was reserved in the service. Please send the "
+"money"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:53 tgbot/handlers/escrow.py:71
+#: tgbot/handlers/exchange.py:51 tgbot/handlers/operations.py:44
+#: tgbot/handlers/p2p.py:25
+#, fuzzy
+msgid "Wallet is empty."
+msgstr "Le portefeuille est vide."
+
+#: tgbot/handlers/escrow.py:95 tgbot/handlers/p2p.py:22
+#, fuzzy
+msgid "Select an action"
+msgstr "Sélectionnez une action"
+
+#: tgbot/handlers/escrow.py:105
+#, fuzzy
+msgid "All active orders: "
+msgstr "Toutes les offres actives :"
+
+#: tgbot/handlers/escrow.py:113
+msgid ""
+"\n"
+"Rate: 1 {fcur} = {rate} {scur}"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:137
+msgid "You don't have active deals"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:142
+msgid "Escrow exchange"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:144
+#, fuzzy
+msgid "Which currency you want to sell"
+msgstr "Quelle devise voulez-vous vendre ? "
+
+#: tgbot/handlers/escrow.py:151 tgbot/handlers/p2p.py:124
+#, fuzzy
+msgid "Enter amount of {currency} you want to sell"
+msgstr "Saisissez le montant de {currency} que vous souhaitez vendre"
+
+#: tgbot/handlers/escrow.py:169 tgbot/handlers/p2p.py:138
+#, fuzzy
+msgid "Which currency you want to get"
+msgstr "Quelle devise vous souhaitez déposer ?"
+
+#: tgbot/handlers/escrow.py:182 tgbot/handlers/p2p.py:150
+#, fuzzy
+msgid "Enter amount of {currency} you want to get"
+msgstr "Saisissez le montant de {currency} que vous souhaitez vendre"
+
+#: tgbot/handlers/escrow.py:200
+msgid "Enter username or ID of second transaction participant"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:229 tgbot/handlers/escrow.py:241
+#: tgbot/handlers/p2p.py:100
+#, fuzzy
+msgid "Deal successfully created"
+msgstr "Modifié avec succès"
+
+#: tgbot/handlers/escrow.py:252
+#, fuzzy
+msgid "Incorrect value or user not registered in bot"
+msgstr "Valeur incorrecte ou utilisateur non enregistré sur AltrEX"
+
+#: tgbot/handlers/escrow.py:270
+msgid ""
+"Deal №{deal_id} with <a "
+"href='tg://user?id={info['buyer_id']}'>{info['buyer_id']}</a>\n"
+"\n"
+"You give: {info['first_amount']} {info['first_currency']}\n"
+"You'll get: {info['second_amount']} {info['second_currency']}"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:276
+msgid ""
+"Deal №{deal_id} with <a "
+"href='tg://user?id={info['seller_id']}'>{info['seller_id']}</a>\n"
+"\n"
+"You give: {info['second_amount']} {info['second_currency']}\n"
+"You'll get: {info['first_amount']} {info['first_currency']}"
+msgstr ""
+
+#: tgbot/handlers/escrow.py:280
+msgid ""
+"\n"
+"\n"
+"Chat: {chat_link}"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:16
+#, fuzzy
+msgid ""
+"Ok, your <b>Balance</b>:\n"
+"\n"
+"\n"
+msgstr "Votre <b>solde</b> :"
+
+#: tgbot/handlers/exchange.py:23
+#, fuzzy
+msgid ""
+"\n"
+"Current <b>Rates</b> are:\n"
+"\n"
+msgstr "Les <b>taux</b> actuels :"
+
+#: tgbot/handlers/exchange.py:44
+#, fuzzy
+msgid ""
+"\n"
+"What do you want to exchange?"
+msgstr "Que voulez-vous échanger ?"
+
+#: tgbot/handlers/exchange.py:58
+#, fuzzy
+msgid "What do you want to get"
+msgstr "Que voulez-vous échanger ?"
+
+#: tgbot/handlers/exchange.py:66
+#, fuzzy
+msgid "How much {data['currency1']} do you want to sell?"
+msgstr "Combien de {data['currency1']} voulez-vous vendre ?"
+
+#: tgbot/handlers/exchange.py:89 tgbot/keyboards/inline.py:169
+#: tgbot/keyboards/inline.py:188 tgbot/keyboards/inline.py:266
+msgid "Confirm"
+msgstr "Confirmer"
+
+#: tgbot/handlers/exchange.py:94
+msgid ""
+"You sell: {count} {data['currency1']}\n"
+" You get: {sum:f} {data['currency2']}\n"
+"\n"
+msgstr ""
+
+#: tgbot/handlers/exchange.py:101 tgbot/handlers/operations.py:154
+msgid "Invalid value"
+msgstr "Valeur invalide"
+
+#: tgbot/handlers/exchange.py:103
+#, fuzzy
+msgid "Please, enter num"
+msgstr "S'il vous plaît, veuillez entrer le montant"
+
+#: tgbot/handlers/exchange.py:117
+#, fuzzy
+msgid "Successfully exchanged"
+msgstr "Modifié avec succès"
+
+#: tgbot/handlers/help.py:11 tgbot/handlers/help.py:21
+msgid ""
+"Official website: rich-leo.com\n"
+"\n"
+"If you have any questions, don't hesitate asking them after clicking on "
+"'❓Ask'\n"
+"\n"
+"Join our 👫🏼Community to discuss Leo\n"
+"\n"
+"If you want to check what are the 🔀exchange rates or 🔢fees - click "
+"correspond buttons below"
+msgstr ""
+
+#: tgbot/handlers/help.py:40
+msgid "Fees"
+msgstr ""
+
+#: tgbot/handlers/operations.py:17
+msgid ""
+"What would you like to do? 👩🏼‍🦰\n"
+"\n"
+"• <b>Deposit</b> money on your account in the bot\n"
+"• <b>Withdraw money</b> from the bot to your personal account\n"
+"\n"
+"• <b>Fast Exchange</b> - Just  choose what you want to give and get & "
+"make your trade\n"
+"• <b>Escrow Exchange</b> - Exchange crypto with a person chosen by you\n"
+"\n"
+"• <b>P2P</b> - Make and take orders to trade crypto"
+msgstr ""
+
+#: tgbot/handlers/operations.py:40
+#, fuzzy
+msgid "Choose currency to send"
+msgstr "Choisissez la devise à envoyer"
+
+#: tgbot/handlers/operations.py:52
+#, fuzzy
+msgid "Enter amount of {currency} you want to send to another user"
+msgstr ""
+"Saisissez le montant de {currency} que vous souhaitez envoyer à un autre "
+"utilisateur"
+
+#: tgbot/handlers/operations.py:74
+#, fuzzy
+msgid "Enter user_id or user's nickname on Telegram"
+msgstr "Saisissez le pseudo de l'utilisateur sur Telegram"
+
+#: tgbot/handlers/operations.py:97
+msgid ""
+"Amount: {amount}{currency}\n"
+" User_id: {message.text}"
+msgstr ""
+
+#: tgbot/handlers/operations.py:103
+#, fuzzy
+msgid "Enter correct user_id"
+msgstr "Saisissez le bon nom d'utilisateur "
+
+#: tgbot/handlers/operations.py:115
+msgid ""
+"You got {amount}{currency} from <a "
+"href='tg://user?id={user_id}'>{user_id}</a>"
+msgstr ""
+
+#: tgbot/handlers/operations.py:127
+#, fuzzy
+msgid ""
+"To request funds, please specify amount and pick the currency you want to"
+" receive.\n"
+"\n"
+msgstr ""
+"Pour demander des fonds, veuillez spécifier le montant et sélectionner la"
+" devise que vous souhaitez recevoir."
+
+#: tgbot/handlers/operations.py:133
+#, fuzzy
+msgid "How much {method} you want to request"
+msgstr "Combien {method} souhaitez-vous demander ?"
+
+#: tgbot/handlers/operations.py:148
+#, fuzzy
+msgid ""
+"To request {amount} {method} choose person from your contacts\n"
+"\n"
+" <b>Or show them this QR.</b>"
+msgstr "Pour demander {amount} {method} choisissez la personne de vos contacts"
+
+#: tgbot/handlers/operations.py:162
+#, fuzzy
+msgid "No much funds"
+msgstr "Pas de fonds suffisants"
+
+#: tgbot/handlers/operations.py:168
+#, fuzzy
+msgid "Transaction rejected."
+msgstr "Transaction refusée."
+
+#: tgbot/handlers/p2p.py:33
+#, fuzzy
+msgid "Choose currency to sell"
+msgstr "Choisissez la devise à vendre"
+
+#: tgbot/handlers/p2p.py:36
+#, fuzzy
+msgid "No active orders now"
+msgstr "Aucune offre active pour le moment"
+
+#: tgbot/handlers/p2p.py:42
+#, fuzzy
+msgid "Choose currency you want to get"
+msgstr "Choisissez la devise que vous souhaitez obtenir"
+
+#: tgbot/handlers/p2p.py:55
+#, fuzzy
+msgid "All active orders:"
+msgstr "Toutes les offres actives :"
+
+#: tgbot/handlers/p2p.py:69
+msgid ""
+"P2P order №{order[0]}\n"
+"You give: {order[5]} {order[4]}\n"
+"You get: {order[3]} {order[2]}\n"
+"Rate: 1 {order[2]} = {round(rate, 5)} {order[4]}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:76
+msgid ""
+"P2P order №{order[0]}\n"
+"You give: {order[5]} {order[4]}\n"
+"You get: {order[3]} {order[2]}\n"
+"Rate: 1 {order[4]} = {round(rate, 5)} {order[2]}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:80
+msgid "No active orders now with selected params"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:93
+msgid ""
+"\n"
+"Rate: 1 {data['first_currency']} = {rate} {data['second_currency']}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:96
+msgid ""
+"\n"
+"Rate: 1 {data['second_currency']} = {rate} {data['first_currency']}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:116
+#, fuzzy
+msgid "What do you want to give?"
+msgstr "Que voulez-vous recevoir ? "
+
+#: tgbot/handlers/p2p.py:170
+msgid ""
+"P2P order\n"
+"You give: {data['first_amount']} {data['first_currency']}\n"
+"You'll get: {data['second_amount']} {data['second_currency']}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:183
+msgid "P2P order has been created"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:195
+#, fuzzy
+msgid "Your active p2p orders:"
+msgstr "Vos offres P2P actives : "
+
+#: tgbot/handlers/p2p.py:199
+msgid ""
+"P2P order №{order[0]}\n"
+"You give: {order[5]} {order[4]}\n"
+"You get: {order[3]} {order[2]}"
+msgstr ""
+
+#: tgbot/handlers/p2p.py:207
+#, fuzzy
+msgid "Order №{order_id} has been delete"
+msgstr "L'offre nº {order_id} a été annulé "
+
+#: tgbot/handlers/settings.py:12
+msgid ""
+"<b>WARNING</b>: Leo is in a BETA test mode, issues may occur. \n"
+"\n"
+"Feedback / questions: @RichLeoSupportBot\n"
+"\n"
+"Official website: rich-leo.com"
+msgstr ""
+
+#: tgbot/handlers/settings.py:21
+msgid ""
+"<b>WARNING</b>: Leo is in a BETA test mode, issues may occur. \n"
+"\n"
+"Feedback / questions: @RichLeoSupportBot \n"
+"\n"
+"Official website: rich-leo.com"
+msgstr ""
+
+#: tgbot/handlers/settings.py:30
+msgid "Choose language"
+msgstr ""
+
+#: tgbot/handlers/start.py:15
+msgid "{'User'} asks you to donate {info[3]} {info[2]}"
+msgstr ""
+
+#: tgbot/handlers/start.py:22 tgbot/handlers/start.py:39
+#: tgbot/handlers/start.py:49
+msgid ""
+"Welcome back {message.chat.first_name}.\n"
+"\n"
+" How we can help you?"
+msgstr ""
+
+#: tgbot/handlers/start.py:29
+msgid "Send location"
+msgstr ""
+
+#: tgbot/handlers/start.py:31
+msgid "Skip"
+msgstr ""
+
+#: tgbot/handlers/start.py:32
+msgid "Please send your location"
+msgstr ""
+
+#: tgbot/handlers/user.py:6
+msgid "Hello, user!"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:24
+#, fuzzy
+msgid "Active orders"
+msgstr "Toutes les offres actives :"
+
+#: tgbot/keyboards/inline.py:26
+msgid "Create order"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:28
+msgid "My orders"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:35
+msgid "Delete"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:62 tgbot/keyboards/inline.py:364
+#: tgbot/keyboards/inline.py:379
+#, fuzzy
+msgid "Accept"
+msgstr "accepté"
+
+#: tgbot/keyboards/inline.py:97
+msgid "Create"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:99 tgbot/keyboards/inline.py:190
+#: tgbot/keyboards/inline.py:268 tgbot/keyboards/reply.py:21
+msgid "Cancel"
+msgstr "Annuler"
+
+#: tgbot/keyboards/inline.py:132 tgbot/keyboards/inline.py:147
+#: tgbot/keyboards/inline.py:199 tgbot/keyboards/inline.py:212
+#, fuzzy
+msgid "📥Deposit"
+msgstr "déposer"
+
+#: tgbot/keyboards/inline.py:134 tgbot/keyboards/inline.py:201
+msgid "📤Withdraw"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:136
+msgid "📊Fast exchange"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:138
+msgid "📊Escrow exchange"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:140
+msgid "🎯P2P"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:167
+msgid "Reject"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:203
+msgid "💸Send"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:205
+#, fuzzy
+msgid "🖨History"
+msgstr "Pas d'historique"
+
+#: tgbot/keyboards/inline.py:214
+msgid "💸Request"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:234
+msgid "Check"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:277
+msgid "🌍Language"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:298 tgbot/keyboards/inline.py:322
+#: tgbot/keyboards/inline.py:329
+msgid "🔙Back"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:309
+msgid "🔀Exchange rates"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:311
+msgid "👫Community"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:313
+msgid "🔢Fees"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:320
+msgid "📊Exchange"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:338
+msgid "Create deal"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:340
+msgid "Active deals"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:361 tgbot/keyboards/inline.py:366
+#: tgbot/keyboards/inline.py:376 tgbot/keyboards/inline.py:381
+msgid "Cancel deal"
+msgstr ""
+
+#: tgbot/keyboards/inline.py:374
+msgid "Confirm receipt"
+msgstr ""
+
+#: tgbot/keyboards/reply.py:15
+msgid "{button}"
+msgstr ""
+
+#~ msgid "Please input correct command"
+#~ msgstr "Veuillez saisir la commande correcte"
+
+#~ msgid "Hello, admin!"
+#~ msgstr "Bonjour, administrateur !"
+
+#~ msgid "Successfully confirmed"
+#~ msgstr "Confirmé avec succès"
+
+#~ msgid "Your NGN deposit was confirmed"
+#~ msgstr "Votre dépôt en NGN a été confirmé"
+
+#~ msgid "Enter amount of"
+#~ msgstr "Saisissez le montant de"
+
+#~ msgid "you want to withdraw"
+#~ msgstr "vous voulez vous retirer"
+
+#~ msgid "amount"
+#~ msgstr "montant"
+
+#~ msgid "currency"
+#~ msgstr "somme"
+
+#~ msgid "<b>Deposit</b> – top up your balance"
+#~ msgstr "<b>Déposer</b> – rechargez votre solde"
+
+#~ msgid "Your balance:"
+#~ msgstr "Votre solde:"
+
+#~ msgid "If you want to perform any kind of Operation you should talk to Leo."
+#~ msgstr ""
+#~ "Si vous souhaitez effectuer tout type"
+#~ " d'opération, vous devez en parler à"
+#~ " Leo."
+
+#~ msgid "Your deposit has been received"
+#~ msgstr "Votre dépôt a été reçu"
+
+#~ msgid "To replenish your NGN account - send amount you want Bank account:"
+#~ msgstr "nan"
+
+#~ msgid "Bank Name: keystone PLC"
+#~ msgstr "nan"
+
+#~ msgid "Account Name: Opal Trade Limited"
+#~ msgstr "nan"
+
+#~ msgid "Account Number: 1012241234"
+#~ msgstr "nan"
+
+#~ msgid "Amount:  NGN"
+#~ msgstr "nan"
+
+#~ msgid "Comment: leoexchange "
+#~ msgstr "nan"
+
+#~ msgid "<b>ATTENTION!</b>"
+#~ msgstr "<b>ATTENTION !</b>"
+
+#~ msgid "It is REQUIRED to write code {message.chat.id} in the comment section"
+#~ msgstr ""
+#~ "Il est OBLIGATOIRE d'écrire le code "
+#~ "{message.chat.id} dans la section commentaire"
+
+#~ msgid "Otherwise, your deposit will not be processed."
+#~ msgstr "Sinon, votre dépôt ne sera pas traité. "
+
+#~ msgid "on address below to deposit"
+#~ msgstr "à l'adresse ci-dessous pour déposer"
+
+#~ msgid "Success"
+#~ msgstr "Succès"
+
+#~ msgid "escrow"
+#~ msgstr "escrow"
+
+#~ msgid "Payment for the trade no. {deal_id} was reserved by AltrEX."
+#~ msgstr "Le paiement pour l'échange nº {deal_id} a été réservé par AltrEX."
+
+#~ msgid "Please send the money"
+#~ msgstr "Veuillez envoyer l'argent"
+
+#~ msgid "All active offers: "
+#~ msgstr "Toutes les offres actives : "
+
+#~ msgid "There is no offers created by you"
+#~ msgstr "Il n'y a pas d'offres actives créées par vous "
+
+#~ msgid "Which currency you want to receive?"
+#~ msgstr "Quelle devise voulez-vous recevoir ? "
+
+#~ msgid "Enter Telegram username of your escrow partner"
+#~ msgstr "Saisissez le nom d'utilisateur sur Telegram de votre partenaire escrow"
+
+#~ msgid "The trade has been successfully started"
+#~ msgstr "L'échange a été lancé avec succès"
+
+#~ msgid "No"
+#~ msgstr "Non"
+
+#~ msgid "Yes"
+#~ msgstr "Oui"
+
+#~ msgid "The trade has been successfully completed"
+#~ msgstr "L'échange a été effectué avec succès "
+
+#~ msgid "Official website: altrex.io"
+#~ msgstr "Site Web officiel : altrex.io"
+
+#~ msgid ""
+#~ "If you have any questions, don't "
+#~ "hesitate asking them after clicking on"
+#~ " '❓Ask'"
+#~ msgstr ""
+#~ "Si vous avez des questions, n'hésitez"
+#~ " pas à les poser après avoir "
+#~ "cliqué sur ' demander '"
+
+#~ msgid ""
+#~ "Join our 👫🏼Community to be aware "
+#~ "of the latest news and to discuss"
+#~ " AltrEX"
+#~ msgstr ""
+#~ "Rejoignez notre 👫🏼Communauté pour être "
+#~ "au courant des dernières nouvelles et"
+#~ " pour discuter d'AltrEX "
+
+#~ msgid ""
+#~ "If you want to check what are "
+#~ "the 🔀exchange rates and 🔢fees, please"
+#~ " click on the corresponding button"
+#~ msgstr ""
+#~ "Si vous voulez vérifier quels sont "
+#~ "les 🔀taux de change et les frais,"
+#~ " veuillez cliquer sur le bouton "
+#~ "correspondant"
+
+#~ msgid "What would you like to do?"
+#~ msgstr "Que voudriez-vous faire ?"
+
+#~ msgid "<b>Deposit</b> money on your AltrEX account"
+#~ msgstr "<b>Déposez</b> de l'argent sur votre compte d'AltrEX"
+
+#~ msgid "<b>Withdraw</b> money from AltrEX to your personal account"
+#~ msgstr "<b>Retirer</b> de l'argent de AltrEX vers votre compte personnel"
+
+#~ msgid ""
+#~ "<b>Fast Exchange</b>  – Just  choose "
+#~ "what you want to give and get "
+#~ "& make your trade"
+#~ msgstr ""
+#~ "Échange rapide</b> – Choisissez juste ce"
+#~ " que vous voulez donner et prendre"
+#~ " en échange et faites votre "
+#~ "transaction."
+
+#~ msgid "<b/>Escrow Exchange</b> – Trade with a person chosen by you"
+#~ msgstr ""
+#~ "<b>Escrow Exchange</b>  – Echange de "
+#~ "cryptomonnaie avec une personne choisie "
+#~ "par vous"
+
+#~ msgid "<b>P2P</b> – Make and take offers to trade crypto"
+#~ msgstr "<b>P2P</b> – Faire et accepter des offres d'échange de cryptomonnaie "
+
+#~ msgid "method"
+#~ msgstr "méthode"
+
+#~ msgid "Or show them this QR."
+#~ msgstr "Ou montrez-leur ce QR."
+
+#~ msgid "P2P offers"
+#~ msgstr "Offres P2P"
+
+#~ msgid "You give:"
+#~ msgstr "Vous donnez:"
+
+#~ msgid "You get:"
+#~ msgstr "Vous recevez:"
+
+#~ msgid "<b>WARNING</b>: AltrEX is in a BETA test mode, issues may occur. "
+#~ msgstr ""
+#~ "<b>AVERTISSEMENT</b> : AltrEX est en un"
+#~ " mode de test BETA, des problèmes "
+#~ "peuvent survenir."
+
+#~ msgid "Feedback & questions: @AltrEXSupportBot "
+#~ msgstr "Commentaires et questions : @AltrEXSupportBot"
+
+#~ msgid "Official website: altrex.io"
+#~ msgstr "Site Web officiel : altrex.io"
 

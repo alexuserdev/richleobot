@@ -87,13 +87,13 @@ async def cancel_escrow(message: types.Message, state: FSMContext, _):
     except MessageNotModified:
         pass
     await state.finish()
-    await start(message, state)
+    await start(message, state, _)
 
 
 async def escrow_exchange_join(call: types.CallbackQuery, state: FSMContext, _):
     await call.message.answer_sticker("CAACAgIAAxkBAAICTGD1mJCRGvildKusT1omUJpJtl3HAAKRDQACzyCgSja8PU7hcPnqIAQ",)
     msg = await call.message.answer(_("Select an action"),
-                              reply_markup=EscrowKeyboards.main())
+                              reply_markup=EscrowKeyboards.main(_))
     await call.message.edit_reply_markup()
     await state.update_data(last_msg=msg.message_id)
 
@@ -140,7 +140,7 @@ async def all_active_deals(call: types.CallbackQuery, _):
 async def escrow_create(call: types.CallbackQuery, state: FSMContext, _):
     await call.message.delete()
     await call.message.answer(_("Escrow exchange"),
-                              reply_markup=escrow_deal_keyboard())
+                              reply_markup=escrow_deal_keyboard(_))
     await call.message.answer(_("Which currency you want to sell"),
                               reply_markup=EscrowKeyboards.choose_currency())
     await EscrowStates.first.set()

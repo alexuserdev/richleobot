@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tgbot VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2021-09-03 16:32+0300\n"
+"POT-Creation-Date: 2021-09-09 22:04+0000\n"
 "PO-Revision-Date: 2021-09-03 16:33+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -38,9 +38,9 @@ msgstr ""
 msgid "Enter bank name"
 msgstr ""
 
-#: tgbot/handlers/balance.py:72 tgbot/handlers/deposit.py:108
+#: tgbot/handlers/balance.py:72 tgbot/handlers/deposit.py:117
 #: tgbot/handlers/escrow.py:176 tgbot/handlers/escrow.py:206
-#: tgbot/handlers/operations.py:79 tgbot/handlers/p2p.py:144
+#: tgbot/handlers/operations.py:78 tgbot/handlers/p2p.py:144
 #: tgbot/handlers/p2p.py:176
 msgid "Incorrect value"
 msgstr ""
@@ -130,27 +130,33 @@ msgid ""
 "Otherwise, deposit will not be executed"
 msgstr ""
 
-#: tgbot/handlers/deposit.py:94
+#: tgbot/handlers/deposit.py:80
+msgid ""
+"To deposit {currency} send {amount} to our bank account:\n"
+"Bank Acc. No.: "
+msgstr ""
+
+#: tgbot/handlers/deposit.py:103
 msgid "Send {data} {currency} on address below to deposit"
 msgstr ""
 
-#: tgbot/handlers/deposit.py:99
+#: tgbot/handlers/deposit.py:108
 msgid "Send {amount} {currency} on address below to deposit {currency}"
 msgstr ""
 
-#: tgbot/handlers/deposit.py:117
+#: tgbot/handlers/deposit.py:126
 msgid "Wait transaction confirming"
 msgstr ""
 
-#: tgbot/handlers/deposit.py:133
+#: tgbot/handlers/deposit.py:142
 msgid "Successfully"
 msgstr ""
 
-#: tgbot/handlers/deposit.py:136
+#: tgbot/handlers/deposit.py:145
 msgid "Transaction is found but not confirmed. Please wait"
 msgstr ""
 
-#: tgbot/handlers/deposit.py:138
+#: tgbot/handlers/deposit.py:147
 msgid "Transaction not found. Please wait"
 msgstr ""
 
@@ -178,7 +184,7 @@ msgid ""
 msgstr ""
 
 #: tgbot/handlers/escrow.py:53 tgbot/handlers/escrow.py:71
-#: tgbot/handlers/exchange.py:51 tgbot/handlers/operations.py:45
+#: tgbot/handlers/exchange.py:51 tgbot/handlers/operations.py:44
 #: tgbot/handlers/p2p.py:25
 msgid "Wallet is empty."
 msgstr ""
@@ -287,8 +293,8 @@ msgstr ""
 msgid "How much {data['currency1']} do you want to sell?"
 msgstr ""
 
-#: tgbot/handlers/exchange.py:89 tgbot/keyboards/inline.py:160
-#: tgbot/keyboards/inline.py:179 tgbot/keyboards/inline.py:257
+#: tgbot/handlers/exchange.py:89 tgbot/keyboards/inline.py:169
+#: tgbot/keyboards/inline.py:188 tgbot/keyboards/inline.py:266
 msgid "Confirm"
 msgstr ""
 
@@ -299,7 +305,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: tgbot/handlers/exchange.py:101 tgbot/handlers/operations.py:156
+#: tgbot/handlers/exchange.py:101 tgbot/handlers/operations.py:154
 msgid "Invalid value"
 msgstr ""
 
@@ -342,57 +348,57 @@ msgid ""
 "• <b>P2P</b> - Make and take orders to trade crypto"
 msgstr ""
 
-#: tgbot/handlers/operations.py:41
+#: tgbot/handlers/operations.py:40
 msgid "Choose currency to send"
 msgstr ""
 
-#: tgbot/handlers/operations.py:53
+#: tgbot/handlers/operations.py:52
 msgid "Enter amount of {currency} you want to send to another user"
 msgstr ""
 
-#: tgbot/handlers/operations.py:75
+#: tgbot/handlers/operations.py:74
 msgid "Enter user_id or user's nickname on Telegram"
 msgstr ""
 
-#: tgbot/handlers/operations.py:98
+#: tgbot/handlers/operations.py:97
 msgid ""
 "Amount: {amount}{currency}\n"
 " User_id: {message.text}"
 msgstr ""
 
-#: tgbot/handlers/operations.py:105
+#: tgbot/handlers/operations.py:103
 msgid "Enter correct user_id"
 msgstr ""
 
-#: tgbot/handlers/operations.py:117
+#: tgbot/handlers/operations.py:115
 msgid ""
 "You got {amount}{currency} from <a "
 "href='tg://user?id={user_id}'>{user_id}</a>"
 msgstr ""
 
-#: tgbot/handlers/operations.py:129
+#: tgbot/handlers/operations.py:127
 msgid ""
 "To request funds, please specify amount and pick the currency you want to"
 " receive.\n"
 "\n"
 msgstr ""
 
-#: tgbot/handlers/operations.py:135
+#: tgbot/handlers/operations.py:133
 msgid "How much {method} you want to request"
 msgstr ""
 
-#: tgbot/handlers/operations.py:150
+#: tgbot/handlers/operations.py:148
 msgid ""
 "To request {amount} {method} choose person from your contacts\n"
 "\n"
 " <b>Or show them this QR.</b>"
 msgstr ""
 
-#: tgbot/handlers/operations.py:164
+#: tgbot/handlers/operations.py:162
 msgid "No much funds"
 msgstr ""
 
-#: tgbot/handlers/operations.py:170
+#: tgbot/handlers/operations.py:168
 msgid "Transaction rejected."
 msgstr ""
 
@@ -524,116 +530,116 @@ msgstr ""
 msgid "Hello, user!"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:15
+#: tgbot/keyboards/inline.py:24
 msgid "Active orders"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:17
+#: tgbot/keyboards/inline.py:26
 msgid "Create order"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:19
+#: tgbot/keyboards/inline.py:28
 msgid "My orders"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:26
+#: tgbot/keyboards/inline.py:35
 msgid "Delete"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:53 tgbot/keyboards/inline.py:355
-#: tgbot/keyboards/inline.py:370
+#: tgbot/keyboards/inline.py:62 tgbot/keyboards/inline.py:364
+#: tgbot/keyboards/inline.py:379
 msgid "Accept"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:88
+#: tgbot/keyboards/inline.py:97
 msgid "Create"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:90 tgbot/keyboards/inline.py:181
-#: tgbot/keyboards/inline.py:259 tgbot/keyboards/reply.py:21
+#: tgbot/keyboards/inline.py:99 tgbot/keyboards/inline.py:190
+#: tgbot/keyboards/inline.py:268 tgbot/keyboards/reply.py:21
 msgid "Cancel"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:123 tgbot/keyboards/inline.py:138
-#: tgbot/keyboards/inline.py:190 tgbot/keyboards/inline.py:203
+#: tgbot/keyboards/inline.py:132 tgbot/keyboards/inline.py:147
+#: tgbot/keyboards/inline.py:199 tgbot/keyboards/inline.py:212
 msgid "📥Deposit"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:125 tgbot/keyboards/inline.py:192
+#: tgbot/keyboards/inline.py:134 tgbot/keyboards/inline.py:201
 msgid "📤Withdraw"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:127
+#: tgbot/keyboards/inline.py:136
 msgid "📊Fast exchange"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:129
+#: tgbot/keyboards/inline.py:138
 msgid "📊Escrow exchange"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:131
+#: tgbot/keyboards/inline.py:140
 msgid "🎯P2P"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:158
+#: tgbot/keyboards/inline.py:167
 msgid "Reject"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:194
+#: tgbot/keyboards/inline.py:203
 msgid "💸Send"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:196
+#: tgbot/keyboards/inline.py:205
 msgid "🖨History"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:205
+#: tgbot/keyboards/inline.py:214
 msgid "💸Request"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:225
+#: tgbot/keyboards/inline.py:234
 msgid "Check"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:268
+#: tgbot/keyboards/inline.py:277
 msgid "🌍Language"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:289 tgbot/keyboards/inline.py:313
-#: tgbot/keyboards/inline.py:320
+#: tgbot/keyboards/inline.py:298 tgbot/keyboards/inline.py:322
+#: tgbot/keyboards/inline.py:329
 msgid "🔙Back"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:300
+#: tgbot/keyboards/inline.py:309
 msgid "🔀Exchange rates"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:302
+#: tgbot/keyboards/inline.py:311
 msgid "👫Community"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:304
+#: tgbot/keyboards/inline.py:313
 msgid "🔢Fees"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:311
+#: tgbot/keyboards/inline.py:320
 msgid "📊Exchange"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:329
+#: tgbot/keyboards/inline.py:338
 msgid "Create deal"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:331
+#: tgbot/keyboards/inline.py:340
 msgid "Active deals"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:352 tgbot/keyboards/inline.py:357
-#: tgbot/keyboards/inline.py:367 tgbot/keyboards/inline.py:372
+#: tgbot/keyboards/inline.py:361 tgbot/keyboards/inline.py:366
+#: tgbot/keyboards/inline.py:376 tgbot/keyboards/inline.py:381
 msgid "Cancel deal"
 msgstr ""
 
-#: tgbot/keyboards/inline.py:365
+#: tgbot/keyboards/inline.py:374
 msgid "Confirm receipt"
 msgstr ""
 
@@ -641,32 +647,21 @@ msgstr ""
 msgid "{button}"
 msgstr ""
 
-#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:463
-#, python-format
-msgid "Content purported to be compressed with %s but failed to decompress."
-msgstr ""
+#~ msgid "Content purported to be compressed with %s but failed to decompress."
+#~ msgstr ""
 
-#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:649
-#, python-format
-msgid "Unsupported value for qop: %s."
-msgstr ""
+#~ msgid "Unsupported value for qop: %s."
+#~ msgstr ""
 
-#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:654
-#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:748
-#, python-format
-msgid "Unsupported value for algorithm: %s.algorithm"
-msgstr ""
+#~ msgid "Unsupported value for algorithm: %s.algorithm"
+#~ msgstr ""
 
-#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:743
-msgid "The challenge doesn't contain a server nonce, or this one is empty."
-msgstr ""
+#~ msgid "The challenge doesn't contain a server nonce, or this one is empty."
+#~ msgstr ""
 
-#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:753
-#, python-format
-msgid "Unsupported value for pw-algorithm: %s.pw-algorithm"
-msgstr ""
+#~ msgid "Unsupported value for pw-algorithm: %s.pw-algorithm"
+#~ msgstr ""
 
-#: venv_pycharm/lib/python3.8/site-packages/httplib2/__init__.py:1657
-msgid "Redirected but the response is missing a Location: header."
-msgstr ""
+#~ msgid "Redirected but the response is missing a Location: header."
+#~ msgstr ""
 
