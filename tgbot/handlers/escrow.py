@@ -226,8 +226,8 @@ async def enter_user_id(message: types.Message, state: FSMContext, _):
         if status == 'escrow':
             text, buyer_text = gen_deal_text(data, deal_id, gettext=_), gen_deal_text(data, deal_id, False, gettext=_)
             rate = await binance_work.get_pair_price(data['first_currency'], data['second_currency'], 1, dp)
-            text +=  "\nRate: 1 {data['first_currency']} = {rate:f} {data['second_currency']}"
-            buyer_text +=  "\nRate: 1 {data['first_currency']} = {rate:} {data['second_currency']}"
+            text +=  f"\nRate: 1 {data['first_currency']} = {rate:f} {data['second_currency']}"
+            buyer_text +=  f"\nRate: 1 {data['first_currency']} = {rate:} {data['second_currency']}"
             await message.answer(_("Deal successfully created"),
                                  reply_markup=main_menu_keyboard())
             await message.answer(text,
@@ -243,8 +243,8 @@ async def enter_user_id(message: types.Message, state: FSMContext, _):
             await message.answer(_("Deal successfully created"),
                                  reply_markup=main_menu_keyboard())
             rate = await binance_work.get_pair_price(data['first_currency'], data['second_currency'], 1, dp)
-            text +=  "\nRate: 1 {data['first_currency']} = {rate:f} {data['second_currency']}"
-            buyer_text +=  "\nRate: 1 {data['first_currency']} = {rate:f} {data['second_currency']}"
+            text +=  f"\nRate: 1 {data['first_currency']} = {rate:f} {data['second_currency']}"
+            buyer_text +=  f"\nRate: 1 {data['first_currency']} = {rate:f} {data['second_currency']}"
             await message.answer(text,
                                  reply_markup=await EscrowKeyboards.in_deal(deal_id))
             await dp.bot.send_message(user_id,

@@ -18,7 +18,7 @@ def main_menu_keyboard(_):
 
 def escrow_deal_keyboard(_):
     keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
-    keyboard.add(types.KeyboardButton(text=_("Cancel")))
+    keyboard.add(types.KeyboardButton(text="Cancel"))
     return keyboard
 
 
