@@ -63,7 +63,7 @@ async def choosed_first_currency(call: types.CallbackQuery, state: FSMContext, _
 async def choosed_second_currency(call: types.CallbackQuery, state: FSMContext, _):
     currency = call.data.split(".")[1]
     data = await state.get_data()
-    await call.message.edit_text(_("How much {data['currency1']} do you want to sell?".format(data=data)))
+    await call.message.edit_text(_("How much {currency1} do you want to sell?".format(**data)))
     await ExchangeStates.first.set()
     await state.update_data(currency2=currency)
 
@@ -91,8 +91,8 @@ async def entered_amount(message: types.Message, state: FSMContext, _):
             await state.update_data(count=count, sum=sum)
             keyboard.add(types.InlineKeyboardButton(text="Cancel",
                                                         callback_data="no"))
-            msg = await message.answer(_("You sell: {count} {data['currency1']}\n You get: {sum:f} {data['currency2']}\n\n".format(
-                sum=sum, data=data, count=count
+            msg = await message.answer(_("You sell: {count} {currency1}\n You get: {sum:f} {currency2}\n\n".format(
+                sum=sum, count=count, **data
             )),
                                        reply_markup=keyboard)
             await state.update_data(last_msg=msg.message_id)

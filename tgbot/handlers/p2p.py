@@ -90,11 +90,11 @@ async def accept_p2p_deal(call: types.CallbackQuery, _):
                        gen_deal_text(data, deal_id, False, chat_link=chat_link)
     dp = Dispatcher.get_current()
     rate = await binance_work.get_pair_price(data['first_currency'], data['second_currency'], 1, dp)
-    text += _("\nRate: 1 {data['first_currency']} = {rate} {data['second_currency']}".format(
-        data=data, rate=rate
+    text += _("\nRate: 1 {first_currency} = {rate} {second_currency}".format(
+        rate=rate, **data
     ))
-    buyer_text += _("\nRate: 1 {data['second_currency']} = {rate} {data['first_currency']}".format(
-        data=data, rate=rate
+    buyer_text += _("\nRate: 1 {second_currency} = {rate} {first_currency}".format(
+        rate=rate, **data
     ))
     await call.message.delete()
     await call.message.answer(_("Deal successfully created"),
@@ -166,9 +166,9 @@ async def enter_amount_of_second_wallet(message: types.Message, state: FSMContex
         print(data)
         await state.update_data(second_amount=amount)
         await message.answer(_("P2P order\n"
-                             "You give: {data['first_amount']} {data['first_currency']}\n" 
-                             "You'll get: {data['second_amount']} {data['second_currency']}".format(
-            data=data
+                             "You give: {first_amount} {first_currency}\n" 
+                             "You'll get: {second_amount} {second_currency}".format(
+            **data
         )),
                              reply_markup=P2PKeyboards.order_create_confirming())
         await P2PStates.next()

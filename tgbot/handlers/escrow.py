@@ -120,7 +120,9 @@ async def all_active_deals(call: types.CallbackQuery, _):
                 chat_link = await EscrowDb.parse_deal_chat(deal[0])
                 text = gen_deal_text(data, deal[0], for_seller, chat_link, gettext=_)
                 rate = await binance_work.get_pair_price(data['first_currency'], data['second_currency'], 1, dp)
-                text += "\nRate: 1 {data['first_currency']} = {rate} {data['second_currency']}"
+                text += "\nRate: 1 {first_currency} = {rate} {second_currency}".format(
+                    rate=rate, **data
+                )
                 if for_seller:
                     if data['first_currency'] in FIAT:
                         keyboard = EscrowKeyboards.in_deal_fiat(deal[0], "fiat")
